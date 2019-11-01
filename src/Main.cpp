@@ -4,7 +4,7 @@
 
 int main()
 {
-	/* std::cout << "Hello World!" << std::endl; */
+
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML works!", sf::Style::Close | sf::Style::Resize);
 	sf::RectangleShape player(sf::Vector2f(20.0f, 20.0f));
@@ -35,19 +35,14 @@ int main()
 	sf::Texture shapeTexture;
 	shapeTexture.loadFromFile("content/Image4.png");
 	shape.setTexture(&shapeTexture);
-	// Light blue 77 253 252 255
+
 	sf::Event evnt;
-/* 	sf::Font font; */
+
 	GridInfo infotable;
 	LineGenerator TestGenerator;
 	std::string xPosition;
 	std::string yPosition;
-/* 	font.loadFromFile("content/Roboto-Light.ttf");
-	sf::Text text1;
-	sf::Text text2; */
-	/* int a,i;
-			a = 0;
-			i = 0; */
+/*
  	//const unsigned int Colums = 2;
 	//const unsigned int Rows = 10;
 /*   	int splineArray[Rows][Colums] = {
@@ -65,15 +60,6 @@ int main()
 	}; */
 	float speedToNextPointX;
 	float speedToNextPointY;
-	//int vectorLength;
-/* 	text1.setFont(font);
-	text1.setFillColor(sf::Color::Green);
-	text1.setCharacterSize(12);
-
-	text2.setFont(font);
-	text2.setFillColor(sf::Color::Green);
-	text2.setCharacterSize(12);
-	text2.setPosition(0.0f, 16.0f); */
 
 
 	float targetX;
@@ -117,40 +103,7 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: W)) //forward now
 		{
-			//player.move(0.5f, 0.42f);
 
-
-			/* speedToNextPointY = 0.0f; */
-
-			/* if (((player.getPosition().x >= splineArray[0][0]) && (player.getPosition().x < splineArray[1][0]))
-			&& ((player.getPosition().y >= splineArray[0][1]) && (player.getPosition().y < splineArray[1][1])))
-			{ */
-
-			/* targetX = splineArray[1][0];
-			targetY= splineArray[1][1]; */
-
-
-			/* while ((player.getPosition().x !=targetX) && (player.getPosition().y !=targetY))
-			{
-
-			//vectorLength = sqrt(pow(xLength,2) + pow(yLength,2));
-
-			player.move(speedToNextPointX , speedToNextPointY );
-			}
-
-			if ((player.getPosition().x >= splineArray[1][0])
-			&& (player.getPosition().y >= splineArray[1][1]))
-			{
-			xLength = splineArray[2][0] - splineArray[1][0];
-			yLength = splineArray[2][1] - splineArray[1][1];
-			//vectorLength = sqrt(pow(xLength,2) + pow(yLength,2));
-			speedToNextPointX = 0.5f;
-			speedToNextPointY = yLength/xLength;
-			}
-			 if (speedToNextPointY == 1)
-			{
-				speedToNextPointY = speedToNextPointY * speedToNextPointX;
-			} */
 			previousPointX = player.getPosition().x;
 			previousPointY = player.getPosition().y;
 			xLength = targetX - previousPointX;
@@ -163,24 +116,6 @@ int main()
 			tail2.setPosition(previousPointX-(15*speedToNextPointX), previousPointY-(15*speedToNextPointY));
 
 
-			/* if ((xLength < 0) && (yLength > 0))
-			{
-				speedToNextPointX = -speedToNextPointX;
-				speedToNextPointY = abs(speedToNextPointY);
-			}
-			else if ((xLength < 0) && (yLength < 0))
-			{
-				speedToNextPointX = -speedToNextPointX;
-				speedToNextPointY = -speedToNextPointY;
-			}
-			else if (xLength == 0)
-			{
-				speedToNextPointX = 0;
-			}
-			 if (speedToNextPointY == 1)
-			{
-				speedToNextPointY = speedToNextPointY * speedToNextPointX;
-			} */
 
 
 			player.move(speedToNextPointX , speedToNextPointY );
@@ -200,7 +135,6 @@ int main()
 		{
 
 
-				//player.getPosition((float)mousePos.x, (float)mousePos.y);
 
 				targetX = mousePos.x;
 				targetY = mousePos.y;
@@ -213,29 +147,15 @@ int main()
 
 
 
-/* 		xPosition = std::to_string(player.getPosition().x);
-		xPosition.erase ( xPosition.find_last_not_of('0') + 1, std::string::npos );
-		yPosition = std::to_string(player.getPosition().y);
-		yPosition.erase ( yPosition.find_last_not_of('0') + 1, std::string::npos );
-		text1.setString("X player: " + xPosition + "  " + "Y player: " + yPosition);
 
-
-		text2.setString("X mouse: " + std::to_string(mousePos.x) + "  " + "Y mouse: " +
-		std::to_string(mousePos.y)+ "\n" +   std::to_string(splineArray[i][a])   + " TargetX "
-		+ std::to_string(targetX) + " TargetY " +  std::to_string(targetY) + "\n" + "prevX"
-		+ std::to_string(previousPointX) + " prevY " +  std::to_string(previousPointY));
- */
 		window.clear();
 
-/* 		window.draw(text1);
-		window.draw(text2); */
+
 		TestGenerator.drawMultipleLines(&window);
 		infotable.showInfo(&window, &player, mousePos, targetX, targetY,
 						   previousPointX, previousPointY);
-		//std::string xPosition, std::string yPosition, sf::RectangleShape* player);
 		window.draw(line1);
 		window.draw(line2);
-		//window.draw(shape);
 		window.draw(player);
 		window.draw(tail1);
 		window.draw(tail2);
