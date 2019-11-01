@@ -6,11 +6,9 @@ LineGenerator:: LineGenerator(){
 	vect2 = sf::Vector2f(350.0f, 0.5f);
 	objLine.setPosition(600.0f, 360.0f);
 }
-void LineGenerator::drawMultipleLines(sf::RenderWindow *m_window)
-{ //, int m_array[2][10], int m_lengthOfArray
-	for(lineCounter =0; (lineCounter < lengthOfArray); lineCounter++)
-	{
-
+void LineGenerator::drawMultipleLines(sf::RenderWindow *m_window) {
+	 //, int m_array[2][10], int m_lengthOfArray
+	for(lineCounter = 0; (lineCounter < lengthOfArray); lineCounter++) {
 		if (lineCounter % 2 == 0)
 		{
 		objLine.setFillColor(sf::Color::Cyan);

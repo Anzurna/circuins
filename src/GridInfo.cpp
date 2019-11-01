@@ -56,6 +56,8 @@ void GridInfo::showInfo(sf::RenderWindow* window,
 		"prevX " + std::to_string(m_previousPointX) +
 		"prevY " + std::to_string(m_previousPointY));
 
+	text1.setPosition((player -> getPosition().x) + 500, (player -> getPosition().y) - 300);
+	text2.setPosition((player -> getPosition().x) + 500, (player -> getPosition().y) - 284);
 	window -> draw(text1);
 	window -> draw(text2);
 
