@@ -15,7 +15,7 @@ GridInfo::GridInfo()
 	text2.setFont(font);
 	text2.setFillColor(sf::Color::Green);
 	text2.setCharacterSize(10);
-	text2.setPosition(470.0f, 16.0f); //Установка параметров текста
+	text2.setPosition(970.0f, 16.0f); //Установка параметров текста
 
 }
 

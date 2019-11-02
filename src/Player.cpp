@@ -1,10 +1,30 @@
 #include <Player.h>
 
-Player::moveSelf( )
+Player::Player() {
+	speedToNextPointX = 0.1f;
+	previousPointX = 0.0;
+	previousPointY = 0.0;
+	targetX = 0.0;
+	targetY = 0.0;
+	TotalSpeed = 2;
+}
+
+void Player::DrawPlayer(sf::RenderWindow *window,float height,float width) {
+	playFig.setFillColor(sf::Color::Green);
+	playFig.setSize(sf::Vector2f(height,width));
+	playFig.setOrigin(10.0f,10.0f);
+	//playFig.setPosition(20.0f,20.0f);
+	window->draw(playFig);
+
+}
+
+
+void Player::moveSelf(float speedX,float speedY)
+
 {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: A))
 		{
-			Player.move(-0.5f, 0.0f);
+			playFig.move(-0.5f, 0.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: W)) //forward now
 		{
@@ -25,15 +45,17 @@ Player::moveSelf( )
 
 
 
-			Player.move(speedToNextPointX , speedToNextPointY );
+			playFig.move(speedX , speedY );
+			//playFig.move(0.0f,-0.5f);
 
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: D) )
 		{
-			Player.move(0.5f, 0.0f);
+			playFig.move(0.5f, 0.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: S))
 		{
-			Player.move(0.0f, 0.5f);
+			playFig.move(0.0f, 0.5f);
 		}
+
 }

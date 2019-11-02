@@ -1,5 +1,6 @@
 #include "Main.hpp"
 #include "GridInfo.h"
+#include "Player.h"
 #include "LineGenerator.h"
 
 int main()
@@ -7,7 +8,7 @@ int main()
 
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML works!", sf::Style::Close | sf::Style::Resize);
-	sf::RectangleShape player(sf::Vector2f(20.0f, 20.0f));
+	//sf::RectangleShape player(sf::Vector2f(20.0f, 20.0f));
 	sf::RectangleShape line1(sf::Vector2f(300.0f, 5.0f));
 	sf::RectangleShape line2(sf::Vector2f(300.0f, 5.0f));
 	sf::RectangleShape tail1(sf::Vector2f(10.0f, 10.0f));
@@ -27,11 +28,18 @@ int main()
 #ifdef SFML_SYSTEM_WINDOWS
 	__windowsHelper.setIcon(window.getSystemHandle());
 #endif
+	window.setFramerateLimit(60);
+	//Массив точек
+	sf::CircleShape dote(10.0f,10.0f);
+	dote.setFillColor(sf::Color::White);
+	dote.setPosition(10.0f,50.0f);
+
+
 
 	sf::CircleShape shape(window.getSize().x/2);
 	shape.setFillColor(sf::Color::White);
-	player.setFillColor(sf::Color::Red);
-	player.setOrigin(10.0f, 10.0f);
+	//player.setFillColor(sf::Color::Red);
+	//player.setOrigin(10.0f, 10.0f);
 	sf::Texture shapeTexture;
 	shapeTexture.loadFromFile("content/Image4.png");
 	shape.setTexture(&shapeTexture);
@@ -40,11 +48,12 @@ int main()
 
 	GridInfo infotable;
 	LineGenerator TestGenerator;
+	Player Figure1;
 	std::string xPosition;
 	std::string yPosition;
 /*
  	//const unsigned int Colums = 2;
-	//const unsigned int Rows = 10;
+	//const unsigned int Rows = 10; */
 /*   	int splineArray[Rows][Colums] = {
 		{200,200},
 		{274,308},
@@ -58,6 +67,7 @@ int main()
 		{204,108},
 
 	}; */
+	/*
 	float speedToNextPointX;
 	float speedToNextPointY;
 
@@ -75,7 +85,8 @@ int main()
 	targetY = 0.0;
 	float Vector;
 	float TotalSpeed;
-	TotalSpeed = 2;
+	TotalSpeed = 2; */
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(evnt))
@@ -91,7 +102,7 @@ int main()
 				break;
 			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: Enter))
+		/* if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: Enter))
 		{
 			player.setPosition(200.0f, 200.0f);
 
@@ -140,7 +151,9 @@ int main()
 				targetY = mousePos.y;
 
 
-		}
+		} */
+
+
 
 
 
@@ -152,14 +165,17 @@ int main()
 
 
 		TestGenerator.drawMultipleLines(&window);
-		infotable.showInfo(&window, &player, mousePos, targetX, targetY,
-						   previousPointX, previousPointY);
+		/* infotable.showInfo(&window, &player, mousePos, targetX, targetY,
+						   previousPointX, previousPointY); */
+
+		window.draw (dote);
 		window.draw(line1);
 		window.draw(line2);
-		window.draw(player);
-		window.draw(tail1);
-		window.draw(tail2);
-
+		/* window.draw(player); */
+		//window.draw(tail1);
+		//indow.draw(tail2);
+		Figure1.DrawPlayer(&window,20.0f,20.0f);
+		Figure1.moveSelf(0.0f,-0.5f);
 		window.display();
 	}
 
