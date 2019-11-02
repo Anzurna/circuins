@@ -1,9 +1,9 @@
-class Player
+/* class Player
 {
 	public:
 	Player();
 	~Player() {};
-	void moveSelf(sf::RenderWindow *window)
+	void moveSelf(sf::RenderWindow *window);
 
 
-}
+}; */

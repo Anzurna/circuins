@@ -1,6 +1,6 @@
-#include <Player.h>
+/* #include <Player.h>
 
-Player::moveSelf( )
+void Player::moveSelf(sf::RenderWindow *window)
 {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: A))
 		{
@@ -11,7 +11,7 @@ Player::moveSelf( )
 
 
 
-		/*	previousPointX = player.getPosition().x;
+			previousPointX = player.getPosition().x;
 			previousPointY = player.getPosition().y;
 			xLength = targetX - previousPointX;
 			yLength = targetY- previousPointY;
@@ -20,7 +20,7 @@ Player::moveSelf( )
 			speedToNextPointX = TotalSpeed*(xLength/Vector);
 			speedToNextPointY = TotalSpeed*(yLength/Vector);
 			tail1.setPosition(previousPointX-(10*speedToNextPointX), previousPointY-(10*speedToNextPointY));
-			tail2.setPosition(previousPointX-(15*speedToNextPointX), previousPointY-(15*speedToNextPointY)); */
+			tail2.setPosition(previousPointX-(15*speedToNextPointX), previousPointY-(15*speedToNextPointY));
 
 
 
@@ -36,4 +36,4 @@ Player::moveSelf( )
 		{
 			Player.move(0.0f, 0.5f);
 		}
-}
+} */

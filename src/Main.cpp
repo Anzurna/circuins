@@ -7,7 +7,7 @@ int main() {
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML works!", sf::Style::Close | sf::Style::Resize);
 	sf::RectangleShape player(sf::Vector2f(20.0f, 20.0f));
 
-	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
+	//sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
 
 	window.setFramerateLimit(60);
 
@@ -47,8 +47,24 @@ int main() {
 	previousPointY = 0.0;
 	targetX = 0.0;
 	targetY = 0.0;
+
+	sf::RectangleShape button1(sf::Vector2f(500.0f, 100.0f));
+	button1.setFillColor(sf::Color::Green);
+	button1.setPosition(sf::Vector2f(390.0f, 360.0f));
+	sf::RectangleShape button2(sf::Vector2f(500.0f, 100.0f));
+	button2.setFillColor(sf::Color::Green);
+	button2.setPosition(sf::Vector2f(390.0f, 480.0f));
+	sf::RectangleShape button3(sf::Vector2f(500.0f, 100.0f));
+	button3.setFillColor(sf::Color::Green);
+	button3.setPosition(sf::Vector2f(390.0f, 600.0f));
+
 	while (window.isOpen()) {
+			int SizeWidth = 1280;
+			int SizeHeight = 720;
 		while (window.pollEvent(evnt)) {
+			SizeWidth = evnt.size.width;//ловлю размер окна
+			SizeHeight = evnt.size.height;
+
 			switch (evnt.type) {
 				case sf::Event::Closed:
 					window.close();
@@ -60,6 +76,25 @@ int main() {
 				break;
 			}
 		}
+		if ((SizeWidth >= 550) && (SizeHeight >= 720)) {//условия где размеры кнопок не меняются{
+				int button1x = ((SizeWidth-500)/2);
+				int button1y = 600;
+
+				button1.setPosition(sf::Vector2f(button1x, button1y));
+				button1.setSize(sf::Vector2f(500.0f, 100.0f));
+
+				int button2x = ((SizeWidth - 500) / 2);
+				int button2y = 480;
+
+				button2.setPosition(sf::Vector2f(button2x, button2y));
+				button2.setSize(sf::Vector2f(500.0f, 100.0f));
+
+				int button3x = ((SizeWidth - 500) / 2);
+				int button3y = 360;
+
+				button3.setPosition(sf::Vector2f(button3x, button3y));
+				button3.setSize(sf::Vector2f(500.0f, 100.0f));
+			}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: Enter)) {
 			player.setPosition(200.0f, 200.0f);
 		}
@@ -95,15 +130,17 @@ int main() {
 
 		window.clear();
 
-		window.setView(view);
-		view.setCenter(player.getPosition());
+		//window.setView(view);
+		//view.setCenter(player.getPosition());
 
 		mapHandl.drawMap(&window);
 		window.draw(player);
 		infotable.showInfo(&window, &player, mousePos, targetX, targetY,
 						   previousPointX, previousPointY);
 
-
+		window.draw(button1);
+		window.draw(button2);
+		window.draw(button3);
 		window.display();
 	}
 
