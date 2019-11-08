@@ -1,6 +1,6 @@
 #include "Main.hpp"
 #include "GridInfo.h"
-
+#include "Player.h"
 #include "Map/MapHandler.h"
 
 int main() {
@@ -24,9 +24,8 @@ int main() {
 	sf::Event evnt;
 	MapHandler mapHandl; //Создание карты
 	GridInfo infotable;
-	/* std::string xPosition;
-	std::string yPosition;
- *//*
+	Player Figure1;
+/*
  	const unsigned int Colums = 4;
 	const unsigned int Rows = 4;
    	int splineArray[Rows][Colums] = {
@@ -44,30 +43,48 @@ int main() {
 		{0, 1, 2, 1},
 		{1, 0, 1, 2},
 	}; */
-	float targetX;
-	float targetY;
-	float previousPointX;
-	float previousPointY;
-	previousPointX = 0.0;
-	previousPointY = 0.0;
-	targetX = 0.0;
-	targetY = 0.0;
-	float xLength;
-	float yLength;
 
-	float speedToNextPointX;
-	float speedToNextPointY;
-	float TotalSpeed = 4;
 
 	//view.setCenter(player.getPosition());
 	//sf::Vector2f parPos(256.0f, 256.0f);
 	//parallaxView.setCenter(parPos);
 	 //bool kostyl = 1;
+	/* int mouseTarX;
+	int mouseTarY; */
+			int i = 0;
+
+	std::vector<sf::CircleShape> dote(4);
+	dote[0].setFillColor(sf::Color::White);
+	dote[0].setRadius(10.0f);
+	dote[0].setPosition(10.0f,350.0f);
+	dote[0].setOrigin(10.0f,10.0f);
+	dote[1].setFillColor(sf::Color::White);
+	dote[1].setRadius(10.0f);
+	dote[1].setPosition(1000.0f,1000.0f);
+	dote[1].setOrigin(10.0f,10.0f);
+	dote[2].setFillColor(sf::Color::White);
+	dote[2].setRadius(10.0f);
+	dote[2].setPosition(210.0f,650.0f);
+	dote[2].setOrigin(10.0f,10.0f);
+	dote[3].setFillColor(sf::Color::White);
+	dote[3].setRadius(10.0f);
+	dote[3].setPosition(510.0f,350.0f);
+	dote[3].setOrigin(10.0f,10.0f);
 	while (window.isOpen()) {
 
 		while (window.pollEvent(evnt)) {
 
-
+			if (evnt.type==sf::Event::MouseButtonPressed) {
+			float pos_x, pos_y;
+			Figure1.setTargX(dote[i].getPosition().x);
+			Figure1.setTargY(dote[i].getPosition().y);
+			Figure1.moveClick(&window, view, Figure1.getTargX(),Figure1.getTargY());
+			pos_x=Figure1.getPosX();
+			pos_y=Figure1.getPosY();
+			if (((abs(pos_x-Figure1.getTargX()))<=5)&&((abs(pos_y-Figure1.getTargY()))<=5)) {
+				i++;
+			}
+		}
 			switch (evnt.type) {
 				case sf::Event::Closed:
 					window.close();
@@ -80,41 +97,10 @@ int main() {
 			}
 		}
 
-		 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: Enter)) {
-			player.setPosition(200.0f, 200.0f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: A)) {
-			player.move(-1.5f, 0.0f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: W)) { //forward now
-			float Vector;
-			sf::Vector2i transformedPlayerPosition = window.mapCoordsToPixel( player.getPosition() , view );
-			previousPointX = transformedPlayerPosition.x;
-			previousPointY = transformedPlayerPosition.y;
-			xLength = targetX - previousPointX;
-			yLength = targetY- previousPointY;
-			Vector = sqrt(pow((targetX - previousPointX),2) + pow((targetY - previousPointY),2));
-			speedToNextPointX = TotalSpeed*(xLength/Vector);
-			speedToNextPointY = TotalSpeed*(yLength/Vector);
-
-			//tail1.setPosition(previousPointX-(10*speedToNextPointX), previousPointY-(10*speedToNextPointY));
-			//tail2.setPosition(previousPointX-(15*speedToNextPointX), previousPointY-(15*speedToNextPointY));
-			player.move(speedToNextPointX , speedToNextPointY );
-
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: D)) {
-			player.move(1.5f, 0.0f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: S)) {
-			player.move(0.0f, 1.5f);
-		}
 
 	 	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				targetX = mousePos.x;
-				targetY = mousePos.y;
-		}
+
 		if (mousePos.x > WINDOWS_WIDTH - 10) {
 			view.move(5.0f, 0.0f);
 			parallaxView.move(0.3f, 0.0f);
@@ -130,25 +116,19 @@ int main() {
 		}
 
 
+		//Figure1.moveClick(&window, view, mousePos.x, mousePos.y);
 
 		window.clear();
-/* 		if (kostyl){
 
-			kostyl = 0;
-		} else {
-			window.setView(parallaxView);
-			kostyl = 1;
-		} */
-
-
-		//window.setView(parallaxView);
 		window.setView(parallaxView);
 		mapHandl.drawParallax(&window);
+
 		window.setView(view);
 		mapHandl.drawMap(&window);
-		window.draw(player);
-		infotable.showInfo(&window, &player, mousePos, targetX, targetY,
-						   previousPointX, previousPointY);
+
+		Figure1.DrawPlayer(&window, 30.0f, 30.0f);
+		infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
+						   Figure1.getPreviousX(), Figure1.getPreviousY());
 
 
 		window.display();

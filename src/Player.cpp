@@ -1,13 +1,48 @@
-/* #include <Player.h>
+#include <Player.h>
 
 Player::Player() {
 	speedToNextPointX = 0.1f;
+	speedToNextPointY = 0.0f;
 	previousPointX = 0.0;
 	previousPointY = 0.0;
 	targetX = 0.0;
 	targetY = 0.0;
 	TotalSpeed = 2;
 }
+float Player::getPreviousX() {
+	return (this->previousPointX);
+}
+
+float Player::getPreviousY() {
+	return (this->previousPointY);
+}
+
+float Player::getTargX() {
+	return (this->targetX);
+}
+
+float Player::getTargY() {
+	return (this->targetY);
+}
+
+float Player::getPosX() {
+	return (this->playFig.getPosition().x);
+}
+
+float Player::getPosY() {
+	return (this->playFig.getPosition().y);
+}
+
+void Player::setTargX(float X)
+{
+	this->targetX = X;
+}
+void Player::setTargY(float Y)
+{
+	this->targetY = Y;
+}
+
+
 
 void Player::DrawPlayer(sf::RenderWindow *window,float height,float width) {
 	playFig.setFillColor(sf::Color::Green);
@@ -18,48 +53,45 @@ void Player::DrawPlayer(sf::RenderWindow *window,float height,float width) {
 
 }
 
+void Player::moveClick(sf::RenderWindow* window, sf::View view, float targetX,float targetY) {
+
+
+
+			sf::Vector2i transformedPlayerPosition = window -> mapCoordsToPixel( playFig.getPosition() , view );
+			previousPointX = transformedPlayerPosition.x;
+			previousPointY = transformedPlayerPosition.y;
+			xLength = targetX - previousPointX;
+			yLength = targetY- previousPointY;
+			Vector = sqrt(pow((targetX - previousPointX),2) + pow((targetY - previousPointY),2));
+			speedToNextPointX = TotalSpeed*5*(xLength/Vector);
+			speedToNextPointY = TotalSpeed*5*(yLength/Vector);
+			playFig.move(speedToNextPointX,speedToNextPointY);
+}
+
 
 void Player::moveSelf(float speedX,float speedY)
 
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: Enter))
+		{
+			playFig.setPosition(10.0f, 10.0f);
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: A))
 		{
-			playFig.move(-0.5f, 0.0f);
+			playFig.move(-speedX, 0.0f);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: W)) //forward now
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: W))
 		{
-
-
-
-			previousPointX = player.getPosition().x;
-			previousPointY = player.getPosition().y;
-			xLength = targetX - previousPointX;
-			yLength = targetY- previousPointY;
-
-			Vector = sqrt(pow((targetX - previousPointX),2) + pow((targetY - previousPointY),2));
-			speedToNextPointX = TotalSpeed*(xLength/Vector);
-			speedToNextPointY = TotalSpeed*(yLength/Vector);
-			tail1.setPosition(previousPointX-(10*speedToNextPointX), previousPointY-(10*speedToNextPointY));
-			tail2.setPosition(previousPointX-(15*speedToNextPointX), previousPointY-(15*speedToNextPointY));
-
-
-
-
-			playFig.move(speedX , speedY );
-			//playFig.move(0.0f,-0.5f);
-
+			playFig.move(0.0f , -speedY );
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: D) )
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: D))
 		{
-			playFig.move(0.5f, 0.0f);
+			playFig.move(speedX, 0.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: S))
 		{
-			playFig.move(0.0f, 0.5f);
+			playFig.move(0.0f, speedY);
 		}
-<<<<<<< HEAD
-} */
-=======
 
 }
->>>>>>> 715a8111ccb24bfdc3315bb7afb0629261966cf4
