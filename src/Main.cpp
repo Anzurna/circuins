@@ -1,8 +1,5 @@
 #include "Main.hpp"
 
-
-
-
 int main() {
 	int WINDOWS_HEIGHT = 720;
 	int WINDOWS_WIDTH = 1280;
@@ -12,7 +9,6 @@ int main() {
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(WINDOWS_WIDTH, WINDOWS_HEIGHT));
 	sf::View parallaxView(sf::Vector2f(1256.0f, 1256.0f), sf::Vector2f(WINDOWS_WIDTH, WINDOWS_HEIGHT));
 	parallaxView.zoom(0.3f);
-
 
 	window.setFramerateLimit(60);
 
@@ -28,37 +24,6 @@ int main() {
 	GridInfo infotable;
 	Player Figure1;
 	bool ToggleParallax = true;
-
-/*
- 	const unsigned int Colums = 4;
-	const unsigned int Rows = 4;
-   	int splineArray[Rows][Colums] = {
-		{200,200},
-		{400,200},
-		{400,400},
-		{200,400},
-
-	};
-	const unsigned int Colums1 = 4;
-	const unsigned int Rows1 = 4;
-   	int vertexArray[Rows1][Colums1] = {
-		{2, 1, 0, 1},
-		{1, 2, 1, 0},
-		{0, 1, 2, 1},
-		{1, 0, 1, 2},
-	}; */
-
-
-	//view.setCenter(player.getPosition());
-	//sf::Vector2f parPos(256.0f, 256.0f);
-	//parallaxView.setCenter(parPos);
-	 //bool kostyl = 1;
-	/* int mouseTarX;
-	int mouseTarY; */
-			//int i = 0;
-
-
-
 
 	while (window.isOpen()) {
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -79,23 +44,7 @@ int main() {
 			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Enter) {
 				Figure1.setPosition(585.0f, 282.0f);
 			}
-		/* 	if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Right)) {
-				for (unsigned int i = 0; i < allVertex.size(); i++) {
-					if (allVertex[i].checkIsOn(Figure1.getTransformedPosition())) {
-						for (unsigned int a = 0; a < allVertex.size(); a++) {
-							if (allVertex[a].checkIsClicked(&window, mousePos, view)) {
-								for (unsigned int k = 0; k < allVertex[i].getConnectionCodesVectorSize(); k++) {
-									if (allVertex[a].getID() == allVertex[i].getConnectionCode(k)) {
-										Figure1.moveClick(&window, view,
-														  allVertex[a].getTransformedVertexPosition().x,
-														  allVertex[a].getTransformedVertexPosition().y);
-									}
-								}
-							}
-						}
-					}
-				}
-			} */
+
 
 
 	/* 	if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button ==  sf::Mouse::Left)
@@ -149,16 +98,12 @@ int main() {
 		} else if (mousePos.y > WINDOWS_HEIGHT - 10) {
 			view.move(0.0f, 5.0f);
 			parallaxView.move(0.0f, 0.3f);
-
 		}
-
-
-
 
 		window.clear();
 
 		window.setView(parallaxView);
-		if (ToggleParallax) {mapHandl.drawParallax(&window);}
+		if (ToggleParallax) { mapHandl.drawParallax(&window); }
 
 
 		window.setView(view);
@@ -166,17 +111,13 @@ int main() {
 
 		Figure1.DrawPlayer(&window, 30.0f, 30.0f);
 		Figure1.move(window, view);
+
 		infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
 						   Figure1.getPreviousX(), Figure1.getPreviousY());
 
- 			for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
-				mapHandl.allVertex[i].draw(&window, view);
-
-			}
-			//allVertex[i].checkIsClicked(&window, mousePos, view);
-
-
-
+ 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
+			mapHandl.allVertex[i].draw(&window, view);
+		}
 
 		window.display();
 	}

@@ -61,7 +61,7 @@ void Player::DrawPlayer(sf::RenderWindow *window,float height,float width)
 	//playFig.setPosition(20.0f,20.0f);
 	window->draw(playFig);
 }
-
+// Дублирование кода в двух функциях, следует отрефакторить
 void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,float targetY)
 {
 			transformedPlayerPosition = window.mapCoordsToPixel( playFig.getPosition() , view );
@@ -98,26 +98,37 @@ void Player::move(sf::RenderWindow& window, sf::View view){
 
 }
 
+// Этот большой цикл занимается тем, что двигает нашего игрока между вершинами
+// Позже следует внести изменения и выделить его в отдельный независимый кусок кода, потому как идентичный алгоритм будет
+// использован для всех прочих неигровых персонажей.
+// Имеет место(24.11.19) нарушение инкапсуляции — вектор из вершин, который содержится в экземпляре класса MapHandler
+// доступен всем. Это связано с тем, что при возвращении через геттер мне не удалось заставить все это работать.
+// Предложения приветствуются.
+
+// Принцип работы цикла:
+// 1. Пробегает весь вектор с вершинами
+// 2. Если игрок касается вершины (метод checkIsOn класса Vertex), то
+// 3. Проверяет кликнута ли какая-либо вершина
+// 4. Если кликнута — проверяет, содержится ли она в списке доступных для перемещения(связанных) вершин.
+// 5. Если так, то пасует данные вершины методу MoveClick
 void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view )
 {
-	 //Здесь происходит нечто ужасное
-
-					for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
-						if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
-							for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
-								if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
-									for (unsigned int k = 0; k < MapHndl.allVertex[i].getConnectionCodesVectorSize(); k++) {
-										if (MapHndl.allVertex[a].getID() == MapHndl.allVertex[i].getConnectionCode(k)) {
-											this -> moveClick(window, view,
-															MapHndl.allVertex[a].getTransformedVertexPosition().x,
-															MapHndl.allVertex[a].getTransformedVertexPosition().y);
-									}
-								}
-							}
+	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
+		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
+			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
+				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
+					for (unsigned int k = 0; k < MapHndl.allVertex[i].getConnectionCodesVectorSize(); k++) {
+						if (MapHndl.allVertex[a].getID() == MapHndl.allVertex[i].getConnectionCode(k)) {
+							this -> moveClick(window, view,
+											MapHndl.allVertex[a].getTransformedVertexPosition().x,
+											MapHndl.allVertex[a].getTransformedVertexPosition().y);
 						}
 					}
 				}
 			}
+		}
+	}
+}
 
 
 
