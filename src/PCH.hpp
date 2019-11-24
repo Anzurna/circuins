@@ -69,3 +69,8 @@
 #define _UNUSED(x) (void)(x)
 
 #endif // PRECOMPILED_HEADER_HPP
+
+#include "GridInfo.h"
+#include "Map/Vertex.h"
+#include "Map/MapHandler.h"
+#include "Player.h"
