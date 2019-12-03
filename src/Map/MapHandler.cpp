@@ -7,7 +7,7 @@ MapHandler::MapHandler()
 	mapTile3.loadFromFile("content/MapTiles/map3.bmp");
 	mapTile4.loadFromFile("content/MapTiles/map4.bmp"); */
 
-	parallaxTile1.loadFromFile("content/MapTiles/Image2red.bmp");
+	parallaxTile1.loadFromFile("content/MapTiles/parallaxTestVers.png");
 
 	mapTile_1.setSize(sf::Vector2f(1280.0f,720.0f));
 /* 	mapTile_2.setSize(sf::Vector2f(512.0f,512.0f));
