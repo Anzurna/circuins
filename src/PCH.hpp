@@ -8,7 +8,7 @@
 		#define NDEBUG
 	#endif
 #endif // _DEBUG
-
+extern bool gameStateActive;
 // SFML
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -74,7 +74,9 @@
 
 #endif // PRECOMPILED_HEADER_HPP
 
-#include "GridInfo.h"
+#include "GlobalContext.hpp"
+#include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
-#include "Player.h"
+#include "characters/Player.h"
+#include "gamestate/GameState.hpp"

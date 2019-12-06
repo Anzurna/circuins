@@ -3,11 +3,8 @@
 int main() {
 	int WINDOWS_HEIGHT = 720;
 	int WINDOWS_WIDTH = 1280;
-	sf::RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "SFML works!", sf::Style::Close | sf::Style::Resize);
-
-	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(WINDOWS_WIDTH, WINDOWS_HEIGHT));
-	sf::View parallaxView(sf::Vector2f(1256.0f, 1256.0f), sf::Vector2f(WINDOWS_WIDTH, WINDOWS_HEIGHT));
-	parallaxView.zoom(0.3f);
+	sf::RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Circuins",
+							sf::Style::Close | sf::Style::Resize);
 
 	window.setFramerateLimit(60);
 
@@ -16,13 +13,22 @@ int main() {
 #endif
 
 	sf::Event evnt;
-	MapHandler mapHandl; //Создание карты
-	GridInfo infotable;
-	Player Figure1;
-	bool ToggleParallax = true;
+	GlobalContext glob;
+	//Заглушка для меню
+	sf::RectangleShape startButton(sf::Vector2f(500.0f, 100.0f));
+	sf::RectangleShape exitButton(sf::Vector2f(500.0f, 100.0f));
+	sf::Texture sb;
+	sf::Texture eb;
+	sb.loadFromFile("content/interface/startbutn.bmp");
+	eb.loadFromFile("content/interface/exitbutn.bmp");
+	startButton.setTexture(&sb);
+	exitButton.setTexture(&eb);
+
+	startButton.setPosition(400.0f, 300.0f);
+	exitButton.setPosition(400.0f, 450.0f);
 
 	while (window.isOpen()) {
-		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+		//sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
 		while (window.pollEvent(evnt)) {
 
@@ -37,36 +43,15 @@ int main() {
 				i++;
 			} */
 
-			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Enter) {
-				Figure1.setPosition(585.0f, 282.0f);
+		if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Enter) {
+				GameState newGameState(WINDOWS_WIDTH, WINDOWS_HEIGHT);
+				glob.setGameStateActive(true);
+				if (glob.getIsGameStateActive()){
+				newGameState.handle(evnt, window, /* mousePos, */ glob);
+				//newGameState.drawScene(window);
+		}
 			}
 
-
-
-	/* 	if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button ==  sf::Mouse::Left)
-		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: M)) {
-			for ( unsigned int i = 0; i < allVertex.size(); i++ ) {
-				if (allVertex[i].checkIsClicked(&window, mousePos, view)) {
-					allVertex[i].setPosition(mousePos);
-				}
-
-			}
-		} */
-		if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Tilde) {
-			for (unsigned int i = 0; i < mapHandl.allVertex.size(); i++) {
-				mapHandl.allVertex[i].toggleVisibility();
-			}
-		}
-		if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::P) {
-
-			ToggleParallax = (ToggleParallax ? false : true);
-		}
-
-		if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Right)) {
-
-			Figure1.moveToVertex( window, mapHandl, mousePos, view);
-
-		}
 		switch (evnt.type) {
 				case sf::Event::Closed:
 					window.close();
@@ -79,44 +64,13 @@ int main() {
 			}
 		}
 
-		 if (mousePos.x > WINDOWS_WIDTH - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
-			view.move(5.0f, 0.0f);
-			parallaxView.move(0.3f, 0.0f);
-
-		} else if (mousePos.x < 10) {
-			view.move(-5.0f, 0.0f);
-			parallaxView.move(-0.3f, 0.0f);
-
-		} else if (mousePos.y < 5) {
-			view.move(0.0f, -5.0f);
-			parallaxView.move(0.0f, -0.3f);
-
-		} else if (mousePos.y > WINDOWS_HEIGHT - 10) {
-			view.move(0.0f, 5.0f);
-			parallaxView.move(0.0f, 0.3f);
-		}
-
+		if(!glob.getIsGameStateActive()) {
 		window.clear();
-
-		window.setView(parallaxView);
-		if (ToggleParallax) { mapHandl.drawParallax(&window); }
-
-
-		window.setView(view);
-		mapHandl.drawMap(&window);
-
-		Figure1.DrawPlayer(&window);
-		Figure1.move(window, view);
-
-		//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
-					//	   Figure1.getPreviousX(), Figure1.getPreviousY());
-
- 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
-			mapHandl.allVertex[i].draw(&window, view);
-		}
-
+		// Отрисовка меню
+		window.draw(startButton);
+		window.draw(exitButton);
 		window.display();
+		}
 	}
-
 	return 0;
 }
