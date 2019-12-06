@@ -1,6 +1,8 @@
 #ifndef PRECOMPILED_HEADER_HPP
 #define PRECOMPILED_HEADER_HPP
 
+#define _USE_MATH_DEFINES
+
 #ifndef _DEBUG
 	#ifndef NDEBUG
 		#define NDEBUG
@@ -47,6 +49,8 @@
 #include <sstream>
 #include <thread>
 #include <type_traits>
+
+
 
 // Windows
 #ifdef _WIN32

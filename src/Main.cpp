@@ -83,7 +83,7 @@ int main() {
 			}
 		}
 
-		if (mousePos.x > WINDOWS_WIDTH - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
+		 if (mousePos.x > WINDOWS_WIDTH - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
 			view.move(5.0f, 0.0f);
 			parallaxView.move(0.3f, 0.0f);
 
@@ -109,7 +109,7 @@ int main() {
 		window.setView(view);
 		mapHandl.drawMap(&window);
 
-		Figure1.DrawPlayer(&window, 30.0f, 30.0f);
+		Figure1.DrawPlayer(&window);
 		Figure1.move(window, view);
 
 		infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
