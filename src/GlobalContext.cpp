@@ -1,0 +1,4 @@
+GlobalContext::GlobalContext()
+{
+	IsGameStateActive = false;
+}
