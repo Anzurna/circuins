@@ -4,7 +4,6 @@ int main() {
 	int WINDOWS_HEIGHT = 720;
 	int WINDOWS_WIDTH = 1280;
 	sf::RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "SFML works!", sf::Style::Close | sf::Style::Resize);
-	sf::RectangleShape player(sf::Vector2f(20.0f, 20.0f));
 
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(WINDOWS_WIDTH, WINDOWS_HEIGHT));
 	sf::View parallaxView(sf::Vector2f(1256.0f, 1256.0f), sf::Vector2f(WINDOWS_WIDTH, WINDOWS_HEIGHT));
@@ -15,9 +14,6 @@ int main() {
 #ifdef SFML_SYSTEM_WINDOWS
 	__windowsHelper.setIcon(window.getSystemHandle());
 #endif
-
-	player.setFillColor(sf::Color::Red);
-	player.setOrigin(10.0f, 10.0f);
 
 	sf::Event evnt;
 	MapHandler mapHandl; //Создание карты
@@ -112,8 +108,8 @@ int main() {
 		Figure1.DrawPlayer(&window);
 		Figure1.move(window, view);
 
-		infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
-						   Figure1.getPreviousX(), Figure1.getPreviousY());
+		//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
+					//	   Figure1.getPreviousX(), Figure1.getPreviousY());
 
  		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
 			mapHandl.allVertex[i].draw(&window, view);

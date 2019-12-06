@@ -12,8 +12,8 @@ Player::Player() {
 
 	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
 	playFig.setTexture(&PlayerTexture);
-	alignHelper.setFillColor(sf::Color::Green);
-	alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
+//	alignHelper.setFillColor(sf::Color::Green);
+//  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
 }
 float Player::getPreviousX() {
 	return (this->previousPointX);
@@ -65,9 +65,12 @@ void Player::DrawPlayer(sf::RenderWindow *window)
 	playFig.setOrigin(60.0f,60.0f);
 
 	//playFig.setPosition(20.0f,20.0f);
-	alignHelper.setPosition(playFig.getPosition().x, playFig.getPosition().y);
+
 	window->draw(playFig);
-	window->draw(alignHelper);
+
+	// Вклчение помощника наведения - линия будет показывать поворот спрайта
+	//alignHelper.setPosition(playFig.getPosition().x, playFig.getPosition().y);
+	//window->draw(alignHelper);
 }
 // Дублирование кода в двух функциях, следует отрефакторить
 void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,float targetY)
@@ -83,10 +86,9 @@ void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,fl
 			speedToNextPointX = TotalSpeed * 3 * (xLength / Vector);
 			speedToNextPointY = TotalSpeed * 3 * (yLength / Vector);
 
-			float degrees = atan2(xLength, -yLength) *(180/M_PI)-90; // Рабочая строчка НЕ ТРОГАТЬ
+			float degrees = atan2(xLength, -yLength) *(180/M_PI) - 90; // Рабочая строчка НЕ ТРОГАТЬ
 			playFig.setRotation(degrees);
-			std::cout << degrees << std::endl;
-			alignHelper.setRotation(degrees);
+			//alignHelper.setRotation(degrees);
 /* 			if (abs(xLength) < 4 && abs(yLength) < 4) {
 				speedToNextPointX = speedToNextPointY = 0;
 			} */
