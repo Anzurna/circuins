@@ -5,7 +5,7 @@ class Player
 	Player();
 	~Player() {};
 
-	void DrawPlayer(sf::RenderWindow *window,float height,float width);
+	void DrawPlayer(sf::RenderWindow *window);
 	void moveSelf(float speedX,float speedY);
 	void moveClick(sf::RenderWindow& , sf::View, float targetX,float targetY);
 	void moveToVertex( sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view);
@@ -24,6 +24,8 @@ class Player
 
 	private:
 	sf::RectangleShape playFig;
+	sf::Texture PlayerTexture;
+	sf::RectangleShape alignHelper;
 	float previousPointX;
 	float previousPointY;
 	float speedToNextPointX;
@@ -35,4 +37,5 @@ class Player
 	float Vector;
 	float TotalSpeed;
 	sf::Vector2i transformedPlayerPosition;
+
 };

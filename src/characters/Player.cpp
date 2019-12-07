@@ -9,32 +9,44 @@ Player::Player() {
 	m_TargetX = 0.0;
 	m_TargetY = 0.0;
 	TotalSpeed = 2;
+
+	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
+	playFig.setTexture(&PlayerTexture);
+//	alignHelper.setFillColor(sf::Color::Green);
+//  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
 }
-float Player::getPreviousX() {
+float Player::getPreviousX()
+{
 	return (this->previousPointX);
 }
 
-float Player::getPreviousY() {
+float Player::getPreviousY()
+{
 	return (this->previousPointY);
 }
 
-float Player::getTargX() {
+float Player::getTargX()
+{
 	return (this->m_TargetX);
 }
 
-float Player::getTargY() {
+float Player::getTargY()
+{
 	return (this->m_TargetY);
 }
 
-float Player::getPosX() {
+float Player::getPosX()
+{
 	return (this->playFig.getPosition().x);
 }
 
-float Player::getPosY() {
+float Player::getPosY()
+{
 	return (this->playFig.getPosition().y);
 }
 
-sf::Vector2i Player::getTransformedPosition(){
+sf::Vector2i Player::getTransformedPosition()
+{
 	return (this->transformedPlayerPosition);
 }
 
@@ -53,13 +65,19 @@ void Player::setPosition(float x, float y)
 
 
 
-void Player::DrawPlayer(sf::RenderWindow *window,float height,float width)
+void Player::DrawPlayer(sf::RenderWindow *window)
 {
-	playFig.setFillColor(sf::Color::Green);
-	playFig.setSize(sf::Vector2f(height,width));
-	playFig.setOrigin(10.0f,10.0f);
+
+	playFig.setSize(sf::Vector2f(120,120));
+	playFig.setOrigin(60.0f,60.0f);
+
 	//playFig.setPosition(20.0f,20.0f);
+
 	window->draw(playFig);
+
+	// Вклчение помощника наведения - линия будет показывать поворот спрайта
+	//alignHelper.setPosition(playFig.getPosition().x, playFig.getPosition().y);
+	//window->draw(alignHelper);
 }
 // Дублирование кода в двух функциях, следует отрефакторить
 void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,float targetY)
@@ -74,6 +92,11 @@ void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,fl
 			Vector = sqrt(pow((targetX - previousPointX),2) + pow((targetY - previousPointY),2));
 			speedToNextPointX = TotalSpeed * 3 * (xLength / Vector);
 			speedToNextPointY = TotalSpeed * 3 * (yLength / Vector);
+
+			float degrees = atan2(xLength, -yLength) *(180/M_PI) - 90; // Рабочая строчка НЕ ТРОГАТЬ
+			playFig.setRotation(degrees);
+			std::cout << degrees << std::endl;
+			//alignHelper.setRotation(degrees);
 /* 			if (abs(xLength) < 4 && abs(yLength) < 4) {
 				speedToNextPointX = speedToNextPointY = 0;
 			} */
@@ -89,6 +112,7 @@ void Player::move(sf::RenderWindow& window, sf::View view){
 	previousPointY = transformedPlayerPosition.y;
 	xLength = m_TargetX - previousPointX;
 	yLength = m_TargetY - previousPointY;
+
 	if (abs(xLength) < 8 && abs(yLength) < 8) {
 				speedToNextPointX = speedToNextPointY = 0;
 			} else {

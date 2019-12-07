@@ -1,12 +1,14 @@
 #ifndef PRECOMPILED_HEADER_HPP
 #define PRECOMPILED_HEADER_HPP
 
+#define _USE_MATH_DEFINES
+
 #ifndef _DEBUG
 	#ifndef NDEBUG
 		#define NDEBUG
 	#endif
 #endif // _DEBUG
-
+extern bool gameStateActive;
 // SFML
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -48,6 +50,8 @@
 #include <thread>
 #include <type_traits>
 
+
+
 // Windows
 #ifdef _WIN32
 	#ifndef UNICODE
@@ -70,7 +74,9 @@
 
 #endif // PRECOMPILED_HEADER_HPP
 
-#include "GridInfo.h"
+#include "GlobalContext.hpp"
+#include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
-#include "Player.h"
+#include "characters/Player.h"
+#include "gamestate/GameState.hpp"

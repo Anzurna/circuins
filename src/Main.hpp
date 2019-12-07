@@ -1,6 +1,7 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
+
 #ifdef __APPLE__
 	#include "MacOS/MacHelper.hpp"
 	MacHelper __macHelper;
