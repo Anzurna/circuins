@@ -22,6 +22,10 @@ class Player
 	void setTargY(float);
 	void setPosition(float, float);
 
+
+	std::vector<int> algorithmDijkstra(int start, int finish);
+
+
 	private:
 	sf::RectangleShape playFig;
 	sf::Texture PlayerTexture;
