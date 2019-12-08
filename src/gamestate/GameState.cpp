@@ -15,7 +15,7 @@ GameState::GameState(int width, int height)
 
 }
 
-void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, float mainViewZoomParam, /* sf::Vector2i& mousePos, */ GlobalContext& glob)
+void GameState::handle(sf::Event& evnt, sf::RenderWindow& window,/* sf::Vector2i& mousePos, */ GlobalContext& glob)
 {
 	sf::RectangleShape test(sf::Vector2f(40.0f, 40.0f));
 
@@ -25,16 +25,18 @@ while (glob.getIsGameStateActive()) {
 
 
 				if(evnt.type == sf::Event::MouseWheelScrolled){
-			view.zoom(mainViewZoomParam);
-			if ((mainViewZoomParam >= 0.5) && ((mainViewZoomParam <= 1.5))) {
-				if(evnt.mouseWheelScroll.delta > 0){
-					//mainViewZoomParam = mainViewZoomParam + evnt.mouseWheelScroll.delta/60;
-					mainViewZoomParam = (mainViewZoomParam + 0.01);
-					//i++;
-					//if (i>10) break;
-					//view.zoom(1+(evnt.mouseWheelScroll.delta)/60);
+					float mainViewZoomParam = 1;
 					view.zoom(mainViewZoomParam);
-					mainViewZoomParam=1;
+					if ((mainViewZoomParam >= 0.5) && ((mainViewZoomParam <= 1.5))) {
+						if(evnt.mouseWheelScroll.delta > 0){
+
+						//mainViewZoomParam = mainViewZoomParam + evnt.mouseWheelScroll.delta/60;
+						mainViewZoomParam = (mainViewZoomParam + 0.01);
+						//i++;
+						//if (i>10) break;
+						//view.zoom(1+(evnt.mouseWheelScroll.delta)/60);
+						view.zoom(mainViewZoomParam);
+						mainViewZoomParam=1;
 				}
 
 				if(evnt.mouseWheelScroll.delta < 0) {
