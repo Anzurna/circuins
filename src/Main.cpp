@@ -1,4 +1,7 @@
 #include "Main.hpp"
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 int main() {
 	int WINDOWS_HEIGHT = 720;

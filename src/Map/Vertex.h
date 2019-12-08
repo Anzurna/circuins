@@ -33,8 +33,4 @@
 		sf::Vector2i getTransformedVertexPosition() { return this -> transformedVertexPosition; }
 		bool toggleVisibility();
 		void setPosition(sf::Vector2i);
-
-
-
-
 };
