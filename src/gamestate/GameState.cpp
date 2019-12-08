@@ -23,7 +23,7 @@ while (glob.getIsGameStateActive()) {
 	sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
 	while (window.pollEvent(evnt)) {
 	if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::R) {
-				Figure1.setPosition(585.0f, 282.0f);
+				Figure1.setPosition(mapHandl.allVertex[0].getPosX(), mapHandl.allVertex[0].getPosY());
 			}
 	if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::L) {
 				Figure1.setPosition(200.0f, 282.0f);
@@ -58,7 +58,42 @@ while (glob.getIsGameStateActive()) {
 			Figure1.moveToVertex( window, mapHandl, mousePos1, view);
 
 		}
+		//Нажать backspace чтобы вызвать редактор карты
+		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
+			 mapRedct.Reset(mapHandl);
+			redact=true;
+		}
+
+		if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button == sf::Mouse::Left)&&redact==true) {
+			mapRedct.SetRedact(window,mapHandl,mousePos1,view);
+		}
+
+	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Left)&&redact==true) {
+          mapRedct.MoveRedact(mapHandl,-10.0f,0.0f);
 	}
+
+		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Up)&&redact==true) {
+          mapRedct.MoveRedact(mapHandl,0.0f,-10.0f);
+	}
+
+		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Down)&&redact==true) {
+          mapRedct.MoveRedact(mapHandl,0.0f,10.0f);
+	}
+
+		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Right)&&redact==true) {
+          mapRedct.MoveRedact(mapHandl,10.0f,0.0f);
+	}
+   //После передвижения пользователем какой то точки - принятие изменений и сброс свойств isMovable
+	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::T)) {
+		mapRedct.Reset(mapHandl);
+	}
+
+		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Z)) {
+		mapRedct.WriteFile(mapHandl);
+	}
+
+	}
+
 
 			if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
 			view.move(5.0f, 0.0f);

@@ -79,4 +79,6 @@ extern bool gameStateActive;
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
 #include "characters/Player.h"
+#include "mapredactor/MapRedactor.h"
 #include "gamestate/GameState.hpp"
+
