@@ -29,6 +29,8 @@ while (glob.getIsGameStateActive()) {
 				Figure1.setPosition(200.0f, 282.0f);
 			}
 	if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Escape) {
+
+				view.setCenter(m_width/2,m_height/2);
 				glob.setGameStateActive(false);
 			}
 
