@@ -75,8 +75,10 @@ extern bool gameStateActive;
 #endif // PRECOMPILED_HEADER_HPP
 
 #include "GlobalContext.hpp"
+#include "interface/Button.hpp"
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
 #include "characters/Player.h"
 #include "gamestate/GameState.hpp"
+
