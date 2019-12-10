@@ -1,5 +1,8 @@
 
 		Button::Button(std::string F, int W, int H, int X, int Y)
+		//F - название файла текстуры в папке content/interface
+		//W и H - Размер кнопки
+		//X и Y - Начальные координаты кнопки
 		{
 			File = F;
 			SizeXTexture = W;
@@ -15,7 +18,7 @@
 		{
 			sprite.setPosition(sf::Vector2f(ButtonX, ButtonY));
 		}
-		void Button::buttonPosition(int ButtonNumberDown)
+		void Button::buttonPosition(int ButtonNumberDown)//Только для меню
 		{
 			if ((WindowWidth >= 900) && (WindowHeight >= 630))// размер минимального окна ставим вручную
 			{
@@ -33,7 +36,7 @@
 			ButtonY = WindowHeight - ((SizeY + 20) * ButtonNumberDown);
 			draw();
 		}
-		bool Button::isPressed(int MousePosX, int MousePosY)
+		bool Button::isPressed(int MousePosX, int MousePosY)// функция нажатия, вводимые значения понятны
 		{
 
 			if (((MousePosX > ButtonX) && (MousePosX < (ButtonX + SizeX))) && ((MousePosY > ButtonY) && (MousePosY < (ButtonY + SizeY))))
@@ -46,12 +49,12 @@
 			}
 
 		}
-		void Button::setPosition(int buttonXAdd, int buttonYAdd)
+		void Button::setPosition(int buttonXAdd, int buttonYAdd)// Установка новой позиции кнопки
 		{
 			ButtonX = buttonXAdd;
 			ButtonY = buttonYAdd;
 		}
-		void Button::setWindowSize(int sizeX, int sizeY)
+		void Button::setWindowSize(int sizeX, int sizeY)// Только для меню
 		{
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
