@@ -1,19 +1,5 @@
-class button {
-		public:
-		int ButtonX;
-		int ButtonY;
-		int SizeXTexture;
-		int SizeYTexture;
-		int SizeX;
-		int SizeY;
-		int WindowWidth;
-		int WindowHeight;
-		int MousePosX;
-		int MousePosY;
-		std::string File;
-		sf::Texture buttonTexture;
-		sf::Sprite sprite;
-		button(std::string F, int W, int H, int X, int Y)
+
+		Button::Button(std::string F, int W, int H, int X, int Y)
 		{
 			File = F;
 			SizeXTexture = W;
@@ -25,11 +11,11 @@ class button {
 			buttonTexture.loadFromFile("content/interface/" + File);
 			sprite.setTexture(buttonTexture);
 		}
-		void draw()
+		void Button::draw()
 		{
 			sprite.setPosition(sf::Vector2f(ButtonX, ButtonY));
 		}
-		void buttonPosition(int ButtonNumberDown)
+		void Button::buttonPosition(int ButtonNumberDown)
 		{
 			if ((WindowWidth >= 900) && (WindowHeight >= 630))// размер минимального окна ставим вручную
 			{
@@ -47,7 +33,7 @@ class button {
 			ButtonY = WindowHeight - ((SizeY + 20) * ButtonNumberDown);
 			draw();
 		}
-		bool isPressed(int MousePosX, int MousePosY)
+		bool Button::isPressed(int MousePosX, int MousePosY)
 		{
 
 			if (((MousePosX > ButtonX) && (MousePosX < (ButtonX + SizeX))) && ((MousePosY > ButtonY) && (MousePosY < (ButtonY + SizeY))))
@@ -60,15 +46,14 @@ class button {
 			}
 
 		}
-		void setPosition(int buttonXAdd, int buttonYAdd)
+		void Button::setPosition(int buttonXAdd, int buttonYAdd)
 		{
 			ButtonX = buttonXAdd;
 			ButtonY = buttonYAdd;
 		}
-		void setWindowSize(int sizeX, int sizeY)
+		void Button::setWindowSize(int sizeX, int sizeY)
 		{
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
 		}
 
-};

@@ -1,17 +1,5 @@
-class name
-{		public:
-		int NameX;
-		int NameY;
-		int SizeXTexture;
-		int SizeYTexture;
-		int SizeX;
-		int SizeY;
-		int WindowWidth;
-		int WindowHeight;
-		std::string File;
-		sf::Texture nameTexture;
-		sf::Sprite sprite;
-		name(std::string F, int W, int H, int X, int Y)
+
+		Name::Name(std::string F, int W, int H, int X, int Y)
 		{
 			File = F;
 			SizeXTexture = W;
@@ -22,12 +10,12 @@ class name
 			sprite.setTexture(nameTexture);
 		}
 
-		void draw()
+		void Name::draw()
 		{
 			sprite.setPosition(sf::Vector2f(NameX, NameY));
 		}
 
-		void namePosition()
+		void Name::namePosition()
 		{
 			if ((WindowWidth >= 900) && (WindowHeight >= 630))// размер минимального окна ставим вручную
 			{
@@ -47,15 +35,14 @@ class name
 			draw();
 		}
 
-		void setPosition(int nameXAdd, int nameYAdd)
+		void Name::setPosition(int nameXAdd, int nameYAdd)
 		{
 			NameX = nameXAdd;
 			NameY = nameYAdd;
 		}
-		void setWindowSize(int sizeX, int sizeY)
+		void Name::setWindowSize(int sizeX, int sizeY)
 		{
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
 		}
 
-};

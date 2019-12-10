@@ -1,17 +1,5 @@
-class background
-{
-		public:
-		float WindowWidth;
-		float WindowHeight;
-		float SizeXTexture;
-		float SizeYTexture;
-		float multiplierX;
-		float multiplierY;
-		float multiplier;
-		std::string File;
-		sf::Texture backgroundTexture;
-		sf::Sprite sprite;
-		background(std::string F, int W, int H)
+
+		Background::Background(std::string F, int W, int H)
 		{
 			File = F;
 			SizeXTexture = W;
@@ -20,7 +8,7 @@ class background
 			sprite.setTexture(backgroundTexture);
 		}
 
-		void reSize()
+		void Background::reSize()
 		{
 			multiplierX = WindowWidth / SizeXTexture;
 			multiplierY = WindowHeight / SizeYTexture;
@@ -35,9 +23,8 @@ class background
 			sprite.setScale(multiplier, multiplier);
 		}
 
-		void setWindowSize(int sizeX, int sizeY)
+		void Background::setWindowSize(int sizeX, int sizeY)
 		{
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
 		}
-};

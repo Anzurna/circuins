@@ -1,15 +1,13 @@
 #include "Main.hpp"
-#include "Button.hpp"
-#include "Name.hpp"
-#include "Background.hpp"
+
 
 int main() {
 
-	button exit("Button.png", 500, 100, 390, 600);
-	button setting("Button.png", 500, 100, 390, 480);
-	button play("Button.png", 500, 100, 390, 360);
-	name name("Name.png", 860, 200, 210, 20);
-	background background("Background.png", 3000, 2000);
+	Button exit("Button.png", 500, 100, 390, 600);
+	Button setting("Button.png", 500, 100, 390, 480);
+	Button play("Button.png", 500, 100, 390, 360);
+	Name name("Name.png", 860, 200, 210, 20);
+	Background background("Background.png", 3000, 2000);
 
 	int WINDOWS_HEIGHT = 720;
 	int WINDOWS_WIDTH = 1280;
@@ -32,6 +30,8 @@ int main() {
 	background.reSize();
 
 	while (window.isOpen()) {
+
+
 
 		while (window.pollEvent(evnt)) {
 			exit.setWindowSize(evnt.size.width, evnt.size.height);
