@@ -16,6 +16,7 @@ class GameState {
 	Player Figure1;
 	bool ToggleParallax = true;
 	bool redact=false;
+	bool create=false;
 	int m_width;
 	int m_height;
 	bool IsGameStateActive = false;

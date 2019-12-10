@@ -39,7 +39,8 @@
 		"*.desktop": "properties",
 		".clang-format": "yaml",
 		"random": "cpp",
-		"fstream": "cpp"
+		"fstream": "cpp",
+		"new": "cpp"
 	},
 
 	"terminal.integrated.shell.windows": "D:/Git/bin/bash.exe",

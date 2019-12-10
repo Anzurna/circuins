@@ -2,6 +2,7 @@ class MapRedactor
 {
 	private:
 	int redactcount;
+	sf::Vector2f TransformedmousePos;
 
 	public:
 	MapRedactor();
@@ -10,5 +11,7 @@ class MapRedactor
 	void MoveRedact(MapHandler& MapHndl,float speedx, float speedy);
 	void Reset(MapHandler& MapHndl);
 	void WriteFile(MapHandler& MapHndl);
+	void SetVertex(sf::RenderWindow& window,MapHandler& MapHndl,int ID, sf::Vector2i mousePos,
+	std::vector<unsigned int> connectionVector,sf::View view);
 
 };

@@ -22,7 +22,7 @@
 
 	public:
 		Vertex(){};
-		void init(int ID, cords self, std::vector<unsigned int> );
+		void init(int ID, cords self, std::vector<unsigned int>connectionVector);
 		~Vertex(){};
 		unsigned int getID() { return this -> m_ID; }
 		bool getIsClicked() { return this -> mouseIsOn;}

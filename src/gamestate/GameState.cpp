@@ -62,6 +62,7 @@ while (glob.getIsGameStateActive()) {
 		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
 			 mapRedct.Reset(mapHandl);
 			redact=true;
+
 		}
 
 		if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button == sf::Mouse::Left)&&redact==true) {
@@ -83,6 +84,14 @@ while (glob.getIsGameStateActive()) {
 		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Right)&&redact==true) {
           mapRedct.MoveRedact(mapHandl,10.0f,0.0f);
 	}
+
+		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Q)) {
+			if (create==true) create=false; else create=true;
+		}
+
+		if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button == sf::Mouse::Left)&&create==true) {
+			mapRedct.SetVertex(window,mapHandl,0,mousePos1,{1},view);
+		}
    //После передвижения пользователем какой то точки - принятие изменений и сброс свойств isMovable
 	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::T)) {
 		mapRedct.Reset(mapHandl);

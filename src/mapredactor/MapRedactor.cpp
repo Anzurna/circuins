@@ -5,6 +5,9 @@
 // 4. После всех перемещений нажать T
 // 5. Можно переходить к следующей точке
 // 6. Чтобы сохранить в файл - нажать Z
+
+// Чтобы задать новую вершину, нажать Q и щелкнуть мышкой в месте размещения
+// после размещения нажать Q
 MapRedactor::MapRedactor()
 {
 	redactcount=0;
@@ -35,6 +38,20 @@ if (MapHndl.allVertex[i].checkIsMovable()==true && redactcount<2) {
 
 }
 
+void MapRedactor::SetVertex(sf::RenderWindow& window,MapHandler& MapHndl,int ID, sf::Vector2i mousePos,
+std::vector<unsigned int> connectionVector,sf::View view)
+{	ID=MapHndl.allVertex.size();
+	TransformedmousePos=window.mapPixelToCoords({mousePos.x,mousePos.y} ,view);
+	int xcord=TransformedmousePos.x;
+	int ycord=TransformedmousePos.y;
+	Vertex *Vertexobj = new Vertex;
+	Vertexobj->init(ID,{},{});
+	MapHndl.allVertex.push_back(*Vertexobj);
+	MapHndl.allVertex[MapHndl.allVertex.size()-1].init(ID,{xcord,ycord},connectionVector);
+	MapHndl.allVertex[MapHndl.allVertex.size()-1].toggleVisibility();
+	delete Vertexobj;
+}
+
 void MapRedactor::WriteFile(MapHandler& MapHndl) {
 	std::string connection = "";
 	std::ofstream out;
@@ -48,7 +65,7 @@ void MapRedactor::WriteFile(MapHandler& MapHndl) {
 		{out<<i<<" "<<MapHndl.allVertex[i].getPosX()<<" "<<MapHndl.allVertex[i].getPosY()<<connection<<std::endl;}
 	} */
 	for (unsigned int i=0; i<MapHndl.allVertex.size();i++) {
-		out<<i<<" "<<MapHndl.allVertex[i].getPosX()<<" "<<MapHndl.allVertex[i].getPosY()<<" ";
+		out<<i+1<<" "<<MapHndl.allVertex[i].getPosX()<<" "<<MapHndl.allVertex[i].getPosY()<<" ";
 		for (unsigned int j=0; j<MapHndl.allVertex[i].getConnectionCodesVectorSize();j++) {
 			out<<MapHndl.allVertex[i].getConnectionCode(j)<<" ";
 		}
