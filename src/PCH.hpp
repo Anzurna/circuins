@@ -8,7 +8,7 @@
 		#define NDEBUG
 	#endif
 #endif // _DEBUG
-extern bool gameStateActive;
+
 // SFML
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -74,9 +74,15 @@ extern bool gameStateActive;
 
 #endif // PRECOMPILED_HEADER_HPP
 
+struct speedAndRotation {
+		sf::Vector2f speed;
+		float degrees;
+	};
 #include "GlobalContext.hpp"
+#include "movable/Movable.hpp"
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
-#include "characters/Player.h"
+#include "movable/characters/Player.h"
 #include "gamestate/GameState.hpp"
+

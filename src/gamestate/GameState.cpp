@@ -17,11 +17,19 @@ GameState::GameState(int width, int height)
 
 void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2i& mousePos, */ GlobalContext& glob)
 {
-	sf::RectangleShape test(sf::Vector2f(40.0f, 40.0f));
+	sf::RectangleShape bullet(sf::Vector2f(20.0f, 20.0f));
+	sf::Texture bulletTexture;
+	bulletTexture.loadFromFile("content/particles/red1.png");
+
+	bullet.setTexture(&bulletTexture);
+	//std::vector<sf::RectangleShape> bullets;
+	//int bullets = 0;
 
 while (glob.getIsGameStateActive()) {
 	sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
-	while (window.pollEvent(evnt)) {
+
+
+while(window.pollEvent(evnt)) {
 	if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::R) {
 				Figure1.setPosition(585.0f, 282.0f);
 			}
@@ -29,7 +37,11 @@ while (glob.getIsGameStateActive()) {
 				Figure1.setPosition(200.0f, 282.0f);
 			}
 	if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Escape) {
+
+				view.setCenter(640.0f, 360.0f);
 				glob.setGameStateActive(false);
+			   /*  view.sf::View::~View();
+				parallaxView.sf::View::~View(); */
 			}
 
 
@@ -58,7 +70,17 @@ while (glob.getIsGameStateActive()) {
 			Figure1.moveToVertex( window, mapHandl, mousePos1, view);
 
 		}
-	}
+		if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Left)) {
+
+			bullet.setPosition(Figure1.getPosX(), Figure1.getPosY());
+
+			bullet.setRotation(degrees);
+
+
+
+		}
+
+}
 
 			if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
 			view.move(5.0f, 0.0f);
@@ -88,6 +110,9 @@ while (glob.getIsGameStateActive()) {
 		window.setView(view);
 		mapHandl.drawMap(&window);
 
+		window.draw(bullet);
+		bullet.move(speedToNextPointX, speedToNextPointY);
+		std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
 		Figure1.DrawPlayer(&window);
 		Figure1.move(window, view);
 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
