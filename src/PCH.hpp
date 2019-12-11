@@ -80,9 +80,12 @@ struct speedAndRotation {
 	};
 #include "GlobalContext.hpp"
 #include "movable/Movable.hpp"
+#include "movable/particles/Bullet.hpp"
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
 #include "movable/characters/Player.h"
+
 #include "gamestate/GameState.hpp"
+
 

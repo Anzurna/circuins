@@ -4,7 +4,7 @@ class Movable {
 
 	Movable();
 	~Movable(){};
-	speedAndRotation calculateSpeedAndRotation(sf::Vector2i &target, sf::Vector2i &position);
+	virtual speedAndRotation calculateSpeedAndRotation(sf::Vector2i &target, sf::Vector2i position);
 
 
 	protected:

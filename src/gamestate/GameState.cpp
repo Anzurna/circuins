@@ -17,14 +17,8 @@ GameState::GameState(int width, int height)
 
 void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2i& mousePos, */ GlobalContext& glob)
 {
-	sf::RectangleShape bullet(sf::Vector2f(20.0f, 20.0f));
-	sf::Texture bulletTexture;
-	bulletTexture.loadFromFile("content/particles/red1.png");
 
-	bullet.setTexture(&bulletTexture);
-	//std::vector<sf::RectangleShape> bullets;
-	//int bullets = 0;
-
+Bullet bullet1;
 while (glob.getIsGameStateActive()) {
 	sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
 
@@ -72,9 +66,9 @@ while(window.pollEvent(evnt)) {
 		}
 		if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Left)) {
 
-			bullet.setPosition(Figure1.getPosX(), Figure1.getPosY());
+			bullet1.setPosition({Figure1.getTransformedPosition().x, Figure1.getTransformedPosition().y});
 
-			bullet.setRotation(degrees);
+			bullet1.calculateSpeedAndRotation(mousePos1, Figure1.getTransformedPosition());
 
 
 
@@ -110,7 +104,7 @@ while(window.pollEvent(evnt)) {
 		window.setView(view);
 		mapHandl.drawMap(&window);
 
-		window.draw(bullet);
+		bullet1.draw(window);
 		bullet.move(speedToNextPointX, speedToNextPointY);
 		std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
 		Figure1.DrawPlayer(&window);
