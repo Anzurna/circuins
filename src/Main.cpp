@@ -16,7 +16,6 @@ int main() {
 #endif
 
 	sf::Event evnt;
-	float mainViewZoomParam = 1;
 	GlobalContext glob;
 	//Заглушка для меню
 	sf::RectangleShape startButton(sf::Vector2f(500.0f, 100.0f));
@@ -56,7 +55,7 @@ int main() {
 				GameState newGameState(WINDOWS_WIDTH, WINDOWS_HEIGHT);
 				glob.setGameStateActive(true);
 				if (glob.getIsGameStateActive()){
-				newGameState.handle(evnt, window, mainViewZoomParam,  /* mousePos, */ glob);
+				newGameState.handle(evnt, window, /* mousePos, */ glob);
 				//newGameState.drawScene(window);
 		}
 			}

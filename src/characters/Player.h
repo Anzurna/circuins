@@ -8,7 +8,7 @@ class Player
 	void DrawPlayer(sf::RenderWindow *window);
 	void moveSelf(float speedX,float speedY);
 	void moveClick(sf::RenderWindow& , sf::View, float targetX,float targetY);
-	void moveToVertex( sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view);
+	void moveToVertex( sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder);
 	float getTargX();
 	float getTargY();
 	float getPreviousX();
@@ -23,7 +23,7 @@ class Player
 	void setPosition(float, float);
 
 
-	std::vector<int> algorithmDijkstra(int start, int finish);
+	//std::vector<int> algorithmDijkstra(int start, int finish);
 
 
 	private:

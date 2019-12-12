@@ -2,7 +2,7 @@ class GameState {
 	public:
 	GameState(int width, int height);
 	~GameState(){};
-	void handle(sf::Event&, sf::RenderWindow&, float mainViewZoomParam,/* sf::Vector2i&, */ GlobalContext& glob);
+	void handle(sf::Event&, sf::RenderWindow&, /* sf::Vector2i&, */ GlobalContext& glob);
 	bool getIsGameStateActive() { return this -> IsGameStateActive;}
 	void setGameStateActive(bool condition) { this -> IsGameStateActive = condition; }
 	//void drawScene(sf::RenderWindow& window);
@@ -18,5 +18,6 @@ class GameState {
 	bool IsGameStateActive = false;
 	sf::View view;
 	sf::View parallaxView;
+	Pathfinder m_pathfinder;
 
 };

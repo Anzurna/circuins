@@ -78,5 +78,6 @@ extern bool gameStateActive;
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
+#include "Map/Pathfinder.h"
 #include "characters/Player.h"
 #include "gamestate/GameState.hpp"

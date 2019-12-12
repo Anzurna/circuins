@@ -11,6 +11,7 @@ Player::Player() {
 	TotalSpeed = 2;
 
 	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
+
 	playFig.setTexture(&PlayerTexture);
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
@@ -136,26 +137,23 @@ void Player::move(sf::RenderWindow& window, sf::View view){
 // 4. Если кликнута — проверяет, содержится ли она в списке доступных для перемещения(связанных) вершин.
 // Для 4 надо вызвать Дейкстру
 // 5. Если так, то пасует данные вершины методу MoveClick
-void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view )
+void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder )
 {
 	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
 		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
 			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
 				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
-
-					std::vector <int>v =algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
-					//
+					//алгоритм Дейкстры: потреблят в себя индекс вершины начальной и конечный(пока индекс = ИД-1, т.к. индексы с 0,  ИД с 1)
+					//выдает вектор вершин пути (начало - вершина отправки, конец - конечная вершина. Чтобы не выводить первую вершину, обращаемся к векторы
+					//не с нуля, а с единицы)
+					std::vector <int>v = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
 					std::cout<<"Way: ";
-					//вывод пути в виде индексов вершин
-					// в этом цикле нужно будет по индексам обратиться к коорданатам вершин, ицициировать туда движение и
-					// как-то получить позицию этой вершины, чтобы слудующая итерация цикла инициировала движения уже к следующей(из списка)
-					//но я не знаю, как это сделать
-					// поэтому пока что только индексы самих вершин
+					//вывод пути в виде индексов вершин.
 					for (unsigned int j = 1; j<v.size(); j++){
 						std::cout<< v[j] << ' ';
 						/*this -> moveClick(window, view,
-											MapHndl.allVertex[v[i]].getTransformedVertexPosition().x,
-											MapHndl.allVertex[v[i]].getTransformedVertexPosition().y);
+											MapHndl.allVertex[v[j]].getTransformedVertexPosition().x,
+											MapHndl.allVertex[v[j]].getTransformedVertexPosition().y);
 						this -> getTransformedPosition();*/
 					}
 
@@ -171,89 +169,6 @@ void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vec
 			}
 		}
 	}
-}
-
-std::vector<int> Player::algorithmDijkstra(int start, int finish)
-{
-
-	//попытка сделать расчёт мощности по координатам
-	// надо будет пробовать конечно дальше, но в те моменты, когда это работало, жутки лаги были каждый раз все считать
-	/*int n = finish;
-	int** g = new int* [n];
-	for (int i = 0; i < n; i++)
-	{
-		g[i] = new int[n];
-	}
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++)
-		{
-			if (MapHndl.allVertex[i].getConnectionCode(j)!=0) {
-
-			int katet1 = pow(((MapHndl.allVertex[j].getTransformedVertexPosition().x)/100) - (MapHndl.allVertex[i].getTransformedVertexPosition().x)/100,2);
-			int katet2 = pow(((MapHndl.allVertex[j].getTransformedVertexPosition().y)/100) - (MapHndl.allVertex[i].getTransformedVertexPosition().y)/100,2);
-			int sqrr=sqrt(katet1+katet2);
-			g[i][j] = sqrr;
-
-			}
-			else g[i][j]=0;
-		}
-
-			for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			std::cout << g[i][j] << " ";
-		}
-			std::cout << std::endl;
-	}
-
-
-	}*/
-	//пока задам массив статичный и здес.
-	// мощности лучше заранее посчитать в Maphandler.
-	// если я х1-х0 (400) буду вовзводиь в квадрат - как катет, то не в один int это не влезет
-	// так что лучше сделайте динамический массив или какую-нибудь структуры с мощностями
-	const int n = 9;
-	int g[n][n]=
-	{
-	{0, 1, 2, 3, 4, 5, 6, 7, 8},
-	{1, 0, 3, 0, 0, 0, 0, 0, 10},
-	{2, 3, 0, 5, 0, 0, 0, 0, 0},
-	{3, 0, 5, 0, 6, 0, 0, 0, 0},
-	{4, 0, 0, 6, 0, 1, 0, 0, 0},
-	{5, 0, 0, 0, 1, 0, 3, 0, 0},
-	{6, 0, 0, 0, 0, 3, 0, 2, 0},
-	{7, 0, 0, 0, 0, 0, 2, 0, 10},
-	{8, 10, 0, 0, 0, 0, 0, 10, 0}
-	};
-
-	std::list<int> way;
-	int inf = 3000;
-	std::vector <int> d(n, inf);
-	std::vector p(n, -1);
-	std::vector <bool> used(n);
-	//int start = 0, finish = 4;
-	int mn, u;
-	d[start] = 0;
-	for (int i = 0; i < n; ++i) {
-		mn = inf, u = -1;
-		for (int j = 0; j < n; ++j)
-			if (!used[j] && d[j] < mn)
-				mn = d[j], u = j;
-		used[u] = true;
-		for (int j = 0; j < n; ++j)
-			if (d[j] > d[u] + g[u][j] && g[u][j] > 0)
-				d[j] = d[u] + g[u][j], p[j] = u;
-	}
-	std::vector <int> v;
-	if (p[finish] == -1)
-		std::cout << "No way\n";
-	else {
-		for (int u = finish; u != -1; u = p[u])
-			v.push_back(u);
-		reverse(v.begin(), v.end());
-	}
-return v;
 }
 /*
  void Player::moveSelf(float speedX,float speedY)
