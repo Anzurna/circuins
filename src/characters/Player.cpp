@@ -137,34 +137,23 @@ void Player::move(sf::RenderWindow& window, sf::View view){
 // 4. Если кликнута — проверяет, содержится ли она в списке доступных для перемещения(связанных) вершин.
 // Для 4 надо вызвать Дейкстру
 // 5. Если так, то пасует данные вершины методу MoveClick
-void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder )
-{
+void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder ){
 	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
 		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
 			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
 				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
-					//алгоритм Дейкстры: потреблят в себя индекс вершины начальной и конечный(пока индекс = ИД-1, т.к. индексы с 0,  ИД с 1)
-					//выдает вектор вершин пути (начало - вершина отправки, конец - конечная вершина. Чтобы не выводить первую вершину, обращаемся к векторы
-					//не с нуля, а с единицы)
 					std::vector <int>v = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
-					std::cout<<"Way: ";
-					//вывод пути в виде индексов вершин.
 					for (unsigned int j = 1; j<v.size(); j++){
 						std::cout<< v[j] << ' ';
-						/*this -> moveClick(window, view,
-											MapHndl.allVertex[v[j]].getTransformedVertexPosition().x,
-											MapHndl.allVertex[v[j]].getTransformedVertexPosition().y);
-						this -> getTransformedPosition();*/
-					}
-
-					/*for (unsigned int k = 0; k < MapHndl.allVertex[i].getConnectionCodesVectorSize(); k++) {
+					for (unsigned int k = 0; k < MapHndl.allVertex[i].getConnectionCodesVectorSize(); k++) {
 
 						if (MapHndl.allVertex[a].getID() == MapHndl.allVertex[i].getConnectionCode(k)) {
 							this -> moveClick(window, view,
 											MapHndl.allVertex[a].getTransformedVertexPosition().x,
 											MapHndl.allVertex[a].getTransformedVertexPosition().y);
-
-					}*/
+						}
+					}
+					}
 				}
 			}
 		}
