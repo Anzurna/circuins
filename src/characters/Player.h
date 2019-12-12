@@ -17,10 +17,13 @@ class Player
 	float getPosY();
 	sf::Vector2i getTransformedPosition();
 	void move(sf::RenderWindow& window, sf::View view);
+	void eventListener(sf::Event &event, sf::RenderWindow& window,
+	MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder);
 
 	void setTargX(float);
 	void setTargY(float);
 	void setPosition(float, float);
+
 
 
 	//std::vector<int> algorithmDijkstra(int start, int finish);

@@ -185,3 +185,17 @@ void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vec
 		}
 }
 */
+
+void Player::eventListener(sf::Event &event, sf::RenderWindow& window, MapHandler& MapHndl,
+						   sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder)
+{
+	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::R) {
+						this -> setPosition(585.0f, 282.0f);
+	}
+	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::L) {
+						this -> setPosition(200.0f, 282.0f);
+	}
+	if (event.type == sf::Event::MouseButtonReleased && (event.mouseButton.button ==  sf::Mouse::Right)) {
+				this -> moveToVertex( window, MapHndl, mousePos, view, pathfinder);
+	}
+}
