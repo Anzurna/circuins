@@ -33,8 +33,6 @@
 		sf::Vector2i getTransformedVertexPosition() { return this -> transformedVertexPosition; }
 		bool toggleVisibility();
 		void setPosition(sf::Vector2i);
-
-
-
-
+		int getCordX(){return this->selfCords.m_x;}
+		int getCordY(){return this->selfCords.m_y;}
 };

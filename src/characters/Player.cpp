@@ -11,6 +11,7 @@ Player::Player() {
 	TotalSpeed = 2;
 
 	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
+
 	playFig.setTexture(&PlayerTexture);
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
@@ -134,29 +135,32 @@ void Player::move(sf::RenderWindow& window, sf::View view){
 // 2. Если игрок касается вершины (метод checkIsOn класса Vertex), то
 // 3. Проверяет кликнута ли какая-либо вершина
 // 4. Если кликнута — проверяет, содержится ли она в списке доступных для перемещения(связанных) вершин.
+// Для 4 надо вызвать Дейкстру
 // 5. Если так, то пасует данные вершины методу MoveClick
-void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view )
-{
+void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder ){
 	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
 		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
 			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
 				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
+					std::vector <int>v = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
+					for (unsigned int j = 1; j<v.size(); j++){
+						std::cout<< v[j] << ' ';
 					for (unsigned int k = 0; k < MapHndl.allVertex[i].getConnectionCodesVectorSize(); k++) {
+
 						if (MapHndl.allVertex[a].getID() == MapHndl.allVertex[i].getConnectionCode(k)) {
 							this -> moveClick(window, view,
 											MapHndl.allVertex[a].getTransformedVertexPosition().x,
 											MapHndl.allVertex[a].getTransformedVertexPosition().y);
 						}
 					}
+					}
 				}
 			}
 		}
 	}
 }
-
-
-
-/* void Player::moveSelf(float speedX,float speedY)
+/*
+ void Player::moveSelf(float speedX,float speedY)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key:: Enter))
 		{
@@ -179,4 +183,5 @@ void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vec
 		{
 			playFig.move(0.0f, speedY);
 		}
-} */
+}
+*/

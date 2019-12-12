@@ -11,9 +11,8 @@ class MapHandler
 	std::vector<Vertex>  getVertexArray();
 	Vertex getVertexArrayElement(unsigned int index);
 
-
-
 	private:
+
 
 	sf:: Texture mapTile1;
 	sf:: Texture mapTile2;

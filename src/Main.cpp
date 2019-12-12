@@ -1,4 +1,7 @@
 #include "Main.hpp"
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 int main() {
 	int WINDOWS_HEIGHT = 720;
@@ -29,6 +32,11 @@ int main() {
 
 	while (window.isOpen()) {
 		//sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+
+
+
+
 
 		while (window.pollEvent(evnt)) {
 

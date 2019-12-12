@@ -18,5 +18,6 @@ class GameState {
 	bool IsGameStateActive = false;
 	sf::View view;
 	sf::View parallaxView;
+	Pathfinder m_pathfinder;
 
 };
