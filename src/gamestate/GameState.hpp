@@ -12,6 +12,7 @@ class GameState {
 	MapHandler mapHandl; //Создание карты
 	GridInfo infotable;
 	Player Figure1;
+	Player Enemy1;
 	bool ToggleParallax = true;
 	int m_width;
 	int m_height;
