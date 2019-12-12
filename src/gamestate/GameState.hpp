@@ -6,6 +6,7 @@ class GameState {
 	bool getIsGameStateActive() { return this -> IsGameStateActive;}
 	void setGameStateActive(bool condition) { this -> IsGameStateActive = condition; }
 	//void drawScene(sf::RenderWindow& window);
+	void testFunct(sf::Event& evnt);
 
 
 	private:
