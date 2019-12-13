@@ -52,5 +52,8 @@ class Player
 	sf::Vector2i transformedPlayerPosition;
 	std::vector <int> m_path;
 	bool isPathExists;
+	bool m_telep;
 
+	private:
+	void teleport(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view);
 };

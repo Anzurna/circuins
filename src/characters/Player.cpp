@@ -11,7 +11,7 @@ Player::Player() {
 	TotalSpeed = 2;
 	m_step = 0;
 	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
-
+	m_telep = false;
 	playFig.setTexture(&PlayerTexture);
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
@@ -240,8 +240,29 @@ void Player::eventListener(sf::Event &event, sf::RenderWindow& window, MapHandle
 	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::L) {
 						this -> setPosition(200.0f, 282.0f);
 	}
+	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::T) {
+		m_telep = (m_telep ? false : true);
+	}
+	if (event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button ==  sf::Mouse::Left && m_telep)){
+			this -> teleport(window, MapHndl, mousePos, view);
+			m_telep = false;
+	}
+
 	if (event.type == sf::Event::MouseButtonReleased && (event.mouseButton.button ==  sf::Mouse::Right)) {
 				this -> moveToVertex( window, MapHndl, mousePos, view, pathfinder);
 				this -> isPathExists = true;
+	}
+}
+
+void Player::teleport(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view)
+{
+	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
+		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
+			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
+				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
+					this->setPosition((float)MapHndl.allVertex[a].getCordX(),(float)MapHndl.allVertex[a].getCordY());
+				}
+			}
+		}
 	}
 }
