@@ -8,7 +8,7 @@ class Player
 	void DrawPlayer(sf::RenderWindow *window);
 	void moveSelf(float speedX,float speedY);
 	void moveClick(sf::RenderWindow& , sf::View, float targetX,float targetY);
-	void moveToVertex( sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder);
+	std::vector<int> moveToVertex( sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder);
 	float getTargX();
 	float getTargY();
 	float getPreviousX();
@@ -16,13 +16,18 @@ class Player
 	float getPosX();
 	float getPosY();
 	sf::Vector2i getTransformedPosition();
-	void move(sf::RenderWindow& window, sf::View view);
+	void move(sf::RenderWindow& window, sf::View view, int& ia);
+	void move(sf::RenderWindow& window, sf::View view, int& ia, float dt);
+	void move(sf::RenderWindow& window, sf::View view, MapHandler& mapHandl, float dt);
 	void eventListener(sf::Event &event, sf::RenderWindow& window,
 	MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder);
+	std::vector<int> getPath() { return this -> m_path; };
 
 	void setTargX(float);
 	void setTargY(float);
 	void setPosition(float, float);
+
+	bool getIsPathExists() { return this -> isPathExists; };
 
 
 
@@ -43,6 +48,9 @@ class Player
 	float m_TargetY;
 	float Vector;
 	float TotalSpeed;
+	int m_step;
 	sf::Vector2i transformedPlayerPosition;
+	std::vector <int> m_path;
+	bool isPathExists;
 
 };
