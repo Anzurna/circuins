@@ -14,9 +14,10 @@
 			buttonTexture.loadFromFile("content/interface/" + File);
 			sprite.setTexture(buttonTexture);
 		}
-		void Button::draw()
+		void Button::draw(sf::RenderWindow &window)
 		{
-			sprite.setPosition(sf::Vector2f(ButtonX, ButtonY));
+			//sprite.setPosition(sf::Vector2f(ButtonX, ButtonY));
+			window.draw(sprite);
 		}
 		void Button::buttonPosition(int ButtonNumberDown)//Только для меню
 		{
@@ -58,5 +59,13 @@
 		{
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
+		}
+
+		sf::Vector2i Button::getPosition()
+		{
+			sf::Vector2i pos;
+			pos.x = ButtonX;
+			pos.y = ButtonY;
+			return this -> pos;
 		}
 

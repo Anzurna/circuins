@@ -15,7 +15,8 @@ class Button {
 		sf::Sprite sprite;
 		Button(std::string F, int W, int H, int X, int Y);
 
-		void draw();
+		public:
+		void draw(sf::RenderWindow &window);
 
 		void buttonPosition(int ButtonNumberDown);
 
@@ -24,6 +25,8 @@ class Button {
 		void setPosition(int buttonXAdd, int buttonYAdd);
 
 		void setWindowSize(int sizeX, int sizeY);
+
+		sf::Vector2i getPosition();
 
 
 };

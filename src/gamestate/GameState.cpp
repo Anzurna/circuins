@@ -19,10 +19,13 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 {
 	sf::RectangleShape test(sf::Vector2f(40.0f, 40.0f));
 	m_pathfinder.init(mapHandl);
+	Button teleportButton('TeleportButton.bmp', 80, 80 , 0, 0);
+	sf::Vector2i transformedButtonPosition;
 	sf::Clock clock;
 	float Time = 0;
 	while (glob.getIsGameStateActive()) {
 		sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
+		transformedButtonPosition = window -> mapCoordsToPixel( teleportButton.getPosition(), view );
 		while (window.pollEvent(evnt)) {
 
 			//Place event listeners here
@@ -69,6 +72,8 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		window.setView(view);
 		mapHandl.drawMap(&window);
 
+		teleportButton.setPosition({transformedButtonPosition.x, transformedButtonPosition.y});
+		teleportButton.draw(window);
 		Figure1.DrawPlayer(&window);
 		Figure1.move(window, view, mapHandl, clock.getElapsedTime().asSeconds());
 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
