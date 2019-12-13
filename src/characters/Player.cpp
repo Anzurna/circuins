@@ -9,7 +9,7 @@ Player::Player() {
 	m_TargetX = 0.0;
 	m_TargetY = 0.0;
 	TotalSpeed = 2;
-
+	m_step = 0;
 	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
 
 	playFig.setTexture(&PlayerTexture);
@@ -107,20 +107,50 @@ void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,fl
 			} */
 }
 
-void Player::move(sf::RenderWindow& window, sf::View view){
+void Player::move(sf::RenderWindow& window, sf::View view, int& ia)
+{
 	transformedPlayerPosition = window.mapCoordsToPixel( playFig.getPosition() , view );
 	previousPointX = transformedPlayerPosition.x;
 	previousPointY = transformedPlayerPosition.y;
 	xLength = m_TargetX - previousPointX;
 	yLength = m_TargetY - previousPointY;
 
-	if (abs(xLength) < 8 && abs(yLength) < 8) {
-				speedToNextPointX = speedToNextPointY = 0;
-			} else {
-				playFig.move(speedToNextPointX,speedToNextPointY);
-			}
+	if (abs(xLength) < 15 && abs(yLength) < 15 && (ia == (int)m_path.size())) {
+		speedToNextPointX = speedToNextPointY = 0;
+		ia = 0;
+		this -> isPathExists = false;
+		m_path.clear();
+	} else if (abs(xLength) < 15 && abs(yLength) < 15 && ia < (int)m_path.size()) {
+		ia++;
+	} else  {
+		playFig.move(speedToNextPointX,speedToNextPointY);
+	}
+	std::cout << isPathExists << "  "  << std::endl;
+}
+void Player::move(sf::RenderWindow& window, sf::View view, MapHandler& mapHandl, float dt)
+ {
+	if ( m_step < (int)m_path.size() && this -> isPathExists){
+		this -> moveClick(window, view, mapHandl.allVertex[m_path[m_step]].getTransformedVertexPosition().x,
+		mapHandl.allVertex[m_path[m_step]].getTransformedVertexPosition().y);
+	}
 
+	transformedPlayerPosition = window.mapCoordsToPixel( playFig.getPosition() , view );
+	previousPointX = transformedPlayerPosition.x;
+	previousPointY = transformedPlayerPosition.y;
+	xLength = m_TargetX - previousPointX;
+	yLength = m_TargetY - previousPointY;
 
+	if ((abs(xLength) < 15) && (abs(yLength) < 15) && (m_step == (int)m_path.size())) {
+		speedToNextPointX = speedToNextPointY = 0;
+		m_step = 0;
+		this -> isPathExists = false;
+		m_path.clear();
+	} else if ((abs(xLength) < 15) && (abs(yLength) < 15) && (m_step < (int)m_path.size())) {
+		m_step++;
+	} else  {
+		playFig.move(speedToNextPointX * (1+dt), speedToNextPointY * (1+dt));
+	}
+	std::cout << isPathExists << "  "  << std::endl;
 }
 
 // Этот большой цикл занимается тем, что двигает нашего игрока между вершинами
@@ -137,14 +167,14 @@ void Player::move(sf::RenderWindow& window, sf::View view){
 // 4. Если кликнута — проверяет, содержится ли она в списке доступных для перемещения(связанных) вершин.
 // Для 4 надо вызвать Дейкстру
 // 5. Если так, то пасует данные вершины методу MoveClick
-void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder ){
+/* void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder ){
 	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
 		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
 			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
 				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
-					std::vector <int>v = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
-					for (unsigned int j = 1; j<v.size(); j++){
-						std::cout<< v[j] << ' ';
+					m_path = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
+					for (unsigned int j = 1; j<m_path.size(); j++){
+						std::cout<< m_path[j] << ' ';
 					for (unsigned int k = 0; k < MapHndl.allVertex[i].getConnectionCodesVectorSize(); k++) {
 
 						if (MapHndl.allVertex[a].getID() == MapHndl.allVertex[i].getConnectionCode(k)) {
@@ -158,6 +188,21 @@ void Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vec
 			}
 		}
 	}
+} */
+std::vector<int> Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder ){
+	for (unsigned int i = 0; i < MapHndl.allVertex.size(); i++) {
+		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
+			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
+				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
+					m_path = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
+				}
+			}
+		}
+	}
+	for (unsigned int j = 1; j<m_path.size(); j++){
+						std::cout << "Path: " << m_path[j] <<std::endl;
+	}
+	return m_path;
 }
 /*
  void Player::moveSelf(float speedX,float speedY)
@@ -197,5 +242,6 @@ void Player::eventListener(sf::Event &event, sf::RenderWindow& window, MapHandle
 	}
 	if (event.type == sf::Event::MouseButtonReleased && (event.mouseButton.button ==  sf::Mouse::Right)) {
 				this -> moveToVertex( window, MapHndl, mousePos, view, pathfinder);
+				this -> isPathExists = true;
 	}
 }
