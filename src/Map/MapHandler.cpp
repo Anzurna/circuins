@@ -7,14 +7,16 @@ MapHandler::MapHandler()
 	mapTile3.loadFromFile("content/MapTiles/map3.bmp");
 	mapTile4.loadFromFile("content/MapTiles/map4.bmp"); */
 
-	parallaxTile1.loadFromFile("content/MapTiles/parallaxTestVers.png");
+	parallaxTile1.loadFromFile("content/MapTiles/parallax1.bmp");
+	parallaxTile2.loadFromFile("content/MapTiles/parallaxT2.bmp");
 
 	mapTile_1.setSize(sf::Vector2f(1280.0f,720.0f));
 /* 	mapTile_2.setSize(sf::Vector2f(512.0f,512.0f));
 	mapTile_3.setSize(sf::Vector2f(512.0f,512.0f));
 	mapTile_4.setSize(sf::Vector2f(512.0f,512.0f)); */
 
-	parallaxTile_1.setSize(sf::Vector2f(512.0f,512.0f));
+	parallaxTile_1.setSize(sf::Vector2f(2000.0f,2000.0f));
+	parallaxTile_2.setSize(sf::Vector2f(2000.0f,2000.0f));
 
 	mapTile_1.setTexture(&mapTile1);
 /* 	mapTile_2.setTexture(&mapTile2);
@@ -22,12 +24,14 @@ MapHandler::MapHandler()
 	mapTile_4.setTexture(&mapTile4); */
 
 	parallaxTile_1.setTexture(&parallaxTile1);
+	parallaxTile_2.setTexture(&parallaxTile2);
 /*
 	mapTile_2.setPosition(0.0f, mapTile_1.getPosition().y - mapTile1.getSize().y);
 	mapTile_3.setPosition(512.0f, -512.0f);
 	mapTile_4.setPosition(512.0f, 0); */
 
 	parallaxTile_1.setPosition(1000.0f, 1000.0f);
+	parallaxTile_2.setPosition(5000.0f, 5000.0f);
 
 
 
@@ -63,9 +67,14 @@ void MapHandler::drawMap(sf::RenderWindow* window)
 
 
 }
-void MapHandler::drawParallax(sf::RenderWindow* window)
+void MapHandler::drawParallax1(sf::RenderWindow* window)
 {
+
 	window -> draw(parallaxTile_1);
+}
+void MapHandler::drawParallax2(sf::RenderWindow* window)
+{
+	window -> draw(parallaxTile_2);
 }
 
 std::vector<Vertex> MapHandler::getVertexArray()

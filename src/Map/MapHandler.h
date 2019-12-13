@@ -7,7 +7,8 @@ class MapHandler
 	MapHandler();
 	~MapHandler() {};
 	void drawMap(sf::RenderWindow* window);
-	void drawParallax(sf::RenderWindow*);
+	void drawParallax1(sf::RenderWindow*);
+	void drawParallax2(sf::RenderWindow* window);
 	std::vector<Vertex>  getVertexArray();
 	Vertex getVertexArrayElement(unsigned int index);
 
@@ -19,6 +20,7 @@ class MapHandler
 	sf:: Texture mapTile3;
 	sf:: Texture mapTile4;
 	sf:: Texture parallaxTile1;
+	sf:: Texture parallaxTile2;
 
 	sf::RectangleShape mapTile_1;
 	sf::RectangleShape mapTile_2;
@@ -26,6 +28,8 @@ class MapHandler
 	sf::RectangleShape mapTile_4;
 
 	sf::RectangleShape parallaxTile_1;
+	sf::RectangleShape parallaxTile_2;
+
 
 	public:
 

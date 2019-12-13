@@ -7,10 +7,16 @@ GameState::GameState(int width, int height)
 	view.setCenter(sf::Vector2f(0.0f, 0.0f));
 	view.setSize(sf::Vector2f(m_width, m_height));
 
-	parallaxView.setCenter(sf::Vector2f(1256.0f, 1256.0f));
-	parallaxView.setSize(sf::Vector2f(m_width, m_height));
+	parallaxView.setCenter(sf::Vector2f(2000.0f, 2000.0f));
+	parallaxView.setSize(sf::Vector2f(2000, 2000));
 
-	parallaxView.zoom(0.3f);
+	parallaxView2.setCenter(sf::Vector2f(6000.0f, 6000.0f));
+	parallaxView2.setSize(sf::Vector2f(2000, 2000));
+
+	view.zoom(1.3f);
+	parallaxView.zoom(0.8f);
+	parallaxView2.zoom(0.6f);
+
 }
 
 
@@ -43,20 +49,23 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		}
 
 		if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
-			view.move(5.0f, 0.0f);
-			parallaxView.move(0.3f, 0.0f);
-
+			view.move(4.0f, 0.0f);
+			parallaxView.move(0.1f, 0.0f);
+			parallaxView2.move(0.2f, 0.0f);
 		} else if (mousePos1.x < 10) {
-			view.move(-5.0f, 0.0f);
-			parallaxView.move(-0.3f, 0.0f);
+			view.move(-4.0f, 0.0f);
+			parallaxView.move(-0.1f, 0.0f);
+			parallaxView2.move(-0.2f, 0.0f);
 
 		} else if (mousePos1.y < 5) {
-			view.move(0.0f, -5.0f);
-			parallaxView.move(0.0f, -0.3f);
+			view.move(0.0f, -4.0f);
+			parallaxView.move(0.0f, -0.1f);
+			parallaxView2.move(0.0f, -0.2f);
 
 		} else if (mousePos1.y > m_height - 10) {
-			view.move(0.0f, 5.0f);
-			parallaxView.move(0.0f, 0.3f);
+			view.move(0.0f, 4.0f);
+			parallaxView.move(0.0f, 0.1f);
+			parallaxView2.move(0.0f, 0.2f);
 		}
 
 
@@ -64,7 +73,10 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 					//	   Figure1.getPreviousX(), Figure1.getPreviousY());
 		window.clear();
 		window.setView(parallaxView);
-		if (ToggleParallax) { mapHandl.drawParallax(&window); }
+		if (ToggleParallax) { mapHandl.drawParallax1(&window); }
+		window.setView(parallaxView2);
+		if (ToggleParallax) { mapHandl.drawParallax2(&window); }
+
 
 		window.setView(view);
 		mapHandl.drawMap(&window);
