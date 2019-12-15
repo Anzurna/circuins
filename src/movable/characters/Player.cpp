@@ -211,6 +211,13 @@ void Player::setTeam(int team)
 {
 	this -> m_team = team;
 }
+void Player::fire(std::list<Bullet>& allBullets, sf::Vector2i& mousePos) {
+	allBullets.push_back(Bullet(&e, 1));
+	allBullets.back().setPosition({(this -> getPosX()),(this -> getPosY())});
+	allBullets.back().calculateSpeedAndRotation(mousePos, this -> getTransformedPosition());
+	allBullets.back().setRotation();
+}
+
 
 
 
