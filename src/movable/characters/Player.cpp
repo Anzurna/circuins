@@ -16,6 +16,22 @@ Player::Player() {
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
 }
+/*
+Player::Player(int team, int HP)
+{
+	speedToNextPointX = 0.0f;
+	speedToNextPointY = 0.0f;
+	previousPointX = 0.0;
+	previousPointY = 0.0;
+	m_TargetX = 0.0;
+	m_TargetY = 0.0;
+	TotalSpeed = 2;
+
+	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
+	playFig.setTexture(&PlayerTexture);
+	this -> m_team = team;
+	this -> HP = 500;
+} */
 float Player::getPreviousX()
 {
 	return (this->previousPointX);

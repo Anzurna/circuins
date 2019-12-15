@@ -60,8 +60,8 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		}
 
 
-		//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
-					//	   Figure1.getPreviousX(), Figure1.getPreviousY());
+				//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
+							//	   Figure1.getPreviousX(), Figure1.getPreviousY());
 		window.clear();
 		window.setView(parallaxView);
 		if (ToggleParallax) { mapHandl.drawParallax(&window); }
@@ -69,6 +69,8 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		window.setView(view);
 		mapHandl.drawMap(&window);
 
+
+		//std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
 		Figure1.DrawPlayer(&window);
 		Figure1.move(window, view, mapHandl, clock.getElapsedTime().asSeconds());
 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
