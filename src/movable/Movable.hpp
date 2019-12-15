@@ -22,6 +22,7 @@ class Movable {
 	float m_TargetY;
 	float Vector;
 	float TotalSpeed;
+	int m_team;
 	MovementData m_movementData;
 
 

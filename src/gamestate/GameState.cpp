@@ -17,19 +17,19 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 {
 	sf::Texture e;
 	e.loadFromFile("content/particles/red1.png");
-	std::vector<Bullet> allBullets;
-	int ia = 0;
-
+	std::list<Bullet> allBullets;
+	std::list<Bullet>::iterator iterBullet;
+	//int ia = 0;
+	sf::RectangleShape hpBar(sf::Vector2f(100.0f, 20.0f));
+	hpBar.setOrigin(50.0f, 3.0f);
+	hpBar.setFillColor(sf::Color::Red);
 	float Time = 0;
  	sf::Clock clock;
 
-
+	Figure1.setHP(500);
 	//float timing = elapsed1.asSeconds();
 	while (glob.getIsGameStateActive()) {
-
 		sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
-
-
 
 
 		std::cout << Time << std::endl;
@@ -67,17 +67,44 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 				Figure1.moveToVertex( window, mapHandl, mousePos1, view);
 			}
 			if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Left)) {
-				allBullets.push_back(Bullet(&e));
-				allBullets[ia].setPosition({(Figure1.getPosX()),(Figure1.getPosY())});
-				allBullets[ia].calculateSpeedAndRotation(mousePos1, Figure1.getTransformedPosition());
-				allBullets[ia].setRotation();
-				ia++;
+				allBullets.push_back(Bullet(&e, 1));
+				allBullets.back().setPosition({(Figure1.getPosX()),(Figure1.getPosY())});
+				allBullets.back().calculateSpeedAndRotation(mousePos1, Figure1.getTransformedPosition());
+				allBullets.back().setRotation();
 /* 				bullet1.setPosition({(Figure1.getPosX()),(Figure1.getPosY())});
 
 				bullet1.calculateSpeedAndRotation(mousePos1, Figure1.getTransformedPosition());
 				bullet1.setRotation(); */
 			}
 		}
+		if (Time > 0.1f) {
+			for (iterBullet = allBullets.begin(); iterBullet != allBullets.end(); ++iterBullet) {
+				if (abs(Figure1.getPosX() - iterBullet ->getPosition().x) < 40 &&
+				abs(Figure1.getPosY() - iterBullet ->getPosition().y) < 40) {
+					if (iterBullet -> getTeam() == 2) {
+						Figure1.changeHP(-20);
+						iterBullet = allBullets.erase(iterBullet);
+					}
+				}
+			}
+		}
+
+		if (Time > 1.0f) {
+
+			std::cout << Time << std::endl;
+			if (abs(Figure1.getPosX() - Enemy1.getPosX()) < 500 &&
+			abs(Figure1.getPosX() - Enemy1.getPosX()) < 500) {
+					allBullets.push_back(Bullet(&e, 2));
+					allBullets.back().setPosition({(Enemy1.getPosX()),(Enemy1.getPosY())});
+					allBullets.back().calculateSpeedAndRotation({(int)(Figure1.getPosX()),(int)(Figure1.getPosY())},
+					{(int)(Enemy1.getPosX()),(int)(Enemy1.getPosY())});
+					allBullets.back().setRotation();
+			}
+			Time = 0;
+		}
+
+		hpBar.setSize(sf::Vector2f((Figure1.getHP()/5), 6));
+		hpBar.setPosition(Figure1.getPosX(), Figure1.getPosY()+60);
 
 		if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
 			view.move(5.0f, 0.0f);
@@ -106,29 +133,17 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 
 		window.setView(view);
 		mapHandl.drawMap(&window);
-		for (unsigned int a = 0; a < allBullets.size(); a++){
-			allBullets[a].draw(window);
-			allBullets[a].move();
+		for (iterBullet = allBullets.begin(); iterBullet != allBullets.end(); ++iterBullet){
+			iterBullet -> draw(window);
+			iterBullet -> move();
 
 		}
-	 	if (Time > 1.0f) {
 
-			std::cout << Time << std::endl;
-			if (abs(Figure1.getPosX() - Enemy1.getPosX()) < 500 &&
-			abs(Figure1.getPosX() - Enemy1.getPosX()) < 500) {
-					allBullets.push_back(Bullet(&e));
-					allBullets[ia].setPosition({(Enemy1.getPosX()),(Enemy1.getPosY())});
-					allBullets[ia].calculateSpeedAndRotation({(int)(Figure1.getPosX()),(int)(Figure1.getPosY())},
-					{(int)(Enemy1.getPosX()),(int)(Enemy1.getPosY())});
-					allBullets[ia].setRotation();
-					ia++;
-			}
-			Time = 0;
-		}
 		//std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
 		Enemy1.DrawPlayer(&window);
 		Figure1.DrawPlayer(&window);
 		Figure1.move(window, view);
+		window.draw(hpBar);
 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
 			mapHandl.allVertex[i].draw(&window, view);
 		}

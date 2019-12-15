@@ -3,6 +3,7 @@ class Player
 {
 	public:
 	Player();
+	//Player(int team, int HP){this -> m_team = team;};
 	~Player() {};
 
 	void DrawPlayer(sf::RenderWindow *window);
@@ -15,12 +16,18 @@ class Player
 	float getPreviousY();
 	float getPosX();
 	float getPosY();
+	int getHP() {return this -> HP;};
 	sf::Vector2i getTransformedPosition();
 	void move(sf::RenderWindow& window, sf::View view);
+
+	void changeHP(int amount);
 
 	void setTargX(float);
 	void setTargY(float);
 	void setPosition(float, float);
+	void setHP(int amount);
+	void setTeam(int amount);
+
 
 	private:
 	sf::RectangleShape playFig;
@@ -36,6 +43,8 @@ class Player
 	float m_TargetY;
 	float Vector;
 	float TotalSpeed;
+	int HP;
+	int m_team;
 	sf::Vector2i transformedPlayerPosition;
 
 };
