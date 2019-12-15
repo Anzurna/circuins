@@ -75,6 +75,7 @@ extern bool gameStateActive;
 #endif // PRECOMPILED_HEADER_HPP
 
 #include "GlobalContext.hpp"
+#include "SoundProducer/SoundProducer.h"
 #include "interface/Button.hpp"
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
