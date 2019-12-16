@@ -17,6 +17,8 @@ class GameState {
 	bool ToggleParallax = true;
 	bool redact=false;
 	bool create=false;
+	bool connect=false;
+	bool drawconnect=false;
 	int m_width;
 	int m_height;
 	bool IsGameStateActive = false;

@@ -6,7 +6,7 @@ public:
 	GridInfo();
 	~GridInfo(){};
 	void showInfo(sf::RenderWindow* window, sf::RectangleShape* player, sf::Vector2i m_mousePos,
-				  float m_targetX, float m_TargetY, float m_previousPointX, float m_previousPointY,std::string Status);
+				  float m_targetX, float m_TargetY, float m_previousPointX, float m_previousPointY);
 private:
 	sf::Text text1;
 	sf::Text text2;

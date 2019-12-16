@@ -22,7 +22,7 @@ void GridInfo::showInfo(sf::RenderWindow* window,
 						sf::RectangleShape* player,
 						sf::Vector2i m_mousePos,
 						float m_targetX, float m_targetY,
-						float m_previousPointX, float m_previousPointY,std::string Status)
+						float m_previousPointX, float m_previousPointY)
 {
 
 	xPosition = std::to_string(player -> getPosition().x);

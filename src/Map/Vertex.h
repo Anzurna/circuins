@@ -19,6 +19,7 @@
 		bool mouseIsOn;
 		bool isVisible;
 		bool isMovable;
+		bool isConnectable;
 
 	public:
 		Vertex(){};
@@ -28,13 +29,17 @@
 		bool getIsClicked() { return this -> mouseIsOn;}
 		bool checkIsOn(/* sf::RectangleShape* player,  */sf::Vector2i position);
 		bool checkIsMovable() {return this->isMovable;};
+		bool checkIsConnectable() {return this->isConnectable;};
 		void draw(sf::RenderWindow* window, sf::View view);
+		void addConnection(int number);
+		void Colorise();
 		bool checkIsClicked(sf::RenderWindow& window, sf::Vector2i mousePos, sf::View view);
 		unsigned int getConnectionCode(int count) { return this ->  m_connectionCodes[count]; }
 		unsigned int getConnectionCodesVectorSize() { return this -> m_connectionCodes.size(); }
 		sf::Vector2i getTransformedVertexPosition() { return this -> transformedVertexPosition; }
 		bool toggleVisibility();
 		bool setIsMovable(bool b);
+		bool setIsConnectable(bool c);
 		void setPosition(sf::Vector2i);
 		void setPosition (float a,float b);
 		float getPosX();

@@ -50,6 +50,9 @@ void Vertex::draw(sf::RenderWindow* window, sf::View view)
 		graphicVertex.setFillColor(sf::Color::Cyan);
 	}
 }
+
+
+
 bool Vertex::toggleVisibility()
 {
 	this -> isVisible = (this -> isVisible ? false : true);
@@ -61,8 +64,18 @@ bool Vertex::setIsMovable(bool b) {
 	return isMovable;
 }
 
+bool Vertex::setIsConnectable(bool c) {
+	isConnectable=c;
+	return isConnectable;
+}
 
+void Vertex::addConnection(int number) {
+	this->m_connectionCodes.push_back(number);
+}
 
+void Vertex::Colorise() {
+	graphicVertex.setFillColor(sf::Color::Green);
+}
 
 
 void Vertex::setPosition(sf::Vector2i mousePos)

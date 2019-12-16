@@ -11,6 +11,9 @@
 MapRedactor::MapRedactor()
 {
 	redactcount=0;
+	concount=0;
+	setconn=false;
+	index=0;
 }
 
 void MapRedactor::SetRedact(sf::RenderWindow& window, MapHandler& MapHndl,sf::Vector2i mousePos,sf::View view) {
@@ -24,10 +27,47 @@ if (MapHndl.allVertex[i].checkIsClicked(window,mousePos,view)) {
 
 void MapRedactor::Reset (MapHandler& MapHndl) {
 	redactcount=0;
+	concount=0;
+	setconn=false;
 	for (unsigned int i=0; i<=MapHndl.allVertex.size();i++) {
 		MapHndl.allVertex[i].setIsMovable(false);
+		MapHndl.allVertex[i].setIsConnectable(false);
 	}
 }
+
+
+
+void MapRedactor::SetConnectBasis (MapHandler& MapHndl,sf::RenderWindow& window,sf::Vector2i mousePos,sf::View view) {
+
+	for (unsigned int i=0; i<=MapHndl.allVertex.size();i++) {
+if (MapHndl.allVertex[i].checkIsClicked(window,mousePos,view)&&(concount<1)) {
+					concount+=1;
+					MapHndl.allVertex[i].setIsConnectable(true);
+					MapHndl.allVertex[i].Colorise();
+					index=i;
+					break;
+
+				}
+	}
+}
+
+void MapRedactor::DrawConnection(MapHandler& MapHndl,sf::RenderWindow& window,sf::Vector2i mousePos,sf::View view) {
+	for (unsigned int i=0; i<=MapHndl.allVertex.size();i++) {
+if (MapHndl.allVertex[i].checkIsClicked(window,mousePos,view)&&(i!=index)) {
+	MapHndl.allVertex[index].addConnection(i+1);
+	MapHndl.allVertex[i].addConnection(index+1);
+}
+	}
+}
+
+
+
+
+
+
+
+
+
 
 void MapRedactor::MoveRedact(MapHandler& MapHndl,float speedx,float speedy) {
 		for (unsigned int i=0; i<=MapHndl.allVertex.size();i++) {
