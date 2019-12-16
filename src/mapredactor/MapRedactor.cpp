@@ -92,10 +92,10 @@ std::vector<unsigned int> connectionVector,sf::View view)
 	delete Vertexobj;
 }
 
-void MapRedactor::WriteFile(MapHandler& MapHndl) {
+void MapRedactor::WriteFile(MapHandler& MapHndl,std::string filename) {
 	std::string connection = "";
 	std::ofstream out;
-	out.open("D:\\game\\map.txt");
+	out.open(filename);
 	if (out.is_open()) {
 		/*for (unsigned int i=0; i<=MapHndl.allVertex.size();i++) {
 			for (unsigned int j=0; j<MapHndl.allVertex[i].getConnectionCodesVectorSize();j++) {
@@ -115,3 +115,26 @@ void MapRedactor::WriteFile(MapHandler& MapHndl) {
 }
 }
 
+void MapRedactor::ReadFile(std::string filename) {
+std::string init;
+std::string init1;
+std::string init2;
+/*float number;
+float xcord;
+float ycord; */
+std::ifstream file (filename);
+
+ if (!file)
+ {
+ std::cout << "Файл не открыт\n\n";
+ }
+
+ else {
+	 /*file>>number>>xcord>>ycord;*/
+	 while(getline(file, init)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
+        std::cout << init<< std::endl; // выводим на экран
+    }
+
+ }
+
+}

@@ -114,7 +114,11 @@ while (glob.getIsGameStateActive()) {
 	}
 
 		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Z)) {
-		mapRedct.WriteFile(mapHandl);
+		mapRedct.WriteFile(mapHandl,"D:\\game\\map.txt");
+	}
+
+	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Y)) {
+		mapRedct.ReadFile("D:\\game\\map.txt");
 	}
 
 	}
