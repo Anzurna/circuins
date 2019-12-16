@@ -19,14 +19,38 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 {
 	sf::RectangleShape test(sf::Vector2f(40.0f, 40.0f));
 	m_pathfinder.init(mapHandl);
+	std::list<Movable*> allMovingObjects;
+	const std::list<Movable*>::iterator iterToPlayer;
+	std::list<Movable*>::iterator drawingIter;
+	std::list<Movable*>::iterator collideIter1;
+	std::list<Movable*>::iterator collideIter2;
+
 	sf::Clock clock;
 	float Time = 0;
+	float Time2 = 0;
+
+	std::vector<Player> enemies;
+	enemies.push_back(Player());
+	enemies[0].setPosition(800.0, 800.0);
+	enemies[0].setHP(500);
+	enemies[0].setTeam(2);
+	//Character mainCharacter1;
+
+	allMovingObjects.push_back(&enemies.back());
+
+	Player mainPlayer;
+	allMovingObjects.push_back(&mainPlayer);
+	mainPlayer.setHP(500);
+	//*iterToPlayer = allMovingObjects.back();
+
 	while (glob.getIsGameStateActive()) {
 		sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
 		while (window.pollEvent(evnt)) {
 
 			//Place event listeners here
-			Figure1.eventListener(evnt, window, mapHandl, mousePos1, view, m_pathfinder);
+
+			mainPlayer.eventListener(evnt, window, mapHandl, mousePos1, view, m_pathfinder);
+			//eventListener(evnt, window, mapHandl, mousePos1, view, m_pathfinder);
 			// Заняты клавиши R, L и ПКМ (12.12.19)
 
 			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Escape) {
@@ -40,7 +64,16 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::P) {
 				ToggleParallax = (ToggleParallax ? false : true);
 			}
+			if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Left)) {
+				sf::Vector2i transformedMousePosition;
+				transformedMousePosition.x  = (int)(window.mapPixelToCoords( mousePos1, view ).x);
+				transformedMousePosition.y  = (int)(window.mapPixelToCoords( mousePos1, view ).y);
+
+				mainPlayer.fire(allMovingObjects, transformedMousePosition);
+
+			}
 		}
+
 
 		if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
 			view.move(5.0f, 0.0f);
@@ -59,25 +92,56 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			parallaxView.move(0.0f, 0.3f);
 		}
 
+		if (Time > 1.0) {
+			if (abs(mainPlayer.getPosition().x - enemies[0].getPosition().x) < 1000 &&
+				abs(mainPlayer.getPosition().y - enemies[0].getPosition().y) < 1000) {
+					enemies[0].fire(allMovingObjects, {(int)mainPlayer.getPosition().x,
+								   (int)mainPlayer.getPosition().y});
+				}
+			Time = 0;
+		}
+		if (Time2 > 0.05f) {
+			for (collideIter1 = allMovingObjects.begin(); collideIter1 != allMovingObjects.end(); ++collideIter1) {
+				for (collideIter2 = allMovingObjects.begin(); collideIter2 != allMovingObjects.end(); ++collideIter2) {
+					if ((abs((**collideIter1).getPosition().x - ((**collideIter2).getPosition().x)) < 40) &&
+					abs((**collideIter1).getPosition().y - ((**collideIter2).getPosition().y) < 40)) {
+						if ((**collideIter1).getTeam() != (**collideIter2).getTeam()) {
+							(**collideIter1).changeHP(-20);
+						}
+					}
+				}
+			}
+		}
 
 				//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
 							//	   Figure1.getPreviousX(), Figure1.getPreviousY());
+		mainPlayer.realTimeListener();
+
 		window.clear();
 		window.setView(parallaxView);
 		if (ToggleParallax) { mapHandl.drawParallax(&window); }
 
 		window.setView(view);
 		mapHandl.drawMap(&window);
-
+		view.setCenter(mainPlayer.getPosition());
 
 		//std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
-		Figure1.DrawPlayer(&window);
-		Figure1.move(window, view, mapHandl, clock.getElapsedTime().asSeconds());
+		for (drawingIter = allMovingObjects.begin(); drawingIter != allMovingObjects.end(); ++drawingIter) {
+			(**drawingIter).draw(&window);
+			(**drawingIter).move();
+		}
+		if (mainPlayer.getIsPathExists()){
+			mainPlayer.move(window, view, mapHandl, clock.getElapsedTime().asSeconds());
+		}
+
 		for (unsigned int i = 0; i < mapHandl.getVertexArray().size(); i++ ) {
 			mapHandl.allVertex[i].draw(&window, view);
 		}
 		window.display();
 		Time += clock.getElapsedTime().asSeconds();
+		Time2 += clock.getElapsedTime().asSeconds();
+		if (Time2 > 0.1)
+			Time2 = 0;
 		clock.restart();
 	}
 }

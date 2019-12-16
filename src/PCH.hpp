@@ -86,8 +86,9 @@ struct speedAndRotation {
 #include "movable/particles/Bullet.hpp"
 #include "inf/GridInfo.h"
 #include "interface/Button.hpp"
-
-#include "movable/characters/Player.h"
+#include "movable/characters/Character.hpp"
+#include "movable/characters/enemies/Enemy.hpp"
+#include "movable/characters/player/Player.h"
 
 #include "gamestate/GameState.hpp"
 

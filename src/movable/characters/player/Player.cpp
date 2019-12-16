@@ -1,6 +1,3 @@
-
-
-
 Player::Player() {
 	speedToNextPointX = 0.0f;
 	speedToNextPointY = 0.0f;
@@ -10,9 +7,7 @@ Player::Player() {
 	m_TargetY = 0.0;
 	TotalSpeed = 2;
 	m_step = 0;
-	PlayerTexture.loadFromFile("content/CharSprites/Golden/1small.png");
 
-	playFig.setTexture(&PlayerTexture);
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
 }
@@ -52,15 +47,7 @@ float Player::getTargY()
 	return (this->m_TargetY);
 }
 
-float Player::getPosX()
-{
-	return (this->playFig.getPosition().x);
-}
 
-float Player::getPosY()
-{
-	return (this->playFig.getPosition().y);
-}
 
 sf::Vector2i Player::getTransformedPosition()
 {
@@ -75,31 +62,18 @@ void Player::setTargY(float Y)
 {
 	this->m_TargetY = Y;
 }
-void Player::setPosition(float x, float y)
+/* void Player::setPosition(float x, float y)
 {
-	this -> playFig.setPosition(x, y);
-}
+	this -> characterShape.setPosition(x, y);
+} */
 
 
 
-void Player::DrawPlayer(sf::RenderWindow *window)
-{
 
-	playFig.setSize(sf::Vector2f(120,120));
-	playFig.setOrigin(60.0f,60.0f);
-
-	//playFig.setPosition(20.0f,20.0f);
-
-	window->draw(playFig);
-
-	// Вклчение помощника наведения - линия будет показывать поворот спрайта
-	//alignHelper.setPosition(playFig.getPosition().x, playFig.getPosition().y);
-	//window->draw(alignHelper);
-}
 // Дублирование кода в двух функциях, следует отрефакторить
 void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,float targetY)
 {
-			transformedPlayerPosition = window.mapCoordsToPixel( playFig.getPosition() , view );
+			transformedPlayerPosition = window.mapCoordsToPixel( m_shape.getPosition() , view );
 			previousPointX = transformedPlayerPosition.x;
 			previousPointY = transformedPlayerPosition.y;
 			m_TargetX = targetX;
@@ -111,7 +85,7 @@ void Player::moveClick(sf::RenderWindow& window, sf::View view, float targetX,fl
 			speedToNextPointY = TotalSpeed * 3 * (yLength / Vector);
 
 			float degrees = atan2(xLength, -yLength) *(180/M_PI) - 90; // Рабочая строчка НЕ ТРОГАТЬ
-			playFig.setRotation(degrees);
+			m_shape.setRotation(degrees);
 			std::cout << degrees << std::endl;
 			//alignHelper.setRotation(degrees);
 /* 			if (abs(xLength) < 4 && abs(yLength) < 4) {
@@ -150,7 +124,7 @@ void Player::move(sf::RenderWindow& window, sf::View view, MapHandler& mapHandl,
 		mapHandl.allVertex[m_path[m_step]].getTransformedVertexPosition().y);
 	}
 
-	transformedPlayerPosition = window.mapCoordsToPixel( playFig.getPosition() , view );
+	transformedPlayerPosition = window.mapCoordsToPixel( m_shape.getPosition() , view );
 	previousPointX = transformedPlayerPosition.x;
 	previousPointY = transformedPlayerPosition.y;
 	xLength = m_TargetX - previousPointX;
@@ -164,7 +138,7 @@ void Player::move(sf::RenderWindow& window, sf::View view, MapHandler& mapHandl,
 	} else if ((abs(xLength) < 15) && (abs(yLength) < 15) && (m_step < (int)m_path.size())) {
 		m_step++;
 	} else  {
-		playFig.move(speedToNextPointX * (1+dt), speedToNextPointY * (1+dt));
+		m_shape.move(speedToNextPointX * 5 *(1+dt), speedToNextPointY * 5* (1+dt));
 	}
 	std::cout << isPathExists << "  "  << std::endl;
 }
@@ -250,6 +224,11 @@ std::vector<int> Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapH
 void Player::eventListener(sf::Event &event, sf::RenderWindow& window, MapHandler& MapHndl,
 						   sf::Vector2i mousePos, sf::View view, Pathfinder& pathfinder)
 {
+	sf::Vector2i transformedMousePosition;
+	transformedMousePosition.x  = (int)(window.mapPixelToCoords( mousePos, view ).x);
+	transformedMousePosition.y  = (int)(window.mapPixelToCoords( mousePos, view ).y);
+	this -> calculateSpeedAndRotation(transformedMousePosition, {(int)(getPosition().x), (int)(getPosition().y)});
+	m_shape.setRotation(m_movementData.degrees);
 	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::R) {
 						this -> setPosition(585.0f, 282.0f);
 	}
@@ -259,5 +238,58 @@ void Player::eventListener(sf::Event &event, sf::RenderWindow& window, MapHandle
 	if (event.type == sf::Event::MouseButtonReleased && (event.mouseButton.button ==  sf::Mouse::Right)) {
 				this -> moveToVertex( window, MapHndl, mousePos, view, pathfinder);
 				this -> isPathExists = true;
+	}
+
+
+}
+Movable::MovementData Player::calculateSpeedAndRotation(sf::Vector2i target, sf::Vector2i position)
+{
+
+			xLength = target.x - position.x;
+			yLength = target.y - position.y;
+			Vector = sqrt(pow(xLength,2)
+					+ pow(yLength,2));
+			float fspeedToNextPointX = 10 * (xLength / Vector);
+			float fspeedToNextPointY = 10 * (yLength / Vector);
+
+			float degrees = atan2(xLength, -yLength) *(180/M_PI) - 90;
+
+			speedToLeftX = 10 * (xLength/ -Vector);
+			speedToLeftY = 10 * (-yLength/ -Vector);
+/* 			float VectorLeft = sqrt(pow(xLength,2)
+					+ pow(-target.y - position.y,2));
+			float VectorRight = sqrt(pow(-target.x - position.x,2)
+					+ pow(yLength,2));
+
+
+			speedToRightX = 10 * ((-target.x - position.x)/ VectorRight);
+			speedToRightY = 10 * ((target.y - position.x)/ VectorRight); */
+			this ->  m_movementData.speed.x = fspeedToNextPointX;
+			this ->  m_movementData.speed.y = fspeedToNextPointY;
+			this ->  m_movementData.degrees = degrees;
+			std::cout << "tx " << target.x << "ty " << target.y << std::endl;
+			return m_movementData;
+
+
+}
+void Player::realTimeListener()
+{
+	if (sf::Keyboard::isKeyPressed (sf::Keyboard::W)) {
+
+		m_shape.move(m_movementData.speed.x, m_movementData.speed.y);
+
+	}
+
+	if (sf::Keyboard::isKeyPressed (sf::Keyboard::A)) {
+
+		m_shape.move(speedToLeftX, speedToLeftY);
+	}
+	if  (sf::Keyboard::isKeyPressed (sf::Keyboard::S)) {
+
+		m_shape.move(-m_movementData.speed.x, -m_movementData.speed.y);
+	}
+	if  (sf::Keyboard::isKeyPressed (sf::Keyboard::D)) {
+
+		m_shape.move(-speedToLeftX, -speedToLeftY);
 	}
 }

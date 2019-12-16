@@ -1,0 +1,24 @@
+class Character : public Movable
+{
+	public:
+
+	virtual ~Character(){};
+	virtual void fire(std::list<Movable*>& allBullets, sf::Vector2i target);
+	virtual float getPosX();
+	virtual float getPosY();
+	virtual int getHP() {return this -> HP;};
+	virtual void changeHP(int amount);
+	virtual void setHP(int amount);
+	virtual void draw(sf::RenderWindow *window);
+	//void setPosition(float, float);
+
+	protected:
+	Character();
+
+	sf::Texture m_bulletTexture;
+
+	int HP;
+	sf::RectangleShape hpBar;
+
+};
+

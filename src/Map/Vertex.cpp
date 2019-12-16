@@ -15,8 +15,8 @@ void Vertex::init(int ID, cords self, std::vector<unsigned int> connectionVector
 }
 bool Vertex::checkIsOn(sf::Vector2i position)
 {
-	if (abs((position.x) - (this -> transformedVertexPosition.x)) <= 15
-	&& abs((position.y) - (this -> transformedVertexPosition.y)) <= 15) {
+	if (abs((position.x) - (this -> transformedVertexPosition.x)) <= 30
+	&& abs((position.y) - (this -> transformedVertexPosition.y)) <= 30) {
 		return (this -> characterIsOn = true);
 	} else {
 		return (this -> characterIsOn = false);

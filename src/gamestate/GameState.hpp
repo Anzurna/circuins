@@ -12,8 +12,7 @@ class GameState {
 	private:
 	MapHandler mapHandl; //Создание карты
 	GridInfo infotable;
-	Player Figure1;
-	Player Enemy1;
+
 	bool ToggleParallax = true;
 	int m_width;
 	int m_height;
@@ -21,5 +20,6 @@ class GameState {
 	sf::View view;
 	sf::View parallaxView;
 	Pathfinder m_pathfinder;
+
 
 };
