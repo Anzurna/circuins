@@ -8,6 +8,7 @@ class Background
 		float multiplierX;
 		float multiplierY;
 		float multiplier;
+		public:
 		std::string File;
 		sf::Texture backgroundTexture;
 		sf::Sprite sprite;
@@ -16,4 +17,6 @@ class Background
 		void reSize();
 
 		void setWindowSize(int sizeX, int sizeY);
+
+		void drawBackground(sf::RenderWindow *window);
 };

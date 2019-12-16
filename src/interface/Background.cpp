@@ -28,3 +28,8 @@
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
 		}
+
+		void Background::drawBackground(sf::RenderWindow *window)
+		{
+			window->draw(sprite);
+		}

@@ -4,39 +4,46 @@
 			File = F;
 			SizeXTexture = W;
 			SizeYTexture = H;
-			SizeX = W;
-			SizeY = H;
-			ButtonX = X;
-			ButtonY = Y;
+			SizeXButton = W;
+			SizeYButton = H;
+			ButtonPositionX = X;
+			ButtonPositionY = Y;
 			buttonTexture.loadFromFile("content/interface/" + File);
 			sprite.setTexture(buttonTexture);
+			sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
 		}
-		void Button::draw()
+		void Button::drawButton(sf::RenderWindow *window)
 		{
-			sprite.setPosition(sf::Vector2f(ButtonX, ButtonY));
+			//sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
+			window->draw(sprite);
 		}
-		void Button::buttonPosition(int ButtonNumberDown)
+		//void Button::drawButton()
+		//{
+		//	sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
+
+	//	}
+		void Button::newMenuPosition(int ButtonNumberDown)
 		{
-			if ((WindowWidth >= 900) && (WindowHeight >= 630))// размер минимального окна ставим вручную
+			if ((WindowWidth >= 850) && (WindowHeight >= 740))// размер минимального окна ставим вручную
 			{
-				SizeX = SizeXTexture;
-				SizeY = SizeYTexture;
+				SizeXButton = SizeXTexture;
+				SizeYButton = SizeYTexture;
 				sprite.setScale(1.0f, 1.0f);
 			}
 			else
 			{
-				SizeX = (SizeXTexture / 2);
-				SizeY = (SizeYTexture / 2);
+				SizeXButton = (SizeXTexture / 2);
+				SizeYButton = (SizeYTexture / 2);
 				sprite.setScale(0.5f, 0.5f);
 			}
-			ButtonX = ((WindowWidth - SizeX) / 2);
-			ButtonY = WindowHeight - ((SizeY + 20) * ButtonNumberDown);
-			draw();
+			ButtonPositionX = ((WindowWidth - SizeXButton) / 2);
+			ButtonPositionY = WindowHeight - ((SizeYButton + 10) * ButtonNumberDown);
+			sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
 		}
 		bool Button::isPressed(int MousePosX, int MousePosY)
 		{
 
-			if (((MousePosX > ButtonX) && (MousePosX < (ButtonX + SizeX))) && ((MousePosY > ButtonY) && (MousePosY < (ButtonY + SizeY))))
+			if (((MousePosX > ButtonPositionX) && (MousePosX < (ButtonPositionX + SizeXButton))) && ((MousePosY > ButtonPositionY) && (MousePosY < (ButtonPositionY + SizeYButton))))
 			{
 				return true;
 			}
@@ -48,8 +55,8 @@
 		}
 		void Button::setPosition(int buttonXAdd, int buttonYAdd)
 		{
-			ButtonX = buttonXAdd;
-			ButtonY = buttonYAdd;
+			ButtonPositionX = buttonXAdd;
+			ButtonPositionY = buttonYAdd;
 		}
 		void Button::setWindowSize(int sizeX, int sizeY)
 		{

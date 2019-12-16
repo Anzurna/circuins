@@ -4,41 +4,43 @@
 			File = F;
 			SizeXTexture = W;
 			SizeYTexture = H;
-			NameX = X;
-			NameY = Y;
+			NameXPosition = X;
+			NameYPosition = Y;
 			nameTexture.loadFromFile("content/interface/" + File);
 			sprite.setTexture(nameTexture);
+			sprite.setPosition(sf::Vector2f(NameXPosition, NameYPosition));
 		}
 
-		void Name::draw()
+		void Name::drawName(sf::RenderWindow *window)
 		{
-			sprite.setPosition(sf::Vector2f(NameX, NameY));
+			//sprite.setPosition(sf::Vector2f(NameXPosition, NameYPosition));
+			window->draw(sprite);
 		}
 
-		void Name::namePosition()
+		void Name::newNamePosition()
 		{
 			if ((WindowWidth >= 900) && (WindowHeight >= 630))// размер минимального окна ставим вручную
 			{
-				SizeX = SizeXTexture;
-				SizeY = SizeYTexture;
+				SizeXName = SizeXTexture;
+				SizeYName = SizeYTexture;
 				sprite.setScale(1.0f, 1.0f);
 			}
 			else
 			{
-				SizeX = (SizeXTexture / 2);
-				SizeY = (SizeYTexture / 2);
+				SizeXName = (SizeXTexture / 2);
+				SizeYName = (SizeYTexture / 2);
 				sprite.setScale(0.5f, 0.5f);
 			}
 
-			NameX = ((WindowWidth - SizeX) / 2);
-			NameY = 20;
-			draw();
+			NameXPosition = ((WindowWidth - SizeXName) / 2);
+			NameYPosition = 20;
+			sprite.setPosition(sf::Vector2f(NameXPosition, NameYPosition));
 		}
 
 		void Name::setPosition(int nameXAdd, int nameYAdd)
 		{
-			NameX = nameXAdd;
-			NameY = nameYAdd;
+			NameXPosition = nameXAdd;
+			NameYPosition = nameYAdd;
 		}
 		void Name::setWindowSize(int sizeX, int sizeY)
 		{

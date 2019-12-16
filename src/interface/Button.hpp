@@ -1,23 +1,24 @@
 class Button {
-		public:
-		int ButtonX;
-		int ButtonY;
+		int ButtonPositionX;
+		int ButtonPositionY;
 		int SizeXTexture;
 		int SizeYTexture;
-		int SizeX;
-		int SizeY;
+		int SizeXButton;
+		int SizeYButton;
 		int WindowWidth;
 		int WindowHeight;
-		int MousePosX;
-		int MousePosY;
+		public:
 		std::string File;
 		sf::Texture buttonTexture;
 		sf::Sprite sprite;
+
 		Button(std::string F, int W, int H, int X, int Y);
 
-		void draw();
+		void drawButton(sf::RenderWindow *window);
 
-		void buttonPosition(int ButtonNumberDown);
+		//void drawButton();
+
+		void newMenuPosition(int ButtonNumberDown);
 
 		bool isPressed(int MousePosX, int MousePosY);
 

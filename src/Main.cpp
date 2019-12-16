@@ -1,20 +1,24 @@
 #include "Main.hpp"
 
 
+
 int main() {
 
-	Button exit("Button.png", 500, 100, 390, 600);
-	Button setting("Button.png", 500, 100, 390, 480);
-	Button play("Button.png", 500, 100, 390, 360);
-	Name name("Name.png", 860, 200, 210, 20);
-	Background background("Background.png", 3000, 2000);
+	Button exit("exit.png", 700, 100, 450, 790);
+	Button setting("settings.png", 700, 100, 450, 570);
+	Button credits("credits.png", 700, 100, 450, 680);
+	Button play("start.png", 700, 100, 450, 460);
+	Name name("logo.png", 700, 200, 450, 20);
+	Slider slider("Scale.png", 500, 30 , "pointer.png", 40, 50, 390, 300);
+	Background background("parallaxT1.bmp", 2000, 2000);
 
-	int WINDOWS_HEIGHT = 720;
-	int WINDOWS_WIDTH = 1280;
-	sf::RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Circuins",
-							sf::Style::Close | sf::Style::Resize);
+	int WINDOWS_HEIGHT = 900;
+	int WINDOWS_WIDTH = 1600;
+	sf::RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Circuins",sf::Style::Close | sf::Style::Resize);
 
 	window.setFramerateLimit(60);
+
+
 
 #ifdef SFML_SYSTEM_WINDOWS
 	__windowsHelper.setIcon(window.getSystemHandle());
@@ -22,12 +26,18 @@ int main() {
 
 	sf::Event evnt;
 	GlobalContext glob;
-	exit.draw();
-	setting.draw();
-	play.draw();
-	name.draw();
+
 	background.setWindowSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);
 	background.reSize();
+
+	std::fstream VolumeFile;
+	VolumeFile.open("src/Volume.txt");
+	if (VolumeFile.is_open())
+	{
+		std::cout << "OK" << std::endl;
+	}
+
+	slider.setPointerPosition(50);
 
 	while (window.isOpen()) {
 
@@ -37,6 +47,7 @@ int main() {
 			exit.setWindowSize(evnt.size.width, evnt.size.height);
 			setting.setWindowSize(evnt.size.width, evnt.size.height);
 			play.setWindowSize(evnt.size.width, evnt.size.height);
+			credits.setWindowSize(evnt.size.width, evnt.size.height);
 			name.setWindowSize(evnt.size.width, evnt.size.height);
 			background.setWindowSize(evnt.size.width, evnt.size.height);
 
@@ -45,8 +56,12 @@ int main() {
 				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 				if (exit.isPressed(mousePos.x, mousePos.y))
 				{
-					std::cout << "It's Work 3!!! " << std::endl;
+					std::cout << "It's Work 4!!! " << std::endl;
 					return 1;
+				}
+				if (credits.isPressed(mousePos.x, mousePos.y))
+				{
+					std::cout << "It's Work 3!!! " << std::endl;
 				}
 				if (setting.isPressed(mousePos.x, mousePos.y))
 				{
@@ -57,11 +72,12 @@ int main() {
 					std::cout << "It's Work 1!!! " << std::endl;
 					GameState newGameState(WINDOWS_WIDTH, WINDOWS_HEIGHT);
 					glob.setGameStateActive(true);
-					if (glob.getIsGameStateActive()){
-					newGameState.handle(evnt, window, /* mousePos, */ glob);
-					//newGameState.drawScene(window);
+						if (glob.getIsGameStateActive())
+						{
+						newGameState.handle(evnt, window, /* mousePos, */ glob);
+						//newGameState.drawScene(window);
+						}
 				}
-			}
 			}
 
 		switch (evnt.type) {
@@ -76,10 +92,11 @@ int main() {
 						)
 					);
 
-					exit.buttonPosition(1);
-					setting.buttonPosition(2);
-					play.buttonPosition(3);
-					name.namePosition();
+					exit.newMenuPosition(1);
+					setting.newMenuPosition(3);
+					play.newMenuPosition(4);
+					credits.newMenuPosition(2);
+					name.newNamePosition();
 					background.reSize();
 					break;
 				default:
@@ -89,13 +106,15 @@ int main() {
 
 		if(!glob.getIsGameStateActive()) {
 		window.clear();
-		window.draw(background.sprite);
-		window.draw(exit.sprite);
-		window.draw(setting.sprite);
-		window.draw(play.sprite);
-		window.draw(name.sprite);
+		background.drawBackground(&window);
+		exit.drawButton(&window);
+		setting.drawButton(&window);
+		credits.drawButton(&window);
+		play.drawButton(&window);
+		name.drawName(&window);
 		window.display();
 		}
 	}
+	VolumeFile.close();
 	return 0;
 }
