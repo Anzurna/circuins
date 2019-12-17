@@ -8,7 +8,7 @@ GameState::GameState(int width, int height)
 	view.setSize(sf::Vector2f(m_width, m_height));
 
 	parallaxView.setCenter(sf::Vector2f(1256.0f, 1256.0f));
-	parallaxView.setSize(sf::Vector2f(m_width, m_height));
+	parallaxView.setSize(sf::Vector2f(500, 500));
 
 	parallaxView.zoom(0.3f);
 }
@@ -28,6 +28,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 	sf::Clock clock;
 	float Time = 0;
 	float Time2 = 0;
+	float Time3 = 0;
 
 	std::vector<Player> enemies;
 	enemies.push_back(Player());
@@ -65,12 +66,17 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 				ToggleParallax = (ToggleParallax ? false : true);
 			}
 			if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Left)) {
+
+
+			}
+		}
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (Time3 > 0.3) {
 				sf::Vector2i transformedMousePosition;
 				transformedMousePosition.x  = (int)(window.mapPixelToCoords( mousePos1, view ).x);
 				transformedMousePosition.y  = (int)(window.mapPixelToCoords( mousePos1, view ).y);
-
 				mainPlayer.fire(allMovingObjects, transformedMousePosition);
-
+				Time3 = 0;
 			}
 		}
 
@@ -100,30 +106,47 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 				}
 			Time = 0;
 		}
-		if (Time2 > 0.05f) {
+
 			for (collideIter1 = allMovingObjects.begin(); collideIter1 != allMovingObjects.end(); ++collideIter1) {
 				for (collideIter2 = allMovingObjects.begin(); collideIter2 != allMovingObjects.end(); ++collideIter2) {
-					if ((abs((**collideIter1).getPosition().x - ((**collideIter2).getPosition().x)) < 40) &&
-					abs((**collideIter1).getPosition().y - ((**collideIter2).getPosition().y) < 40)) {
+					if ((abs((**collideIter1).getPosition().x - ((**collideIter2).getPosition().x)) < 50) &&
+					abs((**collideIter1).getPosition().y - ((**collideIter2).getPosition().y) < 50)) {
 						if ((**collideIter1).getTeam() != (**collideIter2).getTeam()) {
-							(**collideIter1).changeHP(-20);
+							if (Time2 > 0.2f) {
+								(**collideIter1).changeHP(-20);
+								Time2 = 0;
+							}
 						}
 					}
 				}
 			}
-		}
+
 
 				//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
 							//	   Figure1.getPreviousX(), Figure1.getPreviousY());
 		mainPlayer.realTimeListener();
+			if (abs(mainPlayer.getPosition().x - enemies[0].getPosition().x) > 200 &&
+				abs(mainPlayer.getPosition().y - enemies[0].getPosition().y) > 200 ) {
+						float s1 =  enemies[0].calculateSpeedAndRotation({(int)mainPlayer.getPosition().x, (int)mainPlayer.getPosition().y},
+									{(int)enemies[0].getPosition().x, (int)enemies[0].getPosition().y}).speed.x;
+						float s2 =  enemies[0].calculateSpeedAndRotation({(int)mainPlayer.getPosition().x, (int)mainPlayer.getPosition().y},
+									{(int)enemies[0].getPosition().x, (int)enemies[0].getPosition().y}).speed.y;
+						float deg = enemies[0].calculateSpeedAndRotation({(int)mainPlayer.getPosition().x, (int)mainPlayer.getPosition().y},
+									{(int)enemies[0].getPosition().x, (int)enemies[0].getPosition().y}).degrees;
+						enemies[0].move((s1/1.3)-1, (s2/1.3)-1);
+						enemies[0].setRotation(deg);
+				}
+
+
 
 		window.clear();
-		window.setView(parallaxView);
+		//window.setView(parallaxView);
 		if (ToggleParallax) { mapHandl.drawParallax(&window); }
 
 		window.setView(view);
 		mapHandl.drawMap(&window);
 		view.setCenter(mainPlayer.getPosition());
+		parallaxView.setCenter({mainPlayer.getPosition().x + 1256, mainPlayer.getPosition().y + 1256});
 
 		//std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
 		for (drawingIter = allMovingObjects.begin(); drawingIter != allMovingObjects.end(); ++drawingIter) {
@@ -140,8 +163,9 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		window.display();
 		Time += clock.getElapsedTime().asSeconds();
 		Time2 += clock.getElapsedTime().asSeconds();
-		if (Time2 > 0.1)
-			Time2 = 0;
+		Time3 += clock.getElapsedTime().asSeconds();
+		/* if (Time2 > 0.3)
+			Time2 = 0; */
 		clock.restart();
 	}
 }

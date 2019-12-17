@@ -293,3 +293,8 @@ void Player::realTimeListener()
 		m_shape.move(-speedToLeftX, -speedToLeftY);
 	}
 }
+
+void Player::move(float speedX, float speedY)
+{
+	this -> m_shape.move(speedX, speedY);
+}

@@ -2,10 +2,10 @@ Character::Character()
 {
 	hpBar.setOrigin(50.0f, 3.0f);
 	hpBar.setFillColor(sf::Color::Red);
-	m_shape.setSize(sf::Vector2f(120,120));
-	m_shape.setOrigin(60.0f,60.0f);
+	m_shape.setSize(sf::Vector2f(400,400));
+	m_shape.setOrigin(200.0f,200.0f);
 	HP = 0;
-		m_texture.loadFromFile("content/CharSprites/Golden/1small.png");
+		m_texture.loadFromFile("content/CharSprites/basic1.png");
 
 	m_shape.setTexture(&m_texture);
 	m_bulletTexture.loadFromFile("content/particles/laser1.png");

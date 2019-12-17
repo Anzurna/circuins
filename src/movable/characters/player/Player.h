@@ -7,6 +7,7 @@ class Player : public Character
 	~Player() {};
 
 	void DrawPlayer(sf::RenderWindow *window);
+	void move(float speedX, float speedY);
 	void moveSelf(float speedX,float speedY);
 	void moveClick(sf::RenderWindow& , sf::View, float targetX,float targetY);
 	void moveToVertex( sf::RenderWindow& window, MapHandler& MapHndl, sf::Vector2i mousePos, sf::View view);
