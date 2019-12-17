@@ -16,9 +16,7 @@ class Button {
 
 		void drawButton(sf::RenderWindow *window);
 
-		//void drawButton();
-
-		void newMenuPosition(int ButtonNumberDown);
+		void newButtonPosition(int ButtonNumberDown);
 
 		bool isPressed(int MousePosX, int MousePosY);
 

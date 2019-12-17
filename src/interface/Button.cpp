@@ -22,7 +22,7 @@
 		//	sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
 
 	//	}
-		void Button::newMenuPosition(int ButtonNumberDown)
+		void Button::newButtonPosition(int ButtonNumberDown)
 		{
 			if ((WindowWidth >= 850) && (WindowHeight >= 740))// размер минимального окна ставим вручную
 			{

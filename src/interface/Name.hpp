@@ -19,6 +19,7 @@ class Name
 		void newNamePosition();
 
 		void setPosition(int nameXAdd, int nameYAdd);
+
 		void setWindowSize(int sizeX, int sizeY);
 
 };
