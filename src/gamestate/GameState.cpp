@@ -60,66 +60,14 @@ while (glob.getIsGameStateActive()) {
 		}
 		//Нажать backspace чтобы вызвать редактор карты
 		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
-			 mapRedct.Reset(mapHandl);
-			redact=true;
+			 if (mapRed==false) mapRed=true; else mapRed=false;
+			 /*mapRedct.Reset(mapHandl);
+			redact=true;*/
 
 		}
 
-		if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button == sf::Mouse::Left)&&redact==true) {
-			mapRedct.SetRedact(window,mapHandl,mousePos1,view);
-		}
+		if (mapRed==true) {mapRedct.EventListener(evnt,window,mapHandl,mousePos1,view);}
 
-	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Left)&&redact==true) {
-          mapRedct.MoveRedact(mapHandl,-10.0f,0.0f);
-	}
-
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Up)&&redact==true) {
-          mapRedct.MoveRedact(mapHandl,0.0f,-10.0f);
-	}
-
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Down)&&redact==true) {
-          mapRedct.MoveRedact(mapHandl,0.0f,10.0f);
-	}
-
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Right)&&redact==true) {
-          mapRedct.MoveRedact(mapHandl,10.0f,0.0f);
-	}
-		//Создание новой точки
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Q)) {
-			connect=false;
-			if (create==true) create=false; else create=true;
-		}
-		//Задание базиса соединения(точки)
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::U)) {
-			create=false;
-			if (connect==true) connect=false; else connect=true;
-		}
-		//прибавление точек к базису
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::B)) {
-			create=false;
-			connect=false;
-			if	(drawconnect==false) drawconnect=true; else drawconnect=false;
-
-		}
-
-
-		if (evnt.type == sf::Event::MouseButtonPressed && (evnt.mouseButton.button == sf::Mouse::Left)) {
-			if (create==true) mapRedct.SetVertex(window,mapHandl,0,mousePos1,{},view);
-			else if (connect==true) mapRedct.SetConnectBasis(mapHandl,window,mousePos1,view);
-			else if (drawconnect==true) mapRedct.DrawConnection(mapHandl,window,mousePos1,view);
-		}
-   //После передвижения пользователем какой то точки - принятие изменений и сброс свойств isMovable
-	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::T)) {
-		mapRedct.Reset(mapHandl);
-	}
-
-		if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Z)) {
-		mapRedct.WriteFile(mapHandl,"D:\\game\\map.txt");
-	}
-
-	if (evnt.type == sf::Event::KeyPressed && (evnt.key.code == sf::Keyboard::Y)) {
-		mapRedct.ReadFile(mapHandl,"D:\\game\\map.txt");
-	}
 
 	}
 

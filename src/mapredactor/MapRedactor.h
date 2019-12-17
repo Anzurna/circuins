@@ -4,6 +4,10 @@ class MapRedactor
 	int redactcount;
 	int concount;
 	bool setconn;
+	bool redact;
+	bool create;
+	bool connect;
+	bool drawconnect;
 	unsigned int index;
 	sf::Vector2f TransformedmousePos;
 	std::string initStr; //считываемая строка из файла
@@ -22,6 +26,7 @@ class MapRedactor
 	public:
 	MapRedactor();
 	~MapRedactor() {};
+	void EventListener(sf::Event &event,sf::RenderWindow& window, MapHandler& MapHndl,sf::Vector2i mousePos,sf::View);
 	void SetRedact(sf::RenderWindow& window, MapHandler& MapHndl,sf::Vector2i mousePos,sf::View view);
 	void MoveRedact(MapHandler& MapHndl,float speedx, float speedy);
 	void Reset(MapHandler& MapHndl);
