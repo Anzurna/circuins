@@ -33,24 +33,24 @@ MapHandler::MapHandler()
 
 	std::vector<unsigned int> dummyArr1 = {2,3,4,5,6,7,8,9};
 	std::vector<unsigned int> dummyArr2 = {1, 3, 9};
-	std::vector<unsigned int> dummyArr3 = {1, 4, 2};
+	/*std::vector<unsigned int> dummyArr3 = {1, 4, 2};
 	std::vector<unsigned int> dummyArr4 = {1, 3, 5};
 	std::vector<unsigned int> dummyArr5 = {1, 4, 6};
 	std::vector<unsigned int> dummyArr6 = {1, 5, 7};
 	std::vector<unsigned int> dummyArr7 = {1, 6, 8};
 	std::vector<unsigned int> dummyArr8 = {1, 9, 7};
-	std::vector<unsigned int> dummyArr9 = {1, 2, 8};
+	std::vector<unsigned int> dummyArr9 = {1, 2, 8}; */
 
 
 	allVertex[0].init(1, {585, 282}, dummyArr1);
 	allVertex[1].init(2, {298, 93}, dummyArr2);
-	allVertex[2].init(3, {585, 37}, dummyArr3);
+	/*allVertex[2].init(3, {585, 37}, dummyArr3);
 	allVertex[3].init(4, {857, 93}, dummyArr4);
 	allVertex[4].init(5, {952, 282}, dummyArr5);
 	allVertex[5].init(6, {857, 518}, dummyArr6);
 	allVertex[6].init(7, {585, 555}, dummyArr7);
 	allVertex[7].init(8, {307, 518}, dummyArr8);
-	allVertex[8].init(9, {187, 282}, dummyArr9);
+	allVertex[8].init(9, {187, 282}, dummyArr9);*/
 }
 
 void MapHandler::drawMap(sf::RenderWindow* window)

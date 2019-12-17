@@ -94,7 +94,7 @@ std::vector<unsigned int> connectionVector,sf::View view)
 
 void MapRedactor::WriteFile(MapHandler& MapHndl,std::string filename) {
 	std::string connection = "";
-	std::ofstream out;
+	/*std::ofstream out;*/
 	out.open(filename);
 	if (out.is_open()) {
 		/*for (unsigned int i=0; i<=MapHndl.allVertex.size();i++) {
@@ -105,7 +105,7 @@ void MapRedactor::WriteFile(MapHandler& MapHndl,std::string filename) {
 		{out<<i<<" "<<MapHndl.allVertex[i].getPosX()<<" "<<MapHndl.allVertex[i].getPosY()<<connection<<std::endl;}
 	} */
 	for (unsigned int i=0; i<MapHndl.allVertex.size();i++) {
-		out<<i+1<<" "<<MapHndl.allVertex[i].getPosX()<<" "<<MapHndl.allVertex[i].getPosY()<<" ";
+		out<<i+1<<" "<<MapHndl.allVertex[i].getPosX()<<" "<<MapHndl.allVertex[i].getPosY()<<"|";
 		for (unsigned int j=0; j<MapHndl.allVertex[i].getConnectionCodesVectorSize();j++) {
 			out<<MapHndl.allVertex[i].getConnectionCode(j)<<" ";
 		}
@@ -115,13 +115,18 @@ void MapRedactor::WriteFile(MapHandler& MapHndl,std::string filename) {
 }
 }
 
-void MapRedactor::ReadFile(std::string filename) {
-std::string init;
-std::string init1;
+void MapRedactor::ReadFile(MapHandler& MapHndl,std::string filename) {
+/* std::string initStr; //считываемая строка из файла
+std::string connStr;//часть строки, хранящаая коды соединений
 std::string init2;
-/*float number;
+std::vector<unsigned int> connectionCodes;
+int firstSpace;//позиция вхождения символа "|"
+int secondSpace;
+float number;
+int code;
 float xcord;
 float ycord; */
+
 std::ifstream file (filename);
 
  if (!file)
@@ -131,8 +136,29 @@ std::ifstream file (filename);
 
  else {
 	 /*file>>number>>xcord>>ycord;*/
-	 while(getline(file, init)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
-        std::cout << init<< std::endl; // выводим на экран
+	 while(getline(file, initStr)){ // пока не достигнут конец файла класть очередную строку в переменную  initStr
+	   std::stringstream(initStr)>>number>>xcord>>ycord;//запись первых трех параметров вертекса
+	   firstSpace=initStr.find_first_of("|")+1;
+	   secondSpace=initStr.length();
+	   connStr=initStr.substr(firstSpace,secondSpace-firstSpace);//образание первой части строки
+	   std::istringstream is( connStr );
+      std::vector<std::string> tokens;
+	   std::copy( std::istream_iterator<std::string>( is ),
+               std::istream_iterator<std::string>(),
+               std::back_inserter( tokens ) ); //парсинг строки с пробелами
+			    for ( const auto &s : tokens ) {
+					std::stringstream(s)>>code;//перевод из строки в int
+					connectionCodes.push_back(code);//запись в массив соединений
+				}
+
+	   Vertex *Vertexobj = new Vertex; //cсздание вершины без параметров для инициализации
+	Vertexobj->init(number,{(int)xcord,(int)ycord},connectionCodes);
+	MapHndl.allVertex.push_back(*Vertexobj);
+	MapHndl.allVertex[MapHndl.allVertex.size()-1].init(number,{(int)xcord,(int)ycord},connectionCodes);
+		connectionCodes.clear();//очистка массива соединений
+		delete Vertexobj;//удаление указателя на вектор(вершину)
+
+
     }
 
  }
