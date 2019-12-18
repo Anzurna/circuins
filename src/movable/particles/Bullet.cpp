@@ -9,8 +9,9 @@ Bullet::Bullet (sf::Texture* texture, int team)
 {
 
 	this -> m_shape.setTexture(texture);
-	this -> m_shape.setSize({50.0f, 50.0f});
+	this -> m_shape.setSize({60.0f, 15.0f});
 	this -> m_team = team;
+	this -> setType(1);
 
 }
 

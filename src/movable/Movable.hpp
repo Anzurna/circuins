@@ -21,11 +21,14 @@ class Movable {
 	virtual void move(){};
 	virtual void changeHP(int){};
 	virtual void setRotation(float);
+	virtual int getType(){return this -> m_type;};
+	virtual void setType(int type) {this -> m_type = type;};
+	virtual ~Movable(){};
 
 
 
 	protected:
-	virtual ~Movable(){};
+
 	float speedToNextPointX;
 	float speedToNextPointY;
 	float xLength;
@@ -35,6 +38,7 @@ class Movable {
 	float Vector;
 	float TotalSpeed;
 	int m_team;
+	int m_type;
 	sf::Texture m_texture;
 	sf::RectangleShape m_shape;
 	MovementData m_movementData;

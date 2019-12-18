@@ -116,6 +116,10 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 								(**collideIter1).changeHP(-20);
 								Time2 = 0;
 							}
+							if ((**collideIter2).getType() == 1) {
+								(**collideIter2).Movable::~Movable();
+								allMovingObjects.erase(collideIter2--);
+							}
 						}
 					}
 				}

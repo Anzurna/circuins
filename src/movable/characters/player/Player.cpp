@@ -282,7 +282,7 @@ void Player::realTimeListener()
 
 	if (sf::Keyboard::isKeyPressed (sf::Keyboard::A)) {
 
-		m_shape.move(speedToLeftX, speedToLeftY);
+		m_shape.move(m_movementData.speed.y, -m_movementData.speed.x);
 	}
 	if  (sf::Keyboard::isKeyPressed (sf::Keyboard::S)) {
 
@@ -290,7 +290,7 @@ void Player::realTimeListener()
 	}
 	if  (sf::Keyboard::isKeyPressed (sf::Keyboard::D)) {
 
-		m_shape.move(-speedToLeftX, -speedToLeftY);
+		m_shape.move(-m_movementData.speed.y, m_movementData.speed.x);
 	}
 }
 
