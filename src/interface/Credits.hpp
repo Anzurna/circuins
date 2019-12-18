@@ -17,6 +17,10 @@ class Credits
 
 	Credits(std::string F1, std::string F2,int W, int H, int WX, int HX);
 
+	Credits() {};
+
+	~Credits() {};
+
 	void drawCredits(sf::RenderWindow *window);
 
 	void newCreditsPosition(int windowWidth, int windowHeight);

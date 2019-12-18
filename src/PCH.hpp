@@ -81,6 +81,7 @@ extern bool gameStateActive;
 #include "interface/Slider.hpp"
 #include "interface/Setting.hpp"
 #include "interface/Credits.hpp"
+#include "interface/MainMenu.hpp"
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"

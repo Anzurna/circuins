@@ -14,6 +14,10 @@ class Button {
 
 		Button(std::string F, int W, int H, int X, int Y);
 
+		Button() {};
+
+		~Button() {};
+
 		void drawButton(sf::RenderWindow *window);
 
 		void newButtonPosition(int ButtonNumberDown);

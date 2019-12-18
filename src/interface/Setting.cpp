@@ -22,7 +22,7 @@
 	{
 		window->draw(windowSprite);
 		window->draw(textSprite);
-		//slider.drawSlider(window);
+		slider.drawSlider(window);
 	}
 	void Setting::newSettingPosition(int windowWidth, int windowHeight)
 	{

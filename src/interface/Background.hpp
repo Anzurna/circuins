@@ -14,6 +14,10 @@ class Background
 		sf::Sprite sprite;
 		Background(std::string F, int W, int H);
 
+		Background() {};
+
+		~Background() {};
+
 		void reSize();
 
 		void setWindowSize(int sizeX, int sizeY);

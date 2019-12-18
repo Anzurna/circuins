@@ -14,6 +14,11 @@ class Name
 		sf::Sprite sprite;
 		Name(std::string F, int W, int H, int X, int Y);
 
+		Name() {};
+
+		~Name() {};
+
+
 		void drawName(sf::RenderWindow *window);
 
 		void newNamePosition();
