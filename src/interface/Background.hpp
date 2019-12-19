@@ -12,11 +12,12 @@ class Background
 		std::string File;
 		sf::Texture backgroundTexture;
 		sf::Sprite sprite;
-		Background(std::string F, int W, int H);
 
 		Background() {};
 
 		~Background() {};
+
+		void init(std::string F, int W, int H);
 
 		void reSize();
 

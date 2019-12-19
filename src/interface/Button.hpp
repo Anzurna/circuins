@@ -12,11 +12,11 @@ class Button {
 		sf::Texture buttonTexture;
 		sf::Sprite sprite;
 
-		Button(std::string F, int W, int H, int X, int Y);
-
 		Button() {};
 
 		~Button() {};
+
+		void init(std::string F, int W, int H, int X, int Y);
 
 		void drawButton(sf::RenderWindow *window);
 
@@ -27,6 +27,8 @@ class Button {
 		void setPosition(int buttonXAdd, int buttonYAdd);
 
 		void setWindowSize(int sizeX, int sizeY);
+
+
 
 
 };
