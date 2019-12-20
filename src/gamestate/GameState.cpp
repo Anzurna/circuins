@@ -25,6 +25,8 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 	std::list<Movable*>::iterator collideIter1;
 	std::list<Movable*>::iterator collideIter2;
 
+
+	SoundProducer soundProd;
 	sf::Clock clock;
 	float Time = 0;
 	float Time2 = 0;
@@ -76,6 +78,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 				transformedMousePosition.x  = (int)(window.mapPixelToCoords( mousePos1, view ).x);
 				transformedMousePosition.y  = (int)(window.mapPixelToCoords( mousePos1, view ).y);
 				mainPlayer.fire(allMovingObjects, transformedMousePosition);
+				soundProd.soundShoot();
 				Time3 = 0;
 			}
 		}
