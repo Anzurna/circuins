@@ -39,8 +39,11 @@
 		"*.desktop": "properties",
 		".clang-format": "yaml",
 		"random": "cpp",
+<<<<<<< HEAD
 		"fstream": "cpp",
 		"new": "cpp",
+=======
+>>>>>>> ft_menu
 		"array": "cpp",
 		"atomic": "cpp",
 		"*.tcc": "cpp",
@@ -81,6 +84,10 @@
 		"tuple": "cpp",
 		"type_traits": "cpp",
 		"utility": "cpp",
+<<<<<<< HEAD
+=======
+		"fstream": "cpp",
+>>>>>>> ft_menu
 		"future": "cpp",
 		"initializer_list": "cpp",
 		"iomanip": "cpp",

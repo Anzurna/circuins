@@ -25,7 +25,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 	std::list<Movable*>::iterator collideIter1;
 	std::list<Movable*>::iterator collideIter2;
 
-
+	MapRedactor mp;
 	SoundProducer soundProd;
 	sf::Clock clock;
 	float Time = 0;

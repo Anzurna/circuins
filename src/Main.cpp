@@ -1,13 +1,12 @@
 #include "Main.hpp"
 
-
 int main() {
-	int WINDOWS_HEIGHT = 720;
-	int WINDOWS_WIDTH = 1280;
-	sf::RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "Circuins",
-							sf::Style::Close | sf::Style::Resize);
+	MainMenu mainMenu(900, 1600 );
+	sf::RenderWindow window(sf::VideoMode(mainMenu.getWindowsWidth(), mainMenu.getWindowsHeight()), "Circuins",sf::Style::Close | sf::Style::Resize);
 
 	window.setFramerateLimit(60);
+
+
 
 #ifdef SFML_SYSTEM_WINDOWS
 	__windowsHelper.setIcon(window.getSystemHandle());
@@ -19,42 +18,52 @@ int main() {
 	sp.setVolume(glob);//установка значения звука
 	sp.playMusic("ZapTwoTone2");// вызов звука по названию
 	//sp.soundShoot();//вызов выстрела
-	//Заглушка для меню
-	sf::RectangleShape startButton(sf::Vector2f(500.0f, 100.0f));
-	sf::RectangleShape exitButton(sf::Vector2f(500.0f, 100.0f));
-	sf::Texture sb;
-	sf::Texture eb;
-	sb.loadFromFile("content/interface/startbutn.bmp");
-	eb.loadFromFile("content/interface/exitbutn.bmp");
-	startButton.setTexture(&sb);
-	exitButton.setTexture(&eb);
-
-	startButton.setPosition(400.0f, 300.0f);
-	exitButton.setPosition(400.0f, 450.0f);
-
 	while (window.isOpen()) {
-		//sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
 		while (window.pollEvent(evnt)) {
 
+			mainMenu.newWindowSize(evnt.size.width, evnt.size.height);
 
-		/* 	if (evnt.type==sf::Event::MouseButtonPressed) {
-			float pos_x, pos_y;
-			Figure1.setTargX(dote[i].getPosition().x);
-			Figure1.setTargY(dote[i].getPosition().y);
-			Figure1.moveClick(&window, view, Figure1.getTargX(),Figure1.getTargY());
-			pos_x=Figure1.getPosX();
-			pos_y=Figure1.getPosY();
-			if (((abs(pos_x-Figure1.getTargX()))<=5)&&((abs(pos_y-Figure1.getTargY()))<=5)) {
-				i++;
-			} */
-
-			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Enter) {
-					GameState newGameState(WINDOWS_WIDTH, WINDOWS_HEIGHT);
-					glob.setGameStateActive(true);
-					if (glob.getIsGameStateActive()){
-					newGameState.handle(evnt, window, /* mousePos, */ glob);
-					//newGameState.drawScene(window);
+			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Escape)
+			{
+				mainMenu.disableSettingAndCreditsWindow();
 			}
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+				if (!mainMenu.settingWindow.getSettingEnabled() && !mainMenu.creditsWindow.getCreditsEnabled())
+				{
+					if (mainMenu.exit.isPressed(mousePos.x, mousePos.y))
+					{
+						return 1;
+					}
+					if (mainMenu.credits.isPressed(mousePos.x, mousePos.y))
+					{
+						mainMenu.enableCredits();
+					}
+					if (mainMenu.setting.isPressed(mousePos.x, mousePos.y))
+					{
+						mainMenu.enableSetting();
+
+					}
+					if (mainMenu.play.isPressed(mousePos.x, mousePos.y))
+					{
+						GameState newGameState(1600, 900);
+						glob.setGameStateActive(true);
+							if (glob.getIsGameStateActive())
+							{
+							newGameState.handle(evnt, window,  glob);
+							}
+					}
+				}
+				if (mainMenu.settingWindow.getSettingEnabled())
+				{
+					if (mainMenu.slider.isPressed(mousePos.x, mousePos.y))
+					{
+						mainMenu.newValueVolume(mousePos.x);
+					}
+				}
 			}
 
 		switch (evnt.type) {
@@ -62,20 +71,31 @@ int main() {
 					window.close();
 					break;
 				case sf::Event::Resized:
-					std::cout << "New window width: " << evnt.size.width << "New window height: " << evnt.size.height;
+					window.setView(
+					sf::View(
+						sf::Vector2f(evnt.size.width / 2.0, evnt.size.height / 2.0),
+						sf::Vector2f(evnt.size.width, evnt.size.height)
+						)
+					);
+
+					mainMenu.newElementPosition(evnt.size.width, evnt.size.height);
 					break;
 				default:
 				break;
 			}
 		}
 
-		if(!glob.getIsGameStateActive()) {
+
+		if(!glob.getIsGameStateActive())
+		{
 		window.clear();
-		// Отрисовка меню
-		window.draw(startButton);
-		window.draw(exitButton);
+		mainMenu.menuDraw(&window);
+		mainMenu.background.drawBackground(&window);
 		window.display();
 		}
 	}
+
 	return 0;
 }
+
+

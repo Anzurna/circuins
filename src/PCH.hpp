@@ -79,6 +79,14 @@ struct speedAndRotation {
 		float degrees;
 	};
 #include "GlobalContext.hpp"
+#include "interface/Button.hpp"
+#include "interface/Name.hpp"
+#include "interface/Background.hpp"
+#include "interface/Slider.hpp"
+#include "interface/Setting.hpp"
+#include "interface/Credits.hpp"
+#include "interface/MainMenu.hpp"
+
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
 #include "mapredactor/MapRedactor.h"
@@ -90,7 +98,7 @@ struct speedAndRotation {
 #include "movable/Movable.hpp"
 #include "Map/Pathfinder.h"
 #include "movable/particles/Bullet.hpp"
-#include "interface/Button.hpp"
+
 #include "movable/characters/Character.hpp"
 #include "movable/characters/enemies/Enemy.hpp"
 #include "movable/characters/player/Player.h"
