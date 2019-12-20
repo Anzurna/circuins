@@ -1,5 +1,6 @@
 
-		Background::Background(std::string F, int W, int H)
+
+		void Background::init(std::string F, int W, int H)
 		{
 			File = F;
 			SizeXTexture = W;

@@ -1,5 +1,7 @@
 
-		Button::Button(std::string F, int W, int H, int X, int Y)
+
+
+		void Button::init(std::string F, int W, int H, int X, int Y)
 		{
 			File = F;
 			SizeXTexture = W;
@@ -12,6 +14,7 @@
 			sprite.setTexture(buttonTexture);
 			sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
 		}
+
 		void Button::drawButton(sf::RenderWindow *window)
 		{
 			//sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
@@ -63,4 +66,5 @@
 			WindowWidth = sizeX;
 			WindowHeight = sizeY;
 		}
+
 

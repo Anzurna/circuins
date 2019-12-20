@@ -1,5 +1,5 @@
 
-		Name::Name(std::string F, int W, int H, int X, int Y)
+		void Name::init(std::string F, int W, int H, int X, int Y)
 		{
 			File = F;
 			SizeXTexture = W;

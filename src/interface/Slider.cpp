@@ -1,6 +1,5 @@
 
-
-	Slider::Slider(std::string F1, int W1, int H1,std::string F2,int W2, int H2, int X, int Y)
+	void Slider::init(std::string F1, int W1, int H1,std::string F2,int W2, int H2, int X, int Y)
 	{
 		FileScale = F1;
 		FilePointer = F2;

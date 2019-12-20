@@ -1,12 +1,12 @@
 #include "Main.hpp"
 
 int main() {
+
 	MainMenu mainMenu(900, 1600 );
+
 	sf::RenderWindow window(sf::VideoMode(mainMenu.getWindowsWidth(), mainMenu.getWindowsHeight()), "Circuins",sf::Style::Close | sf::Style::Resize);
 
 	window.setFramerateLimit(60);
-
-
 
 #ifdef SFML_SYSTEM_WINDOWS
 	__windowsHelper.setIcon(window.getSystemHandle());
@@ -49,11 +49,11 @@ int main() {
 					}
 					if (mainMenu.play.isPressed(mousePos.x, mousePos.y))
 					{
-						GameState newGameState(1600, 900);
+						GameState newGameState(900, 1600);
 						glob.setGameStateActive(true);
 							if (glob.getIsGameStateActive())
 							{
-							newGameState.handle(evnt, window,  glob);
+								newGameState.handle(evnt, window,  glob);
 							}
 					}
 				}
@@ -90,7 +90,6 @@ int main() {
 		{
 		window.clear();
 		mainMenu.menuDraw(&window);
-		mainMenu.background.drawBackground(&window);
 		window.display();
 		}
 	}

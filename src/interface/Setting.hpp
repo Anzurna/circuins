@@ -17,11 +17,11 @@ class Setting
 	sf::Texture textTexture;
 	sf::Sprite textSprite;
 
-	Setting(std::string F1, std::string F2,int W, int H, int WX, int HX, int SX, int SY);
-
 	Setting(){}
 
 	~Setting(){}
+
+	void init(std::string F1, std::string F2,int W, int H, int WX, int HX, int SX, int SY);
 
 	void drawSetting(sf::RenderWindow *window);
 
@@ -30,5 +30,7 @@ class Setting
 	bool getSettingEnabled() {return isSettingEnabled;}
 
 	void setSettingEnabled(bool condition) { this -> isSettingEnabled = condition; }
+
+	bool sliderIsPressed(int X, int Y);
 
 };

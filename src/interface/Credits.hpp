@@ -15,11 +15,11 @@ class Credits
 	sf::Texture textTexture;
 	sf::Sprite textSprite;
 
-	Credits(std::string F1, std::string F2,int W, int H, int WX, int HX);
-
 	Credits() {};
 
 	~Credits() {};
+
+	void init(std::string F1, std::string F2,int W, int H, int WX, int HX);
 
 	void drawCredits(sf::RenderWindow *window);
 

@@ -21,15 +21,15 @@ class MainMenu
 	{
 		WINDOWS_HEIGHT = WH;
 		WINDOWS_WIDTH = WW;
-		Setting settingWindow("dopWindow.png", "sound.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT, 50, 100);
-		Credits creditsWindow("dopWindow.png", "autors.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT);
-		Button exit("exit.png", 700, 100, 450, 790);
-		Button setting("settings.png", 700, 100, 450, 570);
-		Button credits("credits.png", 700, 100, 450, 680);
-		Button play("start.png", 700, 100, 450, 460);
-		Name name("logo.png", 700, 200, 450, 20);
-		Background background("parallaxT1.bmp", 2000, 2000);
-		Slider slider("Scale.png", 500, 30, "pointer.png", 40, 50, 500, 270);
+		settingWindow.init("dopWindow.png", "sound.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT, 50, 100);
+		creditsWindow.init("dopWindow.png", "autors.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT);
+		exit.init("exit.png", 700, 100, 450, 790);
+		setting.init("settings.png", 700, 100, 450, 570);
+		credits.init("credits.png", 700, 100, 450, 680);
+		play.init("start.png", 700, 100, 450, 460);
+		name.init("logo.png", 700, 200, 450, 20);
+		background.init("parallaxT1.bmp", 2000, 2000);
+		slider.init("Scale.png", 500, 30, "pointer.png", 40, 50, 500, 270);
 		background.setWindowSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);
 		background.reSize();
 

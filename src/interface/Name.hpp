@@ -12,12 +12,12 @@ class Name
 		std::string File;
 		sf::Texture nameTexture;
 		sf::Sprite sprite;
-		Name(std::string F, int W, int H, int X, int Y);
 
 		Name() {};
 
 		~Name() {};
 
+		void init(std::string F, int W, int H, int X, int Y);
 
 		void drawName(sf::RenderWindow *window);
 

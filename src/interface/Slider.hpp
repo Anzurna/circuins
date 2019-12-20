@@ -20,11 +20,11 @@ class Slider
 	sf::Texture pointerTexture;
 	sf::Sprite pointerSprite;
 
-	Slider(std::string F1, int W1, int H1,std::string F2,int W2, int H2, int X, int Y);
-
 	Slider() {}
 
 	~Slider() {}
+
+	void init(std::string F1, int W1, int H1,std::string F2,int W2, int H2, int X, int Y);
 
 	bool isPressed(int MousePosX, int MousePosY);
 
