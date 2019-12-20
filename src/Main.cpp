@@ -15,6 +15,10 @@ int main() {
 
 	sf::Event evnt;
 	GlobalContext glob;
+	SoundProducer sp;
+	sp.setVolume(glob);//установка значения звука
+	sp.playMusic("ZapTwoTone2");// вызов звука по названию
+	//sp.soundShoot();//вызов выстрела
 	//Заглушка для меню
 	sf::RectangleShape startButton(sf::Vector2f(500.0f, 100.0f));
 	sf::RectangleShape exitButton(sf::Vector2f(500.0f, 100.0f));
@@ -31,6 +35,7 @@ int main() {
 	while (window.isOpen()) {
 		//sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		while (window.pollEvent(evnt)) {
+
 
 		/* 	if (evnt.type==sf::Event::MouseButtonPressed) {
 			float pos_x, pos_y;

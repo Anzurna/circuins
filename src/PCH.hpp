@@ -80,7 +80,6 @@ struct speedAndRotation {
 	};
 #include "GlobalContext.hpp"
 #include "SoundProducer/SoundProducer.h"
-
 #include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
