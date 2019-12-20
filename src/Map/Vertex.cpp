@@ -7,7 +7,8 @@ void Vertex::init(int ID, cords self, std::vector<unsigned int> connectionVector
 	for (unsigned int i = 0; i < connectionVector.size(); i++){
 		m_connectionCodes.push_back(connectionVector[i]);
 	}
-
+	isVisible=false;
+	mouseIsOn=false;
 	graphicVertex.setFillColor(sf::Color::Cyan);
 	graphicVertex.setRadius(30.0f);
 	graphicVertex.setOrigin(30.0f, 30.0f);
@@ -49,11 +50,33 @@ void Vertex::draw(sf::RenderWindow* window, sf::View view)
 		graphicVertex.setFillColor(sf::Color::Cyan);
 	}
 }
+
+
+
 bool Vertex::toggleVisibility()
 {
 	this -> isVisible = (this -> isVisible ? false : true);
 	return isVisible;
 }
+
+bool Vertex::setIsMovable(bool b) {
+	isMovable=b;
+	return isMovable;
+}
+
+bool Vertex::setIsConnectable(bool c) {
+	isConnectable=c;
+	return isConnectable;
+}
+
+void Vertex::addConnection(int number) {
+	this->m_connectionCodes.push_back(number);
+}
+
+void Vertex::Colorise() {
+	graphicVertex.setFillColor(sf::Color::Green);
+}
+
 
 void Vertex::setPosition(sf::Vector2i mousePos)
 {
@@ -61,5 +84,20 @@ void Vertex::setPosition(sf::Vector2i mousePos)
 	selfCords.m_y = mousePos.y;
 	graphicVertex.setPosition(this-> selfCords.m_x, this-> selfCords.m_y);
 }
+
+void Vertex::setPosition (float a,float b) {
+	graphicVertex.setPosition(a,b);
+}
+void Vertex::MoveCircle (float a,float b) {
+	graphicVertex.move(a,b);
+}
+float Vertex::getPosX() {
+	return graphicVertex.getPosition().x;
+}
+
+float Vertex::getPosY() {
+	return graphicVertex.getPosition().y;
+}
+
 
 

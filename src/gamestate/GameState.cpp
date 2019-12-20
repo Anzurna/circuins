@@ -55,6 +55,9 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			mainPlayer.eventListener(evnt, window, mapHandl, mousePos1, view, m_pathfinder);
 			//eventListener(evnt, window, mapHandl, mousePos1, view, m_pathfinder);
 			// Заняты клавиши R, L и ПКМ (12.12.19)
+			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::R) {
+				mainPlayer.setPosition(mapHandl.allVertex[0].getPosX(), mapHandl.allVertex[0].getPosY());
+			}
 
 			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Escape) {
 						glob.setGameStateActive(false);
@@ -83,8 +86,20 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			}
 		}
 
+		//Нажать backspace чтобы вызвать редактор карты
+		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
+			 if (mapRed==false) mapRed=true; else mapRed=false;
+			 /*mapRedct.Reset(mapHandl);
+			redact=true;*/
 
-		if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
+		}
+
+		if (mapRed==true) {
+			mapRedct.EventListener(evnt,window,mapHandl,mousePos1,view);
+		}
+
+
+			if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
 			view.move(5.0f, 0.0f);
 			parallaxView.move(0.3f, 0.0f);
 

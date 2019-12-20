@@ -10,10 +10,13 @@ class GameState {
 
 
 	private:
+
 	MapHandler mapHandl; //Создание карты
+	MapRedactor mapRedct;
 	GridInfo infotable;
 
 	bool ToggleParallax = true;
+	bool mapRed=false;
 	int m_width;
 	int m_height;
 	bool IsGameStateActive = false;

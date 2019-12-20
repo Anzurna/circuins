@@ -79,10 +79,14 @@ struct speedAndRotation {
 		float degrees;
 	};
 #include "GlobalContext.hpp"
-#include "SoundProducer/SoundProducer.h"
-#include "inf/GridInfo.h"
 #include "Map/Vertex.h"
 #include "Map/MapHandler.h"
+#include "mapredactor/MapRedactor.h"
+#include "SoundProducer/SoundProducer.h"
+#include "inf/GridInfo.h"
+
+
+
 #include "movable/Movable.hpp"
 #include "Map/Pathfinder.h"
 #include "movable/particles/Bullet.hpp"
