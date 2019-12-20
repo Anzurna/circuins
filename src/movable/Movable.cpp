@@ -16,7 +16,21 @@ Movable::MovementData Movable::calculateSpeedAndRotation(sf::Vector2i target, sf
 			this ->  m_movementData.speed.y = speedToNextPointY;
 			this ->  m_movementData.degrees = degrees;
 
+			std::cout << "tx " << target.x << "ty " << target.y << std::endl;
 			return m_movementData;
 
 
+}
+void Movable::setPosition(float x, float y)
+{
+	this -> m_shape.setPosition(x, y);
+}
+
+void Movable::setPosition(sf::Vector2f pos)
+{
+	this -> m_shape.setPosition(pos);
+}
+void Movable::setRotation(float degrees)
+{
+		this -> m_shape.setRotation(degrees);
 }

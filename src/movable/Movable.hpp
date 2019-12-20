@@ -1,19 +1,34 @@
 class Movable {
 
+
+
+
+	public:
+
 	struct MovementData {
 		sf::Vector2f speed; // x,y speed to target
 		float degrees; // Rotation to target
 	};
 
 
-	public:
-
-	Movable(){};
-	~Movable(){};
 	virtual Movable::MovementData calculateSpeedAndRotation(sf::Vector2i target, sf::Vector2i position);
+	virtual void setTeam(int team) { this -> m_team = team; };
+	virtual void setPosition(float x, float y);
+	virtual void setPosition(sf::Vector2f);
+	virtual int getTeam() { return this -> m_team; };
+	virtual sf::Vector2f getPosition() { return this -> m_shape.getPosition(); };
+	virtual void draw(sf::RenderWindow*){};
+	virtual void move(){};
+	virtual void changeHP(int){};
+	virtual void setRotation(float);
+	virtual int getType(){return this -> m_type;};
+	virtual void setType(int type) {this -> m_type = type;};
+	virtual ~Movable(){};
+
 
 
 	protected:
+
 	float speedToNextPointX;
 	float speedToNextPointY;
 	float xLength;
@@ -23,6 +38,9 @@ class Movable {
 	float Vector;
 	float TotalSpeed;
 	int m_team;
+	int m_type;
+	sf::Texture m_texture;
+	sf::RectangleShape m_shape;
 	MovementData m_movementData;
 
 

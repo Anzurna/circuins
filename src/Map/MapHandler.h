@@ -26,9 +26,12 @@ class MapHandler
 	sf::RectangleShape mapTile_4;
 
 	sf::RectangleShape parallaxTile_1;
+	sf::RectangleShape parallaxTile_2;
+	sf::RectangleShape parallaxTile_3;
+	sf::RectangleShape parallaxTile_4;
 
 	public:
 
-	std::vector<Vertex> allVertex{9};
+	std::vector<Vertex> allVertex{5};
 
 };
