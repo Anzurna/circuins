@@ -23,12 +23,12 @@ class MainMenu
 		WINDOWS_WIDTH = WW;
 		settingWindow.init("dopWindow.png", "sound.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT, 50, 100);
 		creditsWindow.init("dopWindow.png", "autors.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT);
-		exit.init("exit.png", 700, 100, 450, 790);
-		setting.init("settings.png", 700, 100, 450, 570);
-		credits.init("credits.png", 700, 100, 450, 680);
-		play.init("start.png", 700, 100, 450, 460);
-		name.init("logo.png", 700, 200, 450, 20);
-		background.init("parallaxT1.bmp", 2000, 2000);
+		exit.init("exit.png", 700, 100, 450, 590);
+		setting.init("settings.png", 700, 100, 450, 370);
+		credits.init("credits.png", 700, 100, 450, 480);
+		play.init("start.png", 700, 100, 450, 260);
+		name.init("logo.png", 700, 200, 300, 20);
+		background.init("parallaxNB.png", 1920, 1080);
 		slider.init("Scale.png", 500, 30, "pointer.png", 40, 50, 500, 270);
 		background.setWindowSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);
 		background.reSize();

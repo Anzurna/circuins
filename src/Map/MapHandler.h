@@ -32,6 +32,6 @@ class MapHandler
 
 	public:
 
-	std::vector<Vertex> allVertex{2};
+	std::vector<Vertex> allVertex;
 
 };

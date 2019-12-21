@@ -24,6 +24,7 @@ class Movable {
 	virtual int getType(){return this -> m_type;};
 	virtual void setType(int type) {this -> m_type = type;};
 	virtual ~Movable(){};
+	virtual int getHP(){ return 1;};
 
 
 

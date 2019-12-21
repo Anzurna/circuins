@@ -2,7 +2,7 @@
 
 int main() {
 
-	MainMenu mainMenu(900, 1600 );
+	MainMenu mainMenu(720, 1280 );
 
 	sf::RenderWindow window(sf::VideoMode(mainMenu.getWindowsWidth(), mainMenu.getWindowsHeight()), "Circuins",sf::Style::Close | sf::Style::Resize);
 
@@ -49,7 +49,7 @@ int main() {
 					}
 					if (mainMenu.play.isPressed(mousePos.x, mousePos.y))
 					{
-						GameState newGameState(900, 1600);
+						GameState newGameState(1280, 720);
 						glob.setGameStateActive(true);
 							if (glob.getIsGameStateActive())
 							{
@@ -71,24 +71,27 @@ int main() {
 					window.close();
 					break;
 				case sf::Event::Resized:
-					window.setView(
-					sf::View(
-						sf::Vector2f(evnt.size.width / 2.0, evnt.size.height / 2.0),
-						sf::Vector2f(evnt.size.width, evnt.size.height)
-						)
-					);
-
 					mainMenu.newElementPosition(evnt.size.width, evnt.size.height);
 					break;
 				default:
 				break;
 			}
 		}
-
+/* 		window.setView(
+					sf::View(
+						sf::Vector2f(640, 320),
+						sf::Vector2f(1280, 720)
+						)
+					) */;
 
 		if(!glob.getIsGameStateActive())
 		{
+
 		window.clear();
+/* 		window.setView(sf::View(
+						sf::Vector2f(640, 360),
+						sf::Vector2f(1280, 720)
+						)); */
 		mainMenu.menuDraw(&window);
 		window.display();
 		}

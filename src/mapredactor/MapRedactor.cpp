@@ -76,11 +76,11 @@ if (event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button == 
 	}
 
 		if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Z)) {
-		this->WriteFile(MapHndl,"D:\\game\\map.txt");
+		this->WriteFile(MapHndl,"C:\\SFMLprojects\\myproject\\content\\map.txt");
 	}
 
 	if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Y)) {
-		this->ReadFile(MapHndl,"D:\\game\\map.txt");
+		this->ReadFile(MapHndl,"C:\\SFMLprojects\\myproject\\content\\map.txt");
 	}
 
 }

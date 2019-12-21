@@ -51,8 +51,8 @@ MapHandler::MapHandler()
 	std::vector<unsigned int> dummyArr9 = {1, 2, 8}; */
 
 
-	allVertex[0].init(1, {585, 282}, dummyArr1);
-	allVertex[1].init(2, {298, 93}, dummyArr2);
+/* 	allVertex[0].init(1, {585, 282}, dummyArr1);
+	allVertex[1].init(2, {298, 93}, dummyArr2); */
 	/*allVertex[2].init(3, {585, 37}, dummyArr3);
 	allVertex[3].init(4, {857, 93}, dummyArr4);
 	allVertex[4].init(5, {952, 282}, dummyArr5);

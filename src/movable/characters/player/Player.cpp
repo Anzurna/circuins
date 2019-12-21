@@ -184,7 +184,7 @@ std::vector<int> Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapH
 		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
 			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
 				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
-					m_path = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1,MapHndl.allVertex[a].getID()-1);
+					m_path = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID(),MapHndl.allVertex[a].getID());
 				}
 			}
 		}

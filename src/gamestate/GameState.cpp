@@ -18,6 +18,8 @@ GameState::GameState(int width, int height)
 void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2i& mousePos, */ GlobalContext& glob)
 {
 	sf::RectangleShape test(sf::Vector2f(40.0f, 40.0f));
+	MapRedactor mp;
+	mp.ReadFile(mapHandl, "C:\\SFMLprojects\\myproject\\content\\map.txt");
 	m_pathfinder.init(mapHandl);
 	std::list<Movable*> allMovingObjects;
 	const std::list<Movable*>::iterator iterToPlayer;
@@ -25,7 +27,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 	std::list<Movable*>::iterator collideIter1;
 	std::list<Movable*>::iterator collideIter2;
 
-	MapRedactor mp;
+
 	SoundProducer soundProd;
 	sf::Clock clock;
 	float Time = 0;
@@ -74,6 +76,17 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 
 
 			}
+					//Нажать backspace чтобы вызвать редактор карты
+		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
+			 if (mapRed==false) mapRed=true; else mapRed=false;
+			 /*mapRedct.Reset(mapHandl);
+			redact=true;*/
+
+		}
+
+		if (mapRed==true) {
+			mapRedct.EventListener(evnt,window,mapHandl,mousePos1,view);
+		}
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (Time3 > 0.3) {
@@ -86,17 +99,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			}
 		}
 
-		//Нажать backspace чтобы вызвать редактор карты
-		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
-			 if (mapRed==false) mapRed=true; else mapRed=false;
-			 /*mapRedct.Reset(mapHandl);
-			redact=true;*/
 
-		}
-
-		if (mapRed==true) {
-			mapRedct.EventListener(evnt,window,mapHandl,mousePos1,view);
-		}
 
 
 			if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
@@ -134,9 +137,13 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 								(**collideIter1).changeHP(-20);
 								Time2 = 0;
 							}
-							if ((**collideIter2).getType() == 1) {
+							if ((**collideIter2).getType() == 1 && ((**collideIter1).getType() != 1)) {
 								(**collideIter2).Movable::~Movable();
 								allMovingObjects.erase(collideIter2--);
+							}
+							if ((**collideIter1).getType() == 0 && ((**collideIter1).getHP() <= 0)) {
+								(**collideIter1).Movable::~Movable();
+								allMovingObjects.erase(collideIter1--);
 							}
 						}
 					}
