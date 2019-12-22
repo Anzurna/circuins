@@ -31,6 +31,7 @@ class Player : public Character
 
 	void setTargX(float);
 	void setTargY(float);
+	void addKey() { this -> keys += 1; };
 	//void setPosition(float, float);
 
 	bool getIsPathExists() { return this -> isPathExists; };
@@ -54,5 +55,5 @@ class Player : public Character
 	std::vector<int> m_path;
 
 	sf::Texture e;
-
+	int keys;
 };

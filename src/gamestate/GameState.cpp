@@ -9,7 +9,7 @@ GameState::GameState(int width, int height)
 
 	parallaxView.setCenter(sf::Vector2f(1256.0f, 1256.0f));
 	parallaxView.setSize(sf::Vector2f(500, 500));
-
+	view.zoom(1.5f);
 	parallaxView.zoom(0.3f);
 }
 
@@ -22,11 +22,11 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 	mp.ReadFile(mapHandl, "C:\\SFMLprojects\\myproject\\content\\map.txt");
 	m_pathfinder.init(mapHandl);
 	std::list<Movable*> allMovingObjects;
-	const std::list<Movable*>::iterator iterToPlayer;
+	std::list<Movable*>::iterator iterToPlayer;
 	std::list<Movable*>::iterator drawingIter;
 	std::list<Movable*>::iterator collideIter1;
 	std::list<Movable*>::iterator collideIter2;
-
+	//const Movable* toPlayer;
 
 	SoundProducer soundProd;
 	sf::Clock clock;
@@ -34,19 +34,31 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 	float Time2 = 0;
 	float Time3 = 0;
 
-	std::vector<Player> enemies;
-	enemies.push_back(Player());
-	enemies[0].setPosition(800.0, 800.0);
-	enemies[0].setHP(500);
-	enemies[0].setTeam(2);
+	std::vector<Enemy> enemies;
+	for (int u = 0; u < 4; u++) {
+		enemies.push_back(Enemy());
+		enemies[u].setPosition(800.0+20*u, 800.0);
+		enemies[u].setID(u);
+		enemies[u].setHP(500);
+		enemies[u].setTeam(2);
+		enemies[u].setHasKey();
+	}
+	for (int u = 0; u < 4; u++) {
+		allMovingObjects.push_back(&enemies[u]);
+	}
+
 	//Character mainCharacter1;
 
-	allMovingObjects.push_back(&enemies.back());
 
 	Player mainPlayer;
+  //	toPlayer = &mainPlayer;
 	allMovingObjects.push_back(&mainPlayer);
+	mainPlayer.setPosition(6000, 6000);
 	mainPlayer.setHP(500);
-	//*iterToPlayer = allMovingObjects.back();
+	view.setCenter(6000, 6000);
+/* 	Enemy en;
+	en.setTeam(2);
+	allMovingObjects.push_back(&en); */
 
 	while (glob.getIsGameStateActive()) {
 		sf::Vector2i mousePos1 = sf::Mouse::getPosition(window);
@@ -72,10 +84,10 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::P) {
 				ToggleParallax = (ToggleParallax ? false : true);
 			}
-			if (evnt.type == sf::Event::MouseButtonReleased && (evnt.mouseButton.button ==  sf::Mouse::Left)) {
-
-
+			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Space) {
+				view.setCenter(mainPlayer.getPosition());
 			}
+
 					//Нажать backspace чтобы вызвать редактор карты
 		 if (evnt.type==sf::Event::KeyPressed && evnt.key.code == sf::Keyboard::Backspace) {
 			 if (mapRed==false) mapRed=true; else mapRed=false;
@@ -89,7 +101,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		}
 		}
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			if (Time3 > 0.3) {
+			if (Time3 > 0.1) {
 				sf::Vector2i transformedMousePosition;
 				transformedMousePosition.x  = (int)(window.mapPixelToCoords( mousePos1, view ).x);
 				transformedMousePosition.y  = (int)(window.mapPixelToCoords( mousePos1, view ).y);
@@ -103,82 +115,70 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 
 
 			if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
-			view.move(5.0f, 0.0f);
+			view.move(18.0f, 0.0f);
 			parallaxView.move(0.3f, 0.0f);
 
 		} else if (mousePos1.x < 10) {
-			view.move(-5.0f, 0.0f);
+			view.move(-18.0f, 0.0f);
 			parallaxView.move(-0.3f, 0.0f);
 
 		} else if (mousePos1.y < 5) {
-			view.move(0.0f, -5.0f);
+			view.move(0.0f, -18.0f);
 			parallaxView.move(0.0f, -0.3f);
 
 		} else if (mousePos1.y > m_height - 10) {
-			view.move(0.0f, 5.0f);
+			view.move(0.0f, 18.0f);
 			parallaxView.move(0.0f, 0.3f);
 		}
 
-		if (Time > 1.0) {
-			if (abs(mainPlayer.getPosition().x - enemies[0].getPosition().x) < 1000 &&
-				abs(mainPlayer.getPosition().y - enemies[0].getPosition().y) < 1000) {
-					enemies[0].fire(allMovingObjects, {(int)mainPlayer.getPosition().x,
-								   (int)mainPlayer.getPosition().y});
-				}
-			Time = 0;
-		}
 
-			for (collideIter1 = allMovingObjects.begin(); collideIter1 != allMovingObjects.end(); ++collideIter1) {
-				for (collideIter2 = allMovingObjects.begin(); collideIter2 != allMovingObjects.end(); ++collideIter2) {
-					if ((abs((**collideIter1).getPosition().x - ((**collideIter2).getPosition().x)) < 50) &&
-					abs((**collideIter1).getPosition().y - ((**collideIter2).getPosition().y) < 50)) {
-						if ((**collideIter1).getTeam() != (**collideIter2).getTeam()) {
-							if (Time2 > 0.2f) {
-								(**collideIter1).changeHP(-20);
-								Time2 = 0;
-							}
-							if ((**collideIter2).getType() == 1 && ((**collideIter1).getType() != 1)) {
-								(**collideIter2).Movable::~Movable();
-								allMovingObjects.erase(collideIter2--);
-							}
-							if ((**collideIter1).getType() == 0 && ((**collideIter1).getHP() <= 0)) {
-								(**collideIter1).Movable::~Movable();
-								allMovingObjects.erase(collideIter1--);
-							}
+
+		for (collideIter1 = allMovingObjects.begin(); collideIter1 != allMovingObjects.end(); ++collideIter1) {
+			for (collideIter2 = allMovingObjects.begin(); collideIter2 != allMovingObjects.end(); ++collideIter2) {
+				if ((abs((**collideIter1).getPosition().x - ((**collideIter2).getPosition().x)) < 50) &&
+					abs((**collideIter1).getPosition().y - ((**collideIter2).getPosition().y)) < 50) {
+					if ((**collideIter1).getTeam() != (**collideIter2).getTeam()) {
+						if ((**collideIter2).getType() == 1 && ((**collideIter1).getType() != 1)) {
+							(**collideIter1).changeHP(-50);
+							(**collideIter2).Movable::~Movable();
+							allMovingObjects.erase(collideIter2--);
 						}
 					}
+					if ((**collideIter1).getType() == 0 && ((**collideIter2).getType() == 3 )) {
+						mainPlayer.addKey();
+						}
+				if ((**collideIter2).getType() == 2 && ((**collideIter2).getHP() <= 0)) {
+					(**collideIter2).Movable::~Movable();
+					allMovingObjects.erase(collideIter2--);
 				}
+				if ((**collideIter1).getType() == 0 && ((**collideIter1).getHP() <= 0)) {
+					mainPlayer.setPosition(6000, 6000);
+					mainPlayer.setHP(500);
+				}
+
 			}
+		}
+		}
 
 
 				//infotable.showInfo(&window, &player, mousePos,  Figure1.getTargX(), Figure1.getTargY(),
 							//	   Figure1.getPreviousX(), Figure1.getPreviousY());
 		mainPlayer.realTimeListener();
-			if (abs(mainPlayer.getPosition().x - enemies[0].getPosition().x) > 200 &&
-				abs(mainPlayer.getPosition().y - enemies[0].getPosition().y) > 200 ) {
-						float s1 =  enemies[0].calculateSpeedAndRotation({(int)mainPlayer.getPosition().x, (int)mainPlayer.getPosition().y},
-									{(int)enemies[0].getPosition().x, (int)enemies[0].getPosition().y}).speed.x;
-						float s2 =  enemies[0].calculateSpeedAndRotation({(int)mainPlayer.getPosition().x, (int)mainPlayer.getPosition().y},
-									{(int)enemies[0].getPosition().x, (int)enemies[0].getPosition().y}).speed.y;
-						float deg = enemies[0].calculateSpeedAndRotation({(int)mainPlayer.getPosition().x, (int)mainPlayer.getPosition().y},
-									{(int)enemies[0].getPosition().x, (int)enemies[0].getPosition().y}).degrees;
-						enemies[0].move((s1/1.3)-1, (s2/1.3)-1);
-						enemies[0].setRotation(deg);
-				}
-
-
 
 		window.clear();
 		//window.setView(parallaxView);
+
 		if (ToggleParallax) { mapHandl.drawParallax(&window); }
 
 		window.setView(view);
 		mapHandl.drawMap(&window);
-		view.setCenter(mainPlayer.getPosition());
+		//view.setCenter(mainPlayer.getPosition());
 		parallaxView.setCenter({mainPlayer.getPosition().x + 1256, mainPlayer.getPosition().y + 1256});
 
 		//std::cout << speedToNextPointX << " " << speedToNextPointY << std::endl;
 		for (drawingIter = allMovingObjects.begin(); drawingIter != allMovingObjects.end(); ++drawingIter) {
+			(**drawingIter).behave(allMovingObjects, mainPlayer.getPosition(), clock.getElapsedTime().asSeconds());
+			(**drawingIter).handle(allMovingObjects, drawingIter, clock.getElapsedTime().asSeconds());
 			(**drawingIter).draw(&window);
 			(**drawingIter).move();
 		}

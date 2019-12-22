@@ -6,8 +6,8 @@ Movable::MovementData Movable::calculateSpeedAndRotation(sf::Vector2i target, sf
 			yLength = m_TargetY - position.y;
 			Vector = sqrt(pow((m_TargetX - position.x),2)
 					+ pow(m_TargetY - position.y,2));
-			speedToNextPointX = 10 * (xLength / Vector);
-			speedToNextPointY = 10 * (yLength / Vector);
+			speedToNextPointX = m_speed * (xLength / Vector);
+			speedToNextPointY = m_speed * (yLength / Vector);
 
 			float degrees = atan2(xLength, -yLength) *(180/M_PI) - 90;
 

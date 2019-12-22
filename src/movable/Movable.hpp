@@ -25,6 +25,10 @@ class Movable {
 	virtual void setType(int type) {this -> m_type = type;};
 	virtual ~Movable(){};
 	virtual int getHP(){ return 1;};
+	virtual void handle(std::list<Movable*>&, std::list<Movable*>::iterator&, float ) {};
+	virtual void behave(std::list<Movable*>&, sf::Vector2f, float) {};
+	virtual bool getIsHit() { return 0; };
+	virtual void setIsHit() {};
 
 
 
@@ -40,6 +44,7 @@ class Movable {
 	float TotalSpeed;
 	int m_team;
 	int m_type;
+	float m_speed;
 	sf::Texture m_texture;
 	sf::RectangleShape m_shape;
 	MovementData m_movementData;

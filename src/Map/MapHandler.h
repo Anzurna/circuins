@@ -30,8 +30,10 @@ class MapHandler
 	sf::RectangleShape parallaxTile_3;
 	sf::RectangleShape parallaxTile_4;
 
+	std::vector<std::vector<sf::RectangleShape>> allPaper;
 	public:
 
 	std::vector<Vertex> allVertex;
+
 
 };

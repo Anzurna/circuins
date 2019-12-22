@@ -2,25 +2,34 @@ Character::Character()
 {
 	hpBar.setOrigin(50.0f, 3.0f);
 	hpBar.setFillColor(sf::Color::Red);
-	m_shape.setSize(sf::Vector2f(200,200));
-	m_shape.setOrigin(100.0f,100.0f);
+	m_shape.setSize(sf::Vector2f(300,300));
+	m_shape.setOrigin(150.0f,150.0f);
 	HP = 0;
 	m_texture.loadFromFile("content/CharSprites/basic2.png");
 	m_type = 2;
 	m_shape.setTexture(&m_texture);
 	m_bulletTexture.loadFromFile("content/particles/pBullet1.png");
+	m_bulletTexture2.loadFromFile("content/particles/pBullet2.png");
 }
 
 
 void Character::fire(std::list<Movable*>& allBullets, sf::Vector2i target)
 {
-	Bullet *tempBullet = new Bullet(&m_bulletTexture, m_team);
+	Bullet *tempBullet;
+	if (flag) {
+		tempBullet = new Bullet(&m_bulletTexture, m_team);
+		flag = false;
+	} else {
+		tempBullet = new Bullet(&m_bulletTexture2, m_team);
+		flag = true;
+	}
 	allBullets.push_back(tempBullet);
 	allBullets.back() -> setPosition(this -> getPosition());
 	allBullets.back() -> calculateSpeedAndRotation(target,
 	 {(int)this -> getPosX(), (int)this -> getPosY()});
 	allBullets.back() -> setRotation(allBullets.back() -> calculateSpeedAndRotation(target,
 	 {(int)this -> getPosX(), (int)this -> getPosY()}).degrees);
+	 tempBullet = 0;
 
 }
 float Character::getPosX()

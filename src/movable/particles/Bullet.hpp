@@ -10,9 +10,12 @@ class Bullet : public Movable {
 	void move();
 	void setRotation(float degrees);
 	void setRotation();
-
+	void handle(std::list<Movable*>& list, std::list<Movable*>::iterator&, float dt);
 	sf::Vector2f getPosition() { return this -> m_shape.getPosition(); };
 	int getTeam() { return this -> m_team; };
+	bool getIsHit() { return isHit; };
+	void setIsHit() {this -> isHit = true; };
+
 
 
 
@@ -21,6 +24,9 @@ class Bullet : public Movable {
 	sf::RectangleShape m_shape;
 	sf::Texture m_texture;
 	int m_team;
+	float m_timer;
+	float m_maxRange;
+	bool isHit;
 
 
 };

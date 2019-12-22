@@ -10,14 +10,14 @@ void Vertex::init(int ID, cords self, std::vector<unsigned int> connectionVector
 	isVisible=false;
 	mouseIsOn=false;
 	graphicVertex.setFillColor(sf::Color::Cyan);
-	graphicVertex.setRadius(30.0f);
+	graphicVertex.setRadius(60.0f);
 	graphicVertex.setOrigin(30.0f, 30.0f);
 	graphicVertex.setPosition(this-> selfCords.m_x, this-> selfCords.m_y);
 }
 bool Vertex::checkIsOn(sf::Vector2i position)
 {
-	if (abs((position.x) - (this -> transformedVertexPosition.x)) <= 30
-	&& abs((position.y) - (this -> transformedVertexPosition.y)) <= 30) {
+	if (abs((position.x) - (this -> transformedVertexPosition.x)) <= 60
+	&& abs((position.y) - (this -> transformedVertexPosition.y)) <= 60) {
 		return (this -> characterIsOn = true);
 	} else {
 		return (this -> characterIsOn = false);
@@ -26,8 +26,8 @@ bool Vertex::checkIsOn(sf::Vector2i position)
 bool Vertex::checkIsClicked(sf::RenderWindow& window, sf::Vector2i mousePos, sf::View view)
 {
 	transformedMousePosition = window.mapPixelToCoords( {mousePos.x, mousePos.y} , view );
-	if (abs((mousePos.x) - (this -> transformedVertexPosition.x)) <= 30
-	&& abs((mousePos.y) - (this -> transformedVertexPosition.y)) <= 30) {
+	if (abs((mousePos.x) - (this -> transformedVertexPosition.x)) <= 60
+	&& abs((mousePos.y) - (this -> transformedVertexPosition.y)) <= 60) {
 
 		this -> mouseIsOn = true;
 

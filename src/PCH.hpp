@@ -98,6 +98,7 @@ struct speedAndRotation {
 #include "movable/Movable.hpp"
 #include "Map/Pathfinder.h"
 #include "movable/particles/Bullet.hpp"
+#include "movable/particles/Key.hpp"
 
 #include "movable/characters/Character.hpp"
 #include "movable/characters/enemies/Enemy.hpp"

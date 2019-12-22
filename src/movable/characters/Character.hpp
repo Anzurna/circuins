@@ -16,9 +16,12 @@ class Character : public Movable
 	Character();
 
 	sf::Texture m_bulletTexture;
+	sf::Texture m_bulletTexture2;
 
 	int HP;
 	sf::RectangleShape hpBar;
+	float m_timer1;
+	bool flag = true;
 
 };
 

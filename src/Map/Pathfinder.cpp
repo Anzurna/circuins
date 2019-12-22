@@ -60,6 +60,7 @@ std::vector<int> Pathfinder::algorithmDijkstra(int start, int finish){
 				if (d[j] > d[u] + g[u][j] && g[u][j] > 0)
 					d[j] = d[u] + g[u][j], p[j] = u;
 		}
+	std::cout<<"TRY"<<n<<std::endl;
 	std::vector <int> v;
 		if (p[finish] == -1)
 			std::cout << "No way\n";

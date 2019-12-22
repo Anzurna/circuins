@@ -7,6 +7,10 @@ Player::Player() {
 	m_TargetY = 0.0;
 	TotalSpeed = 2;
 	m_step = 0;
+	m_type = 0;
+	m_texture.loadFromFile("content/CharSprites/basic2.png");
+
+	m_shape.setTexture(&m_texture);
 
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
@@ -184,7 +188,7 @@ std::vector<int> Player::moveToVertex(sf::RenderWindow& window, MapHandler& MapH
 		if (MapHndl.allVertex[i].checkIsOn(this -> getTransformedPosition())) {
 			for (unsigned int a = 0; a < MapHndl.allVertex.size(); a++) {
 				if (MapHndl.allVertex[a].checkIsClicked(window, mousePos, view)) {
-					m_path = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID(),MapHndl.allVertex[a].getID());
+					m_path = pathfinder.algorithmDijkstra(MapHndl.allVertex[i].getID()-1, MapHndl.allVertex[a].getID()-1);
 				}
 			}
 		}
