@@ -183,20 +183,20 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 		}
 
 
-			if (mousePos1.x > m_width - 10) { // Перемещение видов, позже бует вынесено в отдельный объект
-			view.move(18.0f, 0.0f);
+			if (mousePos1.x > m_width - 20) { // Перемещение видов, позже бует вынесено в отдельный объект
+			view.move(25.0f, 0.0f);
 			parallaxView.move(0.3f, 0.0f);
 
-		} else if (mousePos1.x < 10) {
-			view.move(-18.0f, 0.0f);
+		} else if (mousePos1.x < 20) {
+			view.move(-25.0f, 0.0f);
 			parallaxView.move(-0.3f, 0.0f);
 
-		} else if (mousePos1.y < 5) {
-			view.move(0.0f, -18.0f);
+		} else if (mousePos1.y < 20) {
+			view.move(0.0f, -25.0f);
 			parallaxView.move(0.0f, -0.3f);
 
-		} else if (mousePos1.y > m_height - 10) {
-			view.move(0.0f, 18.0f);
+		} else if (mousePos1.y > m_height - 20) {
+			view.move(0.0f, 25.0f);
 			parallaxView.move(0.0f, 0.3f);
 		}
 
