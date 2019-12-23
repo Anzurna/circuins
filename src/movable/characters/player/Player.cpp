@@ -8,9 +8,9 @@ Player::Player() {
 	TotalSpeed = 2;
 	m_step = 0;
 	m_type = 0;
-	m_texture.loadFromFile("content/CharSprites/basic2.png");
-
-	m_shape.setTexture(&m_texture);
+	this -> m_texture.loadFromFile("content/CharSprites/basic1.png");
+	maxHP = 500;
+	this -> m_shape.setTexture(&m_texture);
 
 //	alignHelper.setFillColor(sf::Color::Green);
 //  alignHelper.setSize(sf::Vector2f(40.0f, 5.0f));
@@ -234,14 +234,17 @@ void Player::eventListener(sf::Event &event, sf::RenderWindow& window, MapHandle
 	this -> calculateSpeedAndRotation(transformedMousePosition, {(int)(getPosition().x), (int)(getPosition().y)});
 	m_shape.setRotation(m_movementData.degrees);
 	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::R) {
-						this -> setPosition(585.0f, 282.0f);
+						this -> setPosition(6000.0f, 6000.0f);
 	}
 	if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::L) {
-						this -> setPosition(200.0f, 282.0f);
+						this -> setPosition(2000.0f, 2000.0f);
 	}
 	if (event.type == sf::Event::MouseButtonReleased && (event.mouseButton.button ==  sf::Mouse::Right)) {
 				this -> moveToVertex( window, MapHndl, mousePos, view, pathfinder);
 				this -> isPathExists = true;
+	}
+		if (event.type == sf::Event::KeyPressed && event.key.code ==  sf::Keyboard::R) {
+			this -> setPosition( this -> getPosition().x - 100, this -> getPosition().y);
 	}
 
 
@@ -268,6 +271,12 @@ Movable::MovementData Player::calculateSpeedAndRotation(sf::Vector2i target, sf:
 
 			speedToRightX = 10 * ((-target.x - position.x)/ VectorRight);
 			speedToRightY = 10 * ((target.y - position.x)/ VectorRight); */
+			if (abs(xLength) < 10 && abs(yLength) < 10) {
+				fspeedToNextPointX = 0;
+				fspeedToNextPointY = 0;
+			}
+
+
 			this ->  m_movementData.speed.x = fspeedToNextPointX;
 			this ->  m_movementData.speed.y = fspeedToNextPointY;
 			this ->  m_movementData.degrees = degrees;
@@ -281,6 +290,7 @@ void Player::realTimeListener()
 	if (sf::Keyboard::isKeyPressed (sf::Keyboard::W)) {
 
 		m_shape.move(m_movementData.speed.x, m_movementData.speed.y);
+		isPathExists = false;
 
 	}
 
@@ -301,4 +311,12 @@ void Player::realTimeListener()
 void Player::move(float speedX, float speedY)
 {
 	this -> m_shape.move(speedX, speedY);
+}
+void Player::draw(sf::RenderWindow *window)
+{
+	hpBar.setSize(sf::Vector2f((this -> getHP()/5), 6));
+	hpBar.setPosition(this -> getPosX(), this -> getPosY()+60);
+
+	window -> draw(this -> m_shape);
+	window -> draw( this -> hpBar);
 }

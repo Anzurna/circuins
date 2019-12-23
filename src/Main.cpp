@@ -12,6 +12,7 @@ int main() {
 	__windowsHelper.setIcon(window.getSystemHandle());
 #endif
 
+
 	sf::Event evnt;
 	GlobalContext glob;
 	SoundProducer sp;
@@ -23,6 +24,8 @@ int main() {
 		while (window.pollEvent(evnt)) {
 
 			mainMenu.newWindowSize(evnt.size.width, evnt.size.height);
+
+
 
 			if (evnt.type == sf::Event::KeyPressed && evnt.key.code ==  sf::Keyboard::Escape)
 			{
@@ -71,7 +74,7 @@ int main() {
 					window.close();
 					break;
 				case sf::Event::Resized:
-					mainMenu.newElementPosition(evnt.size.width, evnt.size.height);
+					mainMenu.newElementPosition(1280, 720);
 					break;
 				default:
 				break;

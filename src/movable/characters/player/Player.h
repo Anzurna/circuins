@@ -32,6 +32,9 @@ class Player : public Character
 	void setTargX(float);
 	void setTargY(float);
 	void addKey() { this -> keys += 1; };
+	void destroyKeys() { this -> keys =0; };
+	int getAmountOfKeys() {return this -> keys; };
+	void draw(sf::RenderWindow*);
 	//void setPosition(float, float);
 
 	bool getIsPathExists() { return this -> isPathExists; };

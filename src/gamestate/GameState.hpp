@@ -15,7 +15,8 @@ class GameState {
 	MapRedactor mapRedct;
 	GridInfo infotable;
 
-	bool ToggleParallax = true;
+	bool toggleParallax = true;
+	bool toggleCentering = true;
 	bool mapRed=false;
 	int m_width;
 	int m_height;

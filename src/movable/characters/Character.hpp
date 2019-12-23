@@ -9,7 +9,7 @@ class Character : public Movable
 	virtual int getHP() {return this -> HP;};
 	virtual void changeHP(int amount);
 	virtual void setHP(int amount);
-	virtual void draw(sf::RenderWindow *window);
+	virtual void draw(sf::RenderWindow *);
 	//void setPosition(float, float);
 
 	protected:
@@ -19,6 +19,7 @@ class Character : public Movable
 	sf::Texture m_bulletTexture2;
 
 	int HP;
+	int maxHP;
 	sf::RectangleShape hpBar;
 	float m_timer1;
 	bool flag = true;

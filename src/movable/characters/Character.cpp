@@ -5,9 +5,9 @@ Character::Character()
 	m_shape.setSize(sf::Vector2f(300,300));
 	m_shape.setOrigin(150.0f,150.0f);
 	HP = 0;
-	m_texture.loadFromFile("content/CharSprites/basic2.png");
+	//m_texture.loadFromFile("content/CharSprites/basic2.png");
 	m_type = 2;
-	m_shape.setTexture(&m_texture);
+	//m_shape.setTexture(&m_texture);
 	m_bulletTexture.loadFromFile("content/particles/pBullet1.png");
 	m_bulletTexture2.loadFromFile("content/particles/pBullet2.png");
 }
@@ -43,7 +43,7 @@ float Character::getPosY()
 }
 void Character::changeHP(int amount)
 {
-	if (this -> HP > 0)
+	if ((this -> HP > 0) && (this -> HP <= maxHP+1))
 		this -> HP +=amount;
 }
 void Character::setHP(int amount)
@@ -57,8 +57,8 @@ void Character::draw(sf::RenderWindow *window)
 	hpBar.setSize(sf::Vector2f((this -> getHP()/5), 6));
 	hpBar.setPosition(this -> getPosX(), this -> getPosY()+60);
 
-	window -> draw(m_shape);
-	window -> draw(hpBar);
+	window -> draw(this -> m_shape);
+	window -> draw( this -> hpBar);
 }
 
 /* void Character::setPosition(float x, float y)

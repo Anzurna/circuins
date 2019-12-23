@@ -1,7 +1,8 @@
 class Enemy : public Character
 {
 	public:
-	Enemy();
+	Enemy(){};
+	Enemy(float, float, sf::Texture&);
 	~Enemy(){};
 	void move();
 	void move(float, float);
@@ -10,10 +11,12 @@ class Enemy : public Character
 	void handle(std::list<Movable*>& list, std::list<Movable*>::iterator&, float);
 	void dropKey(std::list<Movable*>& list);
 	void setHasKey() { this -> m_hasKey = true;};
+	void draw(sf::RenderWindow*);
 	//void setPosition(float x, float y);
 	private:
 	int behaviour;
 	bool isActive;
 	unsigned int ID;
 	bool m_hasKey;
+
 };

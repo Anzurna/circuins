@@ -13,6 +13,10 @@
 			buttonTexture.loadFromFile("content/interface/" + File);
 			sprite.setTexture(buttonTexture);
 			sprite.setPosition(sf::Vector2f(ButtonPositionX, ButtonPositionY));
+
+			SizeXButton = (SizeXTexture / 2);
+			SizeYButton = (SizeYTexture / 2);
+			sprite.setScale(0.5f, 0.5f);
 		}
 
 		void Button::drawButton(sf::RenderWindow *window)
