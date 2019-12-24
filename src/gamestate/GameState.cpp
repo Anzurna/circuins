@@ -19,7 +19,7 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 {
 	sf::RectangleShape test(sf::Vector2f(40.0f, 40.0f));
 	MapRedactor mp;
-	mp.ReadFile(mapHandl, "C:\\SFMLprojects\\myproject\\content\\map.txt");
+	mp.ReadFile(mapHandl, "C:\\Game\\content\\map.txt");
 	m_pathfinder.init(mapHandl);
 	std::list<Movable*> allMovingObjects;
 	std::list<Movable*>::iterator iterToPlayer;
