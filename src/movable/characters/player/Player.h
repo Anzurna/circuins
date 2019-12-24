@@ -38,14 +38,15 @@ class Player : public Character
 	//void setPosition(float, float);
 
 	bool getIsPathExists() { return this -> isPathExists; };
-
+	void setHasWon(bool w) { this -> win = w; };
+	bool getHasWon() { return this -> win; };
 	private:
 	sf::RectangleShape playFig;
 	sf::Texture PlayerTexture;
 	sf::RectangleShape alignHelper;
 	float previousPointX;
 	float previousPointY;
-
+	bool win;
 	float speedToLeftX;
 	float speedToLeftY;
 

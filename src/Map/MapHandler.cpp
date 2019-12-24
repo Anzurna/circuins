@@ -12,6 +12,12 @@ MapHandler::MapHandler()
 	parallaxTile_1.setTexture(&parallaxTile1);
 	parallaxTile_1.setPosition(0.0f, 0.0f);
 
+	victoryImageT.loadFromFile("content/MapTiles/victoryImage.png");
+	victoryImage.setSize(sf::Vector2f(1000.0f,1000.0f));
+    victoryImage.setTexture(&victoryImageT);
+	victoryImage.setPosition(500.0f, 500.0f);
+
+
 	allPaper.resize(10, std::vector<sf::RectangleShape>{10});
 	for (int i = 0; i < 10; i++) {
 		for (int k = 0; k < 10; k++) {
@@ -25,6 +31,7 @@ MapHandler::MapHandler()
 void MapHandler::drawMap(sf::RenderWindow* window)
 {
 	window -> draw(mapTile_1);
+	window -> draw(victoryImage);
 }
 void MapHandler::drawParallax(sf::RenderWindow* window)
 {

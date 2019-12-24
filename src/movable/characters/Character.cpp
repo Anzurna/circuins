@@ -43,7 +43,7 @@ float Character::getPosY()
 }
 void Character::changeHP(int amount)
 {
-	if ((this -> HP > 0) && (this -> HP <= maxHP+1))
+	if ((this -> HP > 0) && (this -> HP < maxHP-amount))
 		this -> HP +=amount;
 }
 void Character::setHP(int amount)

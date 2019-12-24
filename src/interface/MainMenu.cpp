@@ -4,7 +4,7 @@
 		WINDOWS_HEIGHT = WH;
 		WINDOWS_WIDTH = WW;
 		settingWindow.init("dopWindow.png", "sound.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT, 50, 100);
-		creditsWindow.init("dopWindow.png", "autors.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT);
+		creditsWindow.init("dopWindow.png", "authors.png", 700, 700, WINDOWS_WIDTH, WINDOWS_HEIGHT);
 		exit.init("exit.png", 700, 100, 290, 610);
 		setting.init("settings.png", 700, 100, 290, 390);
 		credits.init("credits.png", 700, 100, 290, 500);

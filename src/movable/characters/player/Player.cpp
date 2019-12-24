@@ -8,7 +8,9 @@ Player::Player() {
 	TotalSpeed = 2;
 	m_step = 0;
 	m_type = 0;
-	this -> m_texture.loadFromFile("content/CharSprites/basic1.png");
+	keys = 0;
+	win = false;
+	this -> m_texture.loadFromFile("content/CharSprites/basic2.png");
 	maxHP = 500;
 	this -> m_shape.setTexture(&m_texture);
 
