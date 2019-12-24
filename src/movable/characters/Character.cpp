@@ -16,13 +16,14 @@ Character::Character()
 void Character::fire(std::list<Movable*>& allBullets, sf::Vector2i target)
 {
 	Bullet *tempBullet;
-	if (flag) {
-		tempBullet = new Bullet(&m_bulletTexture, m_team);
+/* 	if (flag) {
+
 		flag = false;
 	} else {
 		tempBullet = new Bullet(&m_bulletTexture2, m_team);
 		flag = true;
-	}
+	} */
+	tempBullet = new Bullet(&m_bulletTexture, m_team);
 	allBullets.push_back(tempBullet);
 	allBullets.back() -> setPosition(this -> getPosition());
 	allBullets.back() -> calculateSpeedAndRotation(target,
