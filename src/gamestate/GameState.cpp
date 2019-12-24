@@ -195,9 +195,10 @@ void GameState::handle(sf::Event& evnt, sf::RenderWindow& window, /* sf::Vector2
 			mainPlayer.setHasWon(true);
 		}
 		if (mainPlayer.getHasWon()) {
+			view.zoom(1.0f);
 			toggleCentering = false;
 			view.setCenter(1000.0f, 1000.0f);
-			view.zoom(1.0f);
+
 		}
 
 		for (collideIter1 = allMovingObjects.begin(); collideIter1 != allMovingObjects.end(); ++collideIter1) {
